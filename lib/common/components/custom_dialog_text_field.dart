@@ -6,11 +6,11 @@ import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 
 // ignore: must_be_immutable
-class CustomTextFieldContainer extends StatelessWidget {
+class CustomDialogTextFieldContainer extends StatelessWidget {
   String textFieldName;
   String hintTextTextField;
   TextEditingController controller;
-  CustomTextFieldContainer({
+  CustomDialogTextFieldContainer({
     Key? key,
     required this.textFieldName,
     required this.hintTextTextField,
@@ -49,7 +49,7 @@ class CustomTextFieldContainer extends StatelessWidget {
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 10,
-              vertical: 10,
+              vertical: 5,
             ),
           ),
         ),

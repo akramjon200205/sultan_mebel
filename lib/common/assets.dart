@@ -17,7 +17,10 @@ abstract class _AssetsHolder {
 class _Icons extends _AssetsHolder {
   const _Icons() : super('assets/icons');
 
-  // String get allThemIcon => "$basePath/all_of_them_icon.svg";
+  String get plusIcon => "$basePath/plus_icon.svg";
+  String get arrowBackIcon => "$basePath/arrow_back_icon.svg";
+  String get iconUser => "$basePath/icon_user.svg";
+  String get iconNotification => "$basePath/icon_notification.svg";
 }
 
 class _Images extends _AssetsHolder {
@@ -26,4 +29,6 @@ class _Images extends _AssetsHolder {
   String get ellipseBig => "$basePath/ellipse_big.svg";
   String get ellipseMiddle => "$basePath/ellipse_middle.svg";
   String get ellipseSmall => "$basePath/ellipse_small.svg";
+  String get mebel => "$basePath/mebel.png";
+  String get kitchenPhoto => "$basePath/kitchen_photo.png";
 }
