@@ -5,6 +5,7 @@ import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_text_field_container.dart';
 import 'package:sultan_mebel/future/login/presentation/widgets/background_ellipses.dart';
+import 'package:sultan_mebel/future/main/main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,7 +17,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController useNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -62,7 +63,13 @@ class _LoginPageState extends State<LoginPage> {
                   color: AppColors.yellow,
                   textButton: "Kirish",
                   textColor: AppColors.textColorBlack,
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) {
+                        return const MainPage();
+                      },
+                    ));
+                  },
                 ),
                 SizedBox(
                   height: 15.h,

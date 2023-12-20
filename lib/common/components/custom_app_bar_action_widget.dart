@@ -7,20 +7,22 @@ import 'package:sultan_mebel/common/app_colors.dart';
 class CustomAppBarActionWidget extends StatelessWidget {
   String iconTextAssets;
   Function function;
+  EdgeInsets margin;
   CustomAppBarActionWidget({
     Key? key,
     required this.iconTextAssets,
     required this.function,
+    this.margin = EdgeInsets.zero,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => function(),
-      // borderRadius: BorderRadius.circular(15),
       child: Container(
         width: 30,
         height: 30,
+        margin: margin,
         padding: const EdgeInsets.symmetric(horizontal: 7),
         decoration: const BoxDecoration(
           shape: BoxShape.circle,

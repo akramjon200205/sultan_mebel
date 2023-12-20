@@ -110,45 +110,7 @@ class _ChooseCategoryState extends State<ChooseCategory> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.textColorBlack,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Sultan Mebel",
-          style: AppTextStyles.body18w5.copyWith(
-            color: AppColors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        leading: Container(
-          width: 30,
-          height: 30,
-          alignment: Alignment.center,
-          child: InkWell(
-            onTap: () {},
-            child: SvgPicture.asset(
-              Assets.icons.arrowBackIcon,
-              height: 20,
-              width: 20,
-              fit: BoxFit.scaleDown,
-            ),
-          ),
-        ),
-        actions: [
-          CustomAppBarActionWidget(
-            iconTextAssets: Assets.icons.iconNotification,
-            function: () {},
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          CustomAppBarActionWidget(
-            iconTextAssets: Assets.icons.iconUser,
-            function: () {},
-          ),
-        ],
-      ),
+      
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

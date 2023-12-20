@@ -54,6 +54,9 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
                 CustomButtonContainer(
                   color: AppColors.textColorBlack,
                   textButton: "Bekor qilish",
@@ -72,43 +75,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: AppColors.textColorBlack,
-        title: Text(
-          "Sultan Mebel",
-          style: AppTextStyles.body20w6.copyWith(
-            fontWeight: FontWeight.w700,
-            color: AppColors.white,
-          ),
-        ),
-        centerTitle: true,
-        actions: [
-          Container(
-            width: 30,
-            height: 30,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.yellow,
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Container(
-            margin: const EdgeInsets.only(right: 15),
-            width: 30,
-            height: 30,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.yellow,
-            ),
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

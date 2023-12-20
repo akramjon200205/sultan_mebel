@@ -7,12 +7,14 @@ import 'package:sultan_mebel/common/app_text_styles.dart';
 
 // ignore: must_be_immutable
 class CustomButtonContainer extends StatefulWidget {
+  EdgeInsets margin;
   Color color;
   String textButton;
   Color textColor;
   Function onTap;
   CustomButtonContainer({
     Key? key,
+    this.margin = EdgeInsets.zero,
     required this.color,
     required this.textButton,
     required this.textColor,
@@ -31,6 +33,7 @@ class _CustomButtonContainerState extends State<CustomButtonContainer> {
       onTap: () => widget.onTap(),
       child: Container(
         height: 48.h,
+        margin: widget.margin,
         width: double.infinity,
         alignment: Alignment.center,
         decoration: BoxDecoration(

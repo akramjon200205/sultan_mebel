@@ -35,6 +35,8 @@ class CustomTextFieldContainer extends StatelessWidget {
             color: AppColors.grey,
           ),
           decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.customContainerColor,
             isDense: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),

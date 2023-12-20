@@ -21,6 +21,12 @@ class _Icons extends _AssetsHolder {
   String get arrowBackIcon => "$basePath/arrow_back_icon.svg";
   String get iconUser => "$basePath/icon_user.svg";
   String get iconNotification => "$basePath/icon_notification.svg";
+  String get basket => "$basePath/basket.svg";
+  String get clients => "$basePath/clients.svg";
+  String get home => "$basePath/home.svg";
+  String get leddingIcon => "$basePath/ledding_icon.svg";
+  String get saleIcon => "$basePath/sale_icon.svg";
+  String get summaIcon => "$basePath/summa_icon.svg";
 }
 
 class _Images extends _AssetsHolder {
