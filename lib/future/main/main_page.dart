@@ -20,7 +20,11 @@ class _MainPageState extends State<MainPage> {
 
   nextPage(int index) {
     selectedIndex = index;
-    controller.animateToPage(index, duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
+    controller.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.easeIn,
+    );
     setState(() {});
   }
 
@@ -75,7 +79,7 @@ class _MainPageState extends State<MainPage> {
           ),
         ],
       ),
-      body: PageView(        
+      body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: controller,
         children: pages,
