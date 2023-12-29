@@ -1,11 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
 
 class ChoosenCategoryContainerWidget extends StatefulWidget {
-  const ChoosenCategoryContainerWidget({super.key});
+  Function onTap;
+  ChoosenCategoryContainerWidget({
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   State<ChoosenCategoryContainerWidget> createState() => _ChoosenCategoryContainerWidgetState();
@@ -15,6 +22,7 @@ class _ChoosenCategoryContainerWidgetState extends State<ChoosenCategoryContaine
   TextEditingController firstController = TextEditingController();
   TextEditingController secondController = TextEditingController();
   TextEditingController thirdController = TextEditingController();
+  
   List<String> dropListValue = [
     "Umumiy",
     "Oshhona",
@@ -123,10 +131,12 @@ class _ChoosenCategoryContainerWidgetState extends State<ChoosenCategoryContaine
             height: 20,
           ),
           CustomButtonContainer(
+            height: 48.h,
+            width: double.infinity,
             color: AppColors.yellow,
             textButton: "Saqlash",
             textColor: AppColors.textColorBlack,
-            onTap: () {},
+            onTap: ()=> widget.onTap(),
           ),
         ],
       ),

@@ -22,7 +22,7 @@ class _MainPageState extends State<MainPage> {
     selectedIndex = index;
     controller.animateToPage(
       index,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       curve: Curves.easeIn,
     );
     setState(() {});
@@ -33,20 +33,6 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.textColorBlack,
-        leading: Container(
-          width: 30,
-          height: 30,
-          alignment: Alignment.center,
-          child: InkWell(
-            onTap: () {},
-            child: SvgPicture.asset(
-              Assets.icons.arrowBackIcon,
-              height: 20,
-              width: 20,
-              fit: BoxFit.scaleDown,
-            ),
-          ),
-        ),
         centerTitle: true,
         title: Text(
           "Sultan Mebel",
@@ -70,12 +56,7 @@ class _MainPageState extends State<MainPage> {
             },
           ),
           const SizedBox(
-            width: 10,
-          ),
-          CustomAppBarActionWidget(
-            margin: const EdgeInsets.only(right: 15),
-            iconTextAssets: Assets.icons.iconUser,
-            function: () {},
+            width: 15,
           ),
         ],
       ),
@@ -112,6 +93,7 @@ class _MainPageState extends State<MainPage> {
                   width: 20,
                   height: 20,
                   fit: BoxFit.scaleDown,
+                  color: selectedIndex == index ? AppColors.yellow : AppColors.white,
                 ),
               ),
             ),

@@ -17,21 +17,24 @@ class CustomAppBarActionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => function(),
-      child: Container(
-        width: 30,
-        height: 30,
-        margin: margin,
-        padding: const EdgeInsets.symmetric(horizontal: 7),
-        decoration: const BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.yellow,
-        ),
-        child: SvgPicture.asset(
-          iconTextAssets,
-          color: AppColors.textColorDark,
-          fit: BoxFit.scaleDown,
+    return Padding(
+      padding: margin,
+      child: InkWell(
+        onTap: () => function(),
+        child: Container(
+          width: 30,
+          height: 30,
+          // margin: margin,
+          padding: const EdgeInsets.symmetric(horizontal: 7),
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.yellow,
+          ),
+          child: SvgPicture.asset(
+            iconTextAssets,
+            color: AppColors.textColorDark,
+            fit: BoxFit.scaleDown,
+          ),
         ),
       ),
     );

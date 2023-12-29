@@ -5,19 +5,26 @@ import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_grid_add_container_widget.dart';
 
-class ChooseCategoryGridViewWidget extends StatelessWidget {
+class ChoosenCategoryGridViewWidget extends StatefulWidget {
   Function onTap;
-  ChooseCategoryGridViewWidget({
+  int itemcount;
+  ChoosenCategoryGridViewWidget({
     Key? key,
     required this.onTap,
+    required this.itemcount,
   }) : super(key: key);
 
+  @override
+  State<ChoosenCategoryGridViewWidget> createState() => _ChoosenCategoryGridViewWidgetState();
+}
+
+class _ChoosenCategoryGridViewWidgetState extends State<ChoosenCategoryGridViewWidget> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 6,
+      itemCount: widget.itemcount,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 15,
@@ -25,7 +32,7 @@ class ChooseCategoryGridViewWidget extends StatelessWidget {
         childAspectRatio: 1,
       ),
       itemBuilder: (context, index) {
-        if (index < 5) {
+        if (index < widget.itemcount - 1) {
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
@@ -77,7 +84,7 @@ class ChooseCategoryGridViewWidget extends StatelessWidget {
           );
         } else {
           return InkWell(
-            onTap: ()=> onTap(),
+            onTap: () => widget.onTap(),
             borderRadius: BorderRadius.circular(15),
             child: const CustomGridViewAddContainerWidget(),
           );

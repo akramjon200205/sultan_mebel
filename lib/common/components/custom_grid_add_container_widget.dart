@@ -21,8 +21,8 @@ class CustomGridViewAddContainerWidget extends StatelessWidget {
       child: SvgPicture.asset(
         Assets.icons.plusIcon,
         alignment: Alignment.center,
-        width: 50,
-        height: 50,
+        width: 30,
+        height: 30,
         fit: BoxFit.scaleDown,
       ),
     );

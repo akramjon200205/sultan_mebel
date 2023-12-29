@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController showDialogController = TextEditingController();
+  int itemCount = 6;
 
   Future<void> showMyDialog() async {
     return await showDialog(
@@ -40,24 +42,25 @@ class _HomePageState extends State<HomePage> {
                   height: 30,
                 ),
                 CustomButtonContainer(
+                  height: 40.h,
+                  width: 200,
                   color: AppColors.yellow,
                   textButton: "Saqlash",
                   textColor: AppColors.textColorBlack,
                   onTap: () {
-                    if (showDialogController.text.isNotEmpty) {
-                      DataTypesMebelList().mebel.add(showDialogController.text);
-                      setState(() {});
-                      log(DataTypesMebelList().mebel.last);
+                    setState(() {
+                      itemCount += 1;
                       showDialogController.clear();
-                    } else {
-                      Navigator.of(context).pop();
-                    }
+                    });
+                    Navigator.of(context).pop();
                   },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CustomButtonContainer(
+                  height: 40.h,
+                  width: 200,
                   color: AppColors.textColorBlack,
                   textButton: "Bekor qilish",
                   textColor: AppColors.white,
@@ -91,8 +94,9 @@ class _HomePageState extends State<HomePage> {
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
               child: GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: DataTypesMebelList().mebel.length,
+                itemCount: itemCount,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 1.0,
                   crossAxisCount: 3,
@@ -100,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisSpacing: 10,
                 ),
                 itemBuilder: (context, index) {
-                  if (index != DataTypesMebelList().mebel.length - 1) {
+                  if (index != itemCount - 1) {
                     return InkWell(
                       onTap: () {},
                       child: Container(
@@ -114,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Text(
-                          DataTypesMebelList().mebel[index],
+                          DataTypesMebelList().mebel[0],
                           style: AppTextStyles.body16w5,
                           textAlign: TextAlign.center,
                         ),

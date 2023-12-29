@@ -1,21 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 
-// ignore: must_be_immutable
-class CustomDialogTextFieldContainer extends StatelessWidget {
+class PhoneNumberTextField extends StatelessWidget {
   String textFieldName;
-  String hintTextTextField;
-  TextEditingController controller;
-  CustomDialogTextFieldContainer({
+
+  PhoneNumberTextField({
     Key? key,
     required this.textFieldName,
-    required this.hintTextTextField,
-    required this.controller,
   }) : super(key: key);
+
+  TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +24,24 @@ class CustomDialogTextFieldContainer extends StatelessWidget {
           textFieldName,
           style: AppTextStyles.body18w4.copyWith(color: AppColors.greyTextColor),
         ),
-        SizedBox(
-          height: 5.h,
+        const SizedBox(
+          height: 5,
         ),
-        TextField(
+        TextFormField(
           controller: controller,
           style: AppTextStyles.body18w4.copyWith(
             color: AppColors.grey,
           ),
+          inputFormatters: [
+            MaskTextInputFormatter(
+              mask: '+998 (##) ### ## ##',
+              filter: {"#": RegExp(r'[0-9]')},
+            ),
+          ],
           decoration: InputDecoration(
-            isDense: true,
             filled: true,
             fillColor: AppColors.customContainerColor,
+            isDense: true,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),
               borderSide: const BorderSide(
@@ -45,13 +49,13 @@ class CustomDialogTextFieldContainer extends StatelessWidget {
                 width: 1,
               ),
             ),
-            hintText: hintTextTextField,
+            hintText: '+998 (--)  --- -- --',
             hintStyle: AppTextStyles.body18w4.copyWith(
               color: AppColors.grey,
             ),
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 15,
-              vertical: 5,
+              vertical: 10,
             ),
           ),
         ),

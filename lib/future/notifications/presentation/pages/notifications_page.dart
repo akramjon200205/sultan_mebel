@@ -6,7 +6,7 @@ import 'package:sultan_mebel/common/components/custom_app_bar_action_widget.dart
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 
 class NotificationsPage extends StatefulWidget {
-  const NotificationsPage({super.key});
+  const   NotificationsPage({super.key});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -21,13 +21,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
         backgroundColor: AppColors.textColorBlack,
         centerTitle: true,
         leading: InkWell(
+          borderRadius: BorderRadius.circular(30),
           onTap: () {
             Navigator.pop(context);
           },
           child: const Icon(
             Icons.arrow_back_ios_new,
             color: AppColors.yellow,
-            size: 15,
+            size: 20,
           ),
         ),
         title: Text(
@@ -52,71 +53,74 @@ class _NotificationsPageState extends State<NotificationsPage> {
           ),
         ],
       ),
-      body: Column(children: [
-        const SizedBox(
-          height: 25,
-        ),
-        SizedBox(
-          child: ListView.separated(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            // physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, index) {
-              return Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 15,
-                ),
-                decoration: BoxDecoration(
-                  color: AppColors.textColorBlack,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Column(
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 25,
+            ),
+            SizedBox(
+              child: ListView.separated(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                // physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+                    decoration: BoxDecoration(
+                      color: AppColors.textColorBlack,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Notification Notification",
-                          style: AppTextStyles.body18w5.copyWith(
-                            color: AppColors.white,
+                        Column(
+                          children: [
+                            Text(
+                              "Notification Notification",
+                              style: AppTextStyles.body18w5.copyWith(
+                                color: AppColors.white,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Notification Notification",
+                              style: AppTextStyles.body18w5.copyWith(
+                                color: AppColors.white,
+                              ),
+                            )
+                          ],
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 10),
+                          height: 10,
+                          width: 10,
+                          decoration: const BoxDecoration(
+                            color: AppColors.yellow,
+                            shape: BoxShape.circle,
                           ),
                         ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Notification Notification",
-                          style: AppTextStyles.body18w5.copyWith(
-                            color: AppColors.white,
-                          ),
-                        )
                       ],
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      height: 10,
-                      width: 10,
-                      decoration: const BoxDecoration(
-                        color: AppColors.yellow,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-            separatorBuilder: (context, index) {
-              return const SizedBox(
-                height: 25,
-              );
-            },
-            itemCount: 5,
-          ),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 20,
+                  );
+                },
+                itemCount: 5,
+              ),
+            ),
+          ],
         ),
-      ]),
+      ),
     );
   }
 }

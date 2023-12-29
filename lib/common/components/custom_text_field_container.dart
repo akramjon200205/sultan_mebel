@@ -50,7 +50,7 @@ class CustomTextFieldContainer extends StatelessWidget {
               color: AppColors.grey,
             ),
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 10,
+              horizontal: 15,
               vertical: 10,
             ),
           ),

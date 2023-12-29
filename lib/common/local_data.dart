@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sultan_mebel/common/assets.dart';
-import 'package:sultan_mebel/future/choose_category/presentation/pages/choose_category.dart';
+import 'package:sultan_mebel/future/choose_category/presentation/pages/choosen_category.dart';
 import 'package:sultan_mebel/future/choosen_product/presentation/pages/choosen_product.dart';
 import 'package:sultan_mebel/future/clients/presentation/pages/clients_page.dart';
+import 'package:sultan_mebel/future/clients_managements/presentation/pages/clieants_manegement.dart';
 import 'package:sultan_mebel/future/history/presentation/page/history_page.dart';
 import 'package:sultan_mebel/future/home/presentation/pages/home_page.dart';
 import 'package:sultan_mebel/future/notifications/presentation/pages/notifications_page.dart';
@@ -14,16 +15,15 @@ List<String> bottomIcons = [
   Assets.icons.home,
   Assets.icons.basket,
   Assets.icons.leddingIcon,
-  Assets.icons.summaIcon,
+  // Assets.icons.summaIcon,
   Assets.icons.clients,
   Assets.icons.saleIcon,
 ];
 List<Widget> pages = [
   const HomePage(),
-  const ChooseCategory(),
   const ProductListPage(),
-  // const ChoosenProductPage(),
-  const HistoryPage(),
-  const ClientsPage(),
   const OrdersPage(),
+  const ClientsPage(),
+  // const ClientsManagmentsPage(),
+  const HistoryPage(),
 ];

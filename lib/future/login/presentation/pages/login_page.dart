@@ -60,11 +60,13 @@ class _LoginPageState extends State<LoginPage> {
                   height: 30.h,
                 ),
                 CustomButtonContainer(
+                  height: 48.h,
+                  width: double.infinity,
                   color: AppColors.yellow,
                   textButton: "Kirish",
                   textColor: AppColors.textColorBlack,
                   onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
+                    Navigator.pushReplacement(context, MaterialPageRoute(
                       builder: (context) {
                         return const MainPage();
                       },
@@ -75,6 +77,8 @@ class _LoginPageState extends State<LoginPage> {
                   height: 15.h,
                 ),
                 CustomButtonContainer(
+                  height: 48.h,
+                  width: double.infinity,
                   color: AppColors.textColorBlack,
                   textButton: "Tozalash",
                   textColor: AppColors.white,

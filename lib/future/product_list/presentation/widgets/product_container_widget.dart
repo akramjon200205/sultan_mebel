@@ -20,8 +20,10 @@ class ProductContainerWidget extends StatelessWidget {
     return InkWell(
       onTap: () => function(),
       child: Container(
+        height: 70,
+        width: double.infinity,
         margin: const EdgeInsets.symmetric(horizontal: 10),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20,),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           color: AppColors.textColorBlack,

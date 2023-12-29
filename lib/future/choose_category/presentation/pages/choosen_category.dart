@@ -1,25 +1,21 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
-import 'package:sultan_mebel/common/assets.dart';
-import 'package:sultan_mebel/common/components/custom_app_bar_action_widget.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
-import 'package:sultan_mebel/future/choose_category/presentation/wigets/choose_category_grid_view_widget.dart';
-import 'package:sultan_mebel/future/home/data/local_type_mebel_data.dart';
+import 'package:sultan_mebel/future/choose_category/presentation/wigets/choosen_category_grid_view_widget.dart';
 
-class ChooseCategory extends StatefulWidget {
-  const ChooseCategory({super.key});
+class ChoosenCategory extends StatefulWidget {
+  const ChoosenCategory({super.key});
 
   @override
-  State<ChooseCategory> createState() => _ChooseCategoryState();
+  State<ChoosenCategory> createState() => _ChoosenCategoryState();
 }
 
-class _ChooseCategoryState extends State<ChooseCategory> {
+class _ChoosenCategoryState extends State<ChoosenCategory> {
   TextEditingController showDialogController = TextEditingController();
+  int itemCount = 6;
   List<String> dropListValue = [
     "Umumiy",
     "Oshhona",
@@ -28,11 +24,13 @@ class _ChooseCategoryState extends State<ChooseCategory> {
     "Savdo",
   ];
   String dropValue = "";
+  String dropValue1 = "";
 
   @override
   void initState() {
     super.initState();
     dropValue = dropListValue[0];
+    dropValue1 = dropListValue[0];
   }
 
   Future<void> showMyDialog() async {
@@ -49,7 +47,7 @@ class _ChooseCategoryState extends State<ChooseCategory> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomDialogTextFieldContainer(
-                  textFieldName: "Description",
+                  textFieldName: "Maxsulot nomi",
                   hintTextTextField: "Input something",
                   controller: showDialogController,
                 ),
@@ -57,7 +55,7 @@ class _ChooseCategoryState extends State<ChooseCategory> {
                   height: 10,
                 ),
                 CustomDialogTextFieldContainer(
-                  textFieldName: "Description",
+                  textFieldName: "Narx",
                   hintTextTextField: "Input something",
                   controller: showDialogController,
                 ),
@@ -65,32 +63,85 @@ class _ChooseCategoryState extends State<ChooseCategory> {
                   height: 10,
                 ),
                 CustomDialogTextFieldContainer(
-                  textFieldName: "Description",
+                  textFieldName: "O'lcham",
                   hintTextTextField: "Input something",
                   controller: showDialogController,
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 15,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Kategoriya",
+                      style: AppTextStyles.body18w4.copyWith(
+                        color: AppColors.greyTextColor,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 40,
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: AppColors.textColorBlack,
+                        border: Border.all(color: AppColors.grey, width: 1),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          dropdownColor: AppColors.textColorBlack,
+                          value: dropValue1,
+                          isDense: true,
+                          style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
+                          items: dropListValue.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: AppTextStyles.body18w4.copyWith(
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                          isExpanded: true,
+                          onChanged: (value) {
+                            setState(() {
+                              dropValue1 = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 CustomButtonContainer(
+                  width: double.infinity,
+                  height: 48.h,
                   color: AppColors.yellow,
                   textButton: "Saqlash",
                   textColor: AppColors.textColorBlack,
                   onTap: () {
-                    if (showDialogController.text.isNotEmpty) {
-                      DataTypesMebelList().mebel.add(showDialogController.text);
-                      setState(() {});
-                      log(DataTypesMebelList().mebel.last);
-                      showDialogController.clear();
-                    } else {
-                      Navigator.of(context).pop();
-                    }
+                    setState(() {
+                      itemCount += 1;
+                    });
+                    Navigator.pop(context);
                   },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 CustomButtonContainer(
+                  height: 48.h,
+                  width: double.infinity,
                   color: AppColors.textColorBlack,
                   textButton: "Bekor qilish",
                   textColor: AppColors.white,
@@ -110,7 +161,6 @@ class _ChooseCategoryState extends State<ChooseCategory> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -165,10 +215,10 @@ class _ChooseCategoryState extends State<ChooseCategory> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
-              child: ChooseCategoryGridViewWidget(
+              child: ChoosenCategoryGridViewWidget(
+                itemcount: itemCount,
                 onTap: () {
                   showMyDialog();
-                  setState(() {});
                 },
               ),
             ),
