@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
-import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/future/orders/presentation/widgets/orders_container_widget.dart';
 
 class OrdersPage extends StatefulWidget {

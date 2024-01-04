@@ -49,8 +49,8 @@ class _HomePageState extends State<HomePage> {
                   textColor: AppColors.textColorBlack,
                   onTap: () {
                     setState(() {
+                      DataTypesMebelList.mebel.add(showDialogController.text);
                       itemCount += 1;
-                      showDialogController.clear();
                     });
                     Navigator.of(context).pop();
                   },
@@ -104,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisSpacing: 10,
                 ),
                 itemBuilder: (context, index) {
-                  if (index != itemCount - 1) {
+                  if (index < itemCount - 1) {
                     return InkWell(
                       onTap: () {},
                       child: Container(
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                           borderRadius: BorderRadius.circular(15),
                         ),
                         child: Text(
-                          DataTypesMebelList().mebel[0],
+                          DataTypesMebelList.mebel[index],
                           style: AppTextStyles.body16w5,
                           textAlign: TextAlign.center,
                         ),
@@ -128,6 +128,8 @@ class _HomePageState extends State<HomePage> {
                     return InkWell(
                       onTap: () {
                         showMyDialog();
+                        log(DataTypesMebelList.mebel.last);
+                        showDialogController.clear();
                         setState(() {});
                       },
                       child: const CustomGridViewAddContainerWidget(),

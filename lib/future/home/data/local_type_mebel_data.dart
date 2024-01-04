@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-
 class DataTypesMebelList {
-  DataTypesMebelList();
-  List<String> mebel = [
+  static List<String> mebel = [
     "Oshxona Mebellari",
     "Oshxona Mebellari",
     "Oshxona Mebellari",
@@ -10,4 +7,6 @@ class DataTypesMebelList {
     "Oshxona Mebellari",
     "Oshxona Mebellari",
   ];
+
+  
 }

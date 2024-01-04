@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:sultan_mebel/common/app_colors.dart';
 
+// ignore: must_be_immutable
 class CustomAppBarActionWidget extends StatelessWidget {
   String iconTextAssets;
   Function function;
@@ -32,6 +33,7 @@ class CustomAppBarActionWidget extends StatelessWidget {
           ),
           child: SvgPicture.asset(
             iconTextAssets,
+            // ignore: deprecated_member_use
             color: AppColors.textColorDark,
             fit: BoxFit.scaleDown,
           ),

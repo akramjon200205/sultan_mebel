@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 
+// ignore: must_be_immutable
 class RowTextHistoryWidget extends StatelessWidget {
   String textNomi;
   String subNomi;
