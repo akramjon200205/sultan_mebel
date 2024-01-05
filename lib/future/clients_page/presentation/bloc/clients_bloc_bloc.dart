@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/models/customer_model.dart';
 import 'package:sultan_mebel/core/error/failure.dart';
-import 'package:sultan_mebel/future/client_page/domain/repositories/clients_repositories.dart';
+import 'package:sultan_mebel/future/clients_page/domain/repositories/clients_repositories.dart';
 
 part 'clients_bloc_bloc.freezed.dart';
 part 'clients_bloc_event.dart';

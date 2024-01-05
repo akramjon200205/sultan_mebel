@@ -27,7 +27,11 @@ class ClientsRemoteDataSourceImpl extends ClientsRemoteDataSource {
       ),
     );
 
-    var customerList = (jsonDecode(responce.data) as List).map((e) => CustomerModel.fromJson(e)).toList();
+    var customerList = (jsonDecode(responce.data) as List)
+        .map(
+          (e) => CustomerModel.fromJson(e),
+        )
+        .toList();
 
     return customerList;
   }

@@ -6,8 +6,8 @@ import 'package:sultan_mebel/core/error/exeption.dart';
 
 import 'package:sultan_mebel/core/error/failure.dart';
 import 'package:sultan_mebel/core/platform/network_info.dart';
-import 'package:sultan_mebel/future/client_page/domain/repositories/clients_repositories.dart';
 import 'package:sultan_mebel/future/clients_page/data/data_source/clients_remote_data_source.dart';
+import 'package:sultan_mebel/future/clients_page/domain/repositories/clients_repositories.dart';
 
 class ClientsRepositoriesImpl extends ClientsRepositories {
   final ClientsRemoteDataSourceImpl clientsRemoteDataSourceImpl;
