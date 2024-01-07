@@ -26,31 +26,33 @@ class TextFieldRow extends StatelessWidget {
               color: AppColors.greyTextColor,
             ),
           ),
-          const SizedBox(
-            width: 50,
-          ),
-          Expanded(
+          SizedBox(
+            width: 200,
             child: TextField(
               controller: controller,
               style: AppTextStyles.body14w4.copyWith(
                 color: AppColors.grey,
               ),
               decoration: InputDecoration(
-                  fillColor: AppColors.customContainerColor,
-                  filled: true,
-                  isDense: true,
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: const BorderSide(
-                      color: AppColors.grey,
-                      width: 1,
-                    ),
-                  ),
-                  hintText: "Input something",
-                  hintStyle: AppTextStyles.body14w4.copyWith(
+                fillColor: AppColors.customContainerColor,
+                filled: true,
+                isDense: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
                     color: AppColors.grey,
+                    width: 1,
                   ),
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10)),
+                ),
+                hintText: "Input something",
+                hintStyle: AppTextStyles.body14w4.copyWith(
+                  color: AppColors.grey,
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 10,
+                ),
+              ),
             ),
           ),
         ],

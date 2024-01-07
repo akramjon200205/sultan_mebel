@@ -1,9 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sultan_mebel/core/error/exeption.dart';
-
 import 'package:sultan_mebel/core/error/failure.dart';
 import 'package:sultan_mebel/core/platform/network_info.dart';
 import 'package:sultan_mebel/future/home/data/datasourses/ramote_datasource/category_remote_datasource.dart';

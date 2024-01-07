@@ -5,32 +5,32 @@ import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 
 // ignore: must_be_immutable
-class ProductListDropDownWidget extends StatefulWidget {
+class CartListDropDownWidget extends StatefulWidget {
   String dropValue;
   List<String> dropListValue;
 
-  ProductListDropDownWidget({
+  CartListDropDownWidget({
     Key? key,
     required this.dropValue,
     required this.dropListValue,
   }) : super(key: key);
 
   @override
-  State<ProductListDropDownWidget> createState() => _ProductListDropDownWidgetState();
+  State<CartListDropDownWidget> createState() => _CartListDropDownWidgetState();
 }
 
-class _ProductListDropDownWidgetState extends State<ProductListDropDownWidget> {
+class _CartListDropDownWidgetState extends State<CartListDropDownWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 15, right: 50),
       child: Column(
         children: [
-          ProductDropDownWidget(dropValue: widget.dropValue, dropListValue: widget.dropListValue, text: "Mijoz"),
+          CartDropDownWidget(dropValue: widget.dropValue, dropListValue: widget.dropListValue, text: "Mijoz"),
           const SizedBox(
             height: 20,
           ),
-          ProductDropDownWidget(dropValue: widget.dropValue, dropListValue: widget.dropListValue, text: "Filial"),
+          CartDropDownWidget(dropValue: widget.dropValue, dropListValue: widget.dropListValue, text: "Filial"),
           const SizedBox(
             height: 20,
           ),
@@ -76,11 +76,11 @@ class _ProductListDropDownWidgetState extends State<ProductListDropDownWidget> {
 }
 
 // ignore: must_be_immutable
-class ProductDropDownWidget extends StatefulWidget {
+class CartDropDownWidget extends StatefulWidget {
   String text;
   String dropValue;
   List<String> dropListValue;
-  ProductDropDownWidget({
+  CartDropDownWidget({
     Key? key,
     required this.text,
     required this.dropValue,
@@ -88,10 +88,10 @@ class ProductDropDownWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProductDropDownWidget> createState() => _ProductDropDownWidgetState();
+  State<CartDropDownWidget> createState() => _CartDropDownWidgetState();
 }
 
-class _ProductDropDownWidgetState extends State<ProductDropDownWidget> {
+class _CartDropDownWidgetState extends State<CartDropDownWidget> {
   @override
   Widget build(BuildContext context) {
     return Row(

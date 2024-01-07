@@ -4,17 +4,17 @@ import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/future/product/presentation/pages/product_page.dart';
-import 'package:sultan_mebel/future/product_list/presentation/widgets/products_container_widget.dart';
-import 'package:sultan_mebel/future/product_list/presentation/widgets/products_drop_down_widget.dart';
+import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_container_widget.dart';
+import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_page_drop_down_widget.dart';
 
-class ProductsPage extends StatefulWidget {
-  const ProductsPage({super.key});
+class CartPage extends StatefulWidget {
+  const CartPage({super.key});
 
   @override
-  State<ProductsPage> createState() => _ProductsPageState();
+  State<CartPage> createState() => _CartPageState();
 }
 
-class _ProductsPageState extends State<ProductsPage> {
+class _CartPageState extends State<CartPage> {
   TextEditingController controller = TextEditingController();
   int productItmCount = 5;
   List<String> dropListValue = [
@@ -108,9 +108,23 @@ class _ProductsPageState extends State<ProductsPage> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(
                 height: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15),
+                child: Text(
+                  "Xarid",
+                  style: AppTextStyles.body24w5.copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
               ),
               productItmCount == 0
                   ? Container(
@@ -130,17 +144,8 @@ class _ProductsPageState extends State<ProductsPage> {
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            return ProductContainerWidget(
-                              function: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const ProductPage();
-                                    },
-                                  ),
-                                );
-                              },
+                            return CartContainerWidget(
+                              function: () {},
                               number: 1,
                               controller: controller,
                             );
@@ -157,7 +162,7 @@ class _ProductsPageState extends State<ProductsPage> {
               const SizedBox(
                 height: 30,
               ),
-              ProductListDropDownWidget(dropValue: dropValue, dropListValue: dropListValue),
+              CartListDropDownWidget(dropValue: dropValue, dropListValue: dropListValue),
               const SizedBox(
                 height: 20,
               ),

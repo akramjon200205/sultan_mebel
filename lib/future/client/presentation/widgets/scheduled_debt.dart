@@ -71,14 +71,9 @@ class _ScheduletDebtState extends State<ScheduletDebt> {
                   color: AppColors.greyTextColor,
                 ),
               ),
-              const SizedBox(
-                width: 50,
-              ),
-              Expanded(
+              SizedBox(
+                width: 200,
                 child: TextField(
-                  onTap: () => _selectDate(context).then(
-                    (value) => dateController.text = selectedDate.toString().formatDate(),
-                  ),
                   readOnly: true,
                   controller: dateController,
                   style: AppTextStyles.body14w4.copyWith(
@@ -89,7 +84,7 @@ class _ScheduletDebtState extends State<ScheduletDebt> {
                     filled: true,
                     isDense: true,
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(8),
                       borderSide: const BorderSide(
                         color: AppColors.grey,
                         width: 1,
@@ -99,6 +94,16 @@ class _ScheduletDebtState extends State<ScheduletDebt> {
                     hintStyle: AppTextStyles.body14w4.copyWith(
                       color: AppColors.grey,
                     ),
+                    suffixIcon: InkWell(
+                      onTap: () => _selectDate(context).then(
+                        (value) => dateController.text = selectedDate.toString().formatDate(),
+                      ),
+                      child: const Icon(
+                        Icons.calendar_month,
+                        size: 20,
+                      ),
+                    ),
+                    suffixIconColor: AppColors.white,
                     contentPadding: const EdgeInsets.symmetric(
                       vertical: 10,
                       horizontal: 15,

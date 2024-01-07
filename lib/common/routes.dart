@@ -1,24 +1,38 @@
 import 'package:flutter/cupertino.dart';
 import 'package:sultan_mebel/future/client/presentation/pages/client_page.dart';
 import 'package:sultan_mebel/future/home/presentation/pages/home_page.dart';
+import 'package:sultan_mebel/future/login/presentation/pages/login_page.dart';
 import 'package:sultan_mebel/future/product/presentation/pages/product_page.dart';
-import 'package:sultan_mebel/future/product_list/presentation/pages/products_page.dart';
+import 'package:sultan_mebel/future/cart_page/presentation/pages/cart_page.dart';
+import 'package:sultan_mebel/future/products/presentation/pages/products_page.dart';
 
 class Routes {
-  static const home = '/';
-  static const productsPage = '/productsPage';
+  static const home = '/home';
+  static const login = '/';
+  static const cartPage = '/cartPage';
   static const productPage = '/productPage';
   static const clientPage = "/clientPage";
+  static const productsPage = 'productsPage';
 
   static Route<dynamic> generateRoutes(RouteSettings settings) {
     try {
       final Map<String, dynamic>? args = settings.arguments as Map<String, dynamic>?;
       args ?? <String, dynamic>{};
       switch (settings.name) {
-        case productsPage:
+        case login:
           return CupertinoPageRoute(
             settings: const RouteSettings(),
-            builder: (_) => const ProductsPage(),
+            builder: (_) => const LoginPage(),
+          );
+        case home:
+          return CupertinoPageRoute(
+            settings: const RouteSettings(),
+            builder: (_) => const HomePage(),
+          );
+        case cartPage:
+          return CupertinoPageRoute(
+            settings: const RouteSettings(),
+            builder: (_) => const CartPage(),
           );
         case productPage:
           return CupertinoPageRoute(
@@ -29,6 +43,13 @@ class Routes {
           return CupertinoPageRoute(
             settings: const RouteSettings(),
             builder: (_) => const ClientPage(),
+          );
+        case productsPage:
+          return CupertinoPageRoute(
+            settings: const RouteSettings(),
+            builder: (_) =>  ProductsPage(
+              productsCategoriesName: args?['productName'],
+            ),
           );
 
         default:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/di/di.dart';
 import 'package:sultan_mebel/future/home/presentation/bloc/home_bloc.dart';
 import 'package:sultan_mebel/future/login/presentation/pages/login_page.dart';
@@ -37,10 +37,10 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             home: child,
+            onGenerateRoute: (settings) => Routes.generateRoutes(settings),
           ),
         );
       },
-      child: const LoginPage(),
     );
   }
 }

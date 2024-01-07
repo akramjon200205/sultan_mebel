@@ -2,7 +2,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sultan_mebel/future/home/data/models/category_model.dart';
 
 abstract class CategoryRemoteDataSource {

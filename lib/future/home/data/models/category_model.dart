@@ -1,4 +1,4 @@
-import 'package:sultan_mebel/common/models/products_model.dart';
+import 'package:sultan_mebel/common/models/product_model.dart';
 
 class CategoryModel {
   int? id;

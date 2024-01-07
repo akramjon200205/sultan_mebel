@@ -1,19 +1,29 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
+import 'package:sultan_mebel/common/assets.dart';
+import 'package:sultan_mebel/common/components/custom_app_bar_action_widget.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
+import 'package:sultan_mebel/future/notifications/presentation/pages/notifications_page.dart';
 import 'package:sultan_mebel/future/products/presentation/wigets/products_grid_view_widget.dart';
 
-class ChoosenCategory extends StatefulWidget {
-  const ChoosenCategory({super.key});
+class ProductsPage extends StatefulWidget {
+  String productsCategoriesName;
+  ProductsPage({
+    Key? key,
+    required this.productsCategoriesName,
+  }) : super(key: key);
 
   @override
-  State<ChoosenCategory> createState() => _ChoosenCategoryState();
+  State<ProductsPage> createState() => _ProductsPageState();
 }
 
-class _ChoosenCategoryState extends State<ChoosenCategory> {
+class _ProductsPageState extends State<ProductsPage> {
   TextEditingController showDialogController = TextEditingController();
   int itemCount = 6;
   List<String> dropListValue = [
@@ -161,6 +171,51 @@ class _ChoosenCategoryState extends State<ChoosenCategory> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.textColorBlack,
+        leading: Container(
+          width: 30,
+          height: 30,
+          alignment: Alignment.center,
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: SvgPicture.asset(
+              Assets.icons.arrowBackIcon,
+              height: 20,
+              width: 20,
+              fit: BoxFit.scaleDown,
+            ),
+          ),
+        ),
+        centerTitle: true,
+        title: Text(
+          "Sultan Mebel",
+          style: AppTextStyles.body18w6.copyWith(
+            color: AppColors.white,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        actions: [
+          CustomAppBarActionWidget(
+            iconTextAssets: Assets.icons.iconNotification,
+            function: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) {
+                    return const NotificationsPage();
+                  },
+                ),
+              );
+            },
+          ),
+          const SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -169,45 +224,53 @@ class _ChoosenCategoryState extends State<ChoosenCategory> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 15),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  height: 35,
-                  width: 150,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: AppColors.textColorBlack,
-                    border: Border.all(color: AppColors.grey, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      dropdownColor: AppColors.textColorBlack,
-                      value: dropValue,
-                      isDense: true,
-                      style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
-                      items: dropListValue.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: AppTextStyles.body13w4.copyWith(
-                              color: AppColors.white,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      isExpanded: true,
-                      onChanged: (value) {
-                        setState(() {
-                          dropValue = value!;
-                        });
-                      },
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    widget.productsCategoriesName,
+                    style: AppTextStyles.body20w4.copyWith(
+                      color: AppColors.white,
                     ),
                   ),
-                ),
+                  Container(
+                    height: 35,
+                    width: 150,
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: AppColors.textColorBlack,
+                      border: Border.all(color: AppColors.grey, width: 1),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        dropdownColor: AppColors.textColorBlack,
+                        value: dropValue,
+                        isDense: true,
+                        style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
+                        items: dropListValue.map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: AppTextStyles.body13w4.copyWith(
+                                color: AppColors.white,
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                        isExpanded: true,
+                        onChanged: (value) {
+                          setState(() {
+                            dropValue = value!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(
@@ -215,7 +278,7 @@ class _ChoosenCategoryState extends State<ChoosenCategory> {
             ),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 15),
-              child: ChoosenCategoryGridViewWidget(
+              child: ProductsPageGridViewWidget(
                 itemcount: itemCount,
                 onTap: () {
                   showMyDialog();

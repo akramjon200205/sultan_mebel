@@ -4,7 +4,7 @@ import 'package:sultan_mebel/future/clients_page/presentation/pages/clients_page
 import 'package:sultan_mebel/future/history/presentation/page/history_page.dart';
 import 'package:sultan_mebel/future/home/presentation/pages/home_page.dart';
 import 'package:sultan_mebel/future/orders/presentation/pages/orders_page.dart';
-import 'package:sultan_mebel/future/product_list/presentation/pages/products_page.dart';
+import 'package:sultan_mebel/future/cart_page/presentation/pages/cart_page.dart';
 
 // List<String> menuNames = ['Home', 'Statistics', 'Tips', 'Profile'];
 List<String> bottomIcons = [
@@ -17,7 +17,7 @@ List<String> bottomIcons = [
 ];
 List<Widget> pages = [
   const HomePage(),
-  const ProductsPage(),
+  const CartPage(),
   const OrdersPage(),
   const ClientsPage(),
   // const ClientsManagmentsPage(),
