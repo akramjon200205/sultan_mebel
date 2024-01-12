@@ -33,7 +33,7 @@ class PhoneNumberTextField extends StatelessWidget {
             color: AppColors.grey,
           ),
           inputFormatters: [
-            MaskTextInputFormatter(
+            MaskTextInputFormatter(              
               mask: '+998 (##) ### ## ##',
               filter: {"#": RegExp(r'[0-9]')},
             ),

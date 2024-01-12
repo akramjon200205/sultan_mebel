@@ -8,22 +8,21 @@ import 'package:sultan_mebel/common/app_text_styles.dart';
 class CartContainerWidget extends StatelessWidget {
   int number;
   TextEditingController controller;
-  Function function;
+  // Function function;
   CartContainerWidget({
     Key? key,
     required this.number,
     required this.controller,
-    required this.function,
+    // required this.function,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => function(),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
         height: 190,
         width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 10),
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 20,

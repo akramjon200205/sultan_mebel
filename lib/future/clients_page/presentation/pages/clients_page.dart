@@ -25,75 +25,81 @@ class _ClientsPageState extends State<ClientsPage> {
     return await showDialog(
       context: context,
       builder: (context) {
-        return Dialog(
-          insetPadding: const EdgeInsets.symmetric(horizontal: 16),
-          backgroundColor: AppColors.textColorBlack,
-          alignment: Alignment.center,
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Ma'lumotlar",
-                  style: AppTextStyles.body24w5.copyWith(
-                    color: AppColors.white,
-                  ),
+            padding: const EdgeInsets.only(top: 70),
+            child: Dialog(
+              insetPadding: const EdgeInsets.symmetric(horizontal: 16),
+              backgroundColor: AppColors.textColorBlack,
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Ma'lumotlar",
+                      style: AppTextStyles.body24w5.copyWith(
+                        color: AppColors.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    CustomTextFieldContainer(
+                      textFieldName: "Ism, familiya, otasining ismi",
+                      hintTextTextField: "Input something",
+                      controller: ismFamiliyaController,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomTextFieldContainer(
+                      textFieldName: "Yashash manzili",
+                      hintTextTextField: "Input something",
+                      controller: yashashManziliController,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    PhoneNumberTextField(
+                      textFieldName: "Telefon raqami",
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomButtonContainer(
+                      color: AppColors.yellow,
+                      textButton: "Saqlash",
+                      textColor: AppColors.textColorBlack,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      width: 200,
+                      height: 48,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    CustomButtonContainer(
+                      color: Colors.transparent,
+                      textButton: "Tozalash",
+                      textColor: AppColors.white,
+                      onTap: () {
+                        setState(() {
+                          ismFamiliyaController.clear();
+                          yashashManziliController.clear();
+                          phoneNumberController.clear();
+                        });
+                        Navigator.of(context).pop();
+                      },
+                      width: 200,
+                      height: 48,
+                    ),
+                  ],
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                CustomTextFieldContainer(
-                  textFieldName: "Ism, familiya, otasining ismi",
-                  hintTextTextField: "Input something",
-                  controller: ismFamiliyaController,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomTextFieldContainer(
-                  textFieldName: "Yashash manzili",
-                  hintTextTextField: "Input something",
-                  controller: yashashManziliController,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                PhoneNumberTextField(
-                  textFieldName: "Telefon raqami",
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomButtonContainer(
-                  color: AppColors.yellow,
-                  textButton: "Saqlash",
-                  textColor: AppColors.textColorBlack,
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  width: 200,
-                  height: 48,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                CustomButtonContainer(
-                  color: Colors.transparent,
-                  textButton: "Tozalash",
-                  textColor: AppColors.white,
-                  onTap: () {
-                    setState(() {
-                      ismFamiliyaController.clear();
-                      yashashManziliController.clear();
-                      phoneNumberController.clear();
-                    });
-                    Navigator.of(context).pop();
-                  },
-                  width: 200,
-                  height: 48,
-                ),
-              ],
+              ),
             ),
           ),
         );

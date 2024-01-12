@@ -145,7 +145,7 @@ class _CartPageState extends State<CartPage> {
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
                             return CartContainerWidget(
-                              function: () {},
+                              // function: () {},
                               number: 1,
                               controller: controller,
                             );

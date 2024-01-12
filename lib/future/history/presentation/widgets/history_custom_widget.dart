@@ -12,7 +12,7 @@ class HistoryCustomWidget extends StatelessWidget {
       margin: const EdgeInsets.symmetric(
         horizontal: 15,
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: AppColors.textColorBlack,
@@ -21,23 +21,38 @@ class HistoryCustomWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          RowTextHistoryWidget(textNomi: "Mijoz", subNomi: "Ibrohimov Jamoliddin"),
+          RowTextHistoryWidget(
+            textNomi: "Mijoz",
+            subNomi: "Ibrohimov Jamoliddin",
+          ),
           const SizedBox(
             height: 10,
           ),
-          RowTextHistoryWidget(textNomi: "Sana", subNomi: "12.12.2200"),
+          RowTextHistoryWidget(
+            textNomi: "Sana",
+            subNomi: "12.12.2200",
+          ),
           const SizedBox(
             height: 10,
           ),
-          RowTextHistoryWidget(textNomi: "Vaqt", subNomi: "26:00"),
+          RowTextHistoryWidget(
+            textNomi: "Vaqt",
+            subNomi: "26:00",
+          ),
           const SizedBox(
             height: 10,
           ),
-          RowTextHistoryWidget(textNomi: "Hodim", subNomi: "Ibrohimov Jamoliddin"),
+          RowTextHistoryWidget(
+            textNomi: "Hodim",
+            subNomi: "Ibrohimov Jamoliddin",
+          ),
           const SizedBox(
             height: 10,
           ),
-          RowTextHistoryWidget(textNomi: "Filial", subNomi: "Mars"),
+          RowTextHistoryWidget(
+            textNomi: "Filial",
+            subNomi: "Mars",
+          ),
           const SizedBox(
             height: 15,
           ),
@@ -49,18 +64,17 @@ class HistoryCustomWidget extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-              border: Border.all(
-                width: 1,
-                color: AppColors.grey,
-              ),
-              borderRadius: BorderRadius.circular(10),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: Divider(
+              color: AppColors.greyTextColor,
+              thickness: 1.5,
+              height: 1.5,
+              indent: 0,
+              endIndent: 0,
             ),
+          ),
+          SizedBox(
             child: ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -93,7 +107,7 @@ class HistoryCustomWidget extends StatelessWidget {
               },
               itemCount: 5,
             ),
-          ),
+          )
         ],
       ),
     );
