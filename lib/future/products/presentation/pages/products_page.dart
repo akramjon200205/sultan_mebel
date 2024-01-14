@@ -47,119 +47,125 @@ class _ProductsPageState extends State<ProductsPage> {
     return await showDialog(
       context: context,
       builder: (context) {
-        return Dialog(
-          backgroundColor: AppColors.textColorBlack,
-          alignment: Alignment.center,
-          insetPadding: const EdgeInsets.symmetric(horizontal: 25),
+        return SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CustomDialogTextFieldContainer(
-                  textFieldName: "Maxsulot nomi",
-                  hintTextTextField: "Input something",
-                  controller: showDialogController,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomDialogTextFieldContainer(
-                  textFieldName: "Narx",
-                  hintTextTextField: "Input something",
-                  controller: showDialogController,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                CustomDialogTextFieldContainer(
-                  textFieldName: "O'lcham",
-                  hintTextTextField: "Input something",
-                  controller: showDialogController,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            padding: const EdgeInsets.only(top: 50),
+            child: Dialog(
+              backgroundColor: AppColors.textColorBlack,
+              alignment: Alignment.topCenter,
+              insetPadding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      "Kategoriya",
-                      style: AppTextStyles.body18w4.copyWith(
-                        color: AppColors.greyTextColor,
-                      ),
+                    CustomDialogTextFieldContainer(
+                      textFieldName: "Maxsulot nomi",
+                      hintTextTextField: "Input something",
+                      controller: showDialogController,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      height: 40,
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: AppColors.textColorBlack,
-                        border: Border.all(color: AppColors.grey, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: DropdownButtonHideUnderline(
-                        child: DropdownButton<String>(
-                          dropdownColor: AppColors.textColorBlack,
-                          value: dropValue1,
-                          isDense: true,
-                          style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
-                          items: dropListValue.map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value,
-                                style: AppTextStyles.body18w4.copyWith(
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            );
-                          }).toList(),
-                          isExpanded: true,
-                          onChanged: (value) {
-                            setState(() {
-                              dropValue1 = value!;
-                            });
-                          },
+                    CustomDialogTextFieldContainer(
+                      textFieldName: "Narx",
+                      hintTextTextField: "Input something",
+                      controller: showDialogController,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomDialogTextFieldContainer(
+                      textFieldName: "O'lcham",
+                      hintTextTextField: "Input something",
+                      controller: showDialogController,
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Kategoriya",
+                          style: AppTextStyles.body18w4.copyWith(
+                            color: AppColors.greyTextColor,
+                          ),
                         ),
-                      ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 40,
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: AppColors.textColorBlack,
+                            border: Border.all(color: AppColors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              dropdownColor: AppColors.textColorBlack,
+                              value: dropValue1,
+                              isDense: true,
+                              style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
+                              items: dropListValue.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: AppTextStyles.body18w4.copyWith(
+                                      color: AppColors.white,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              isExpanded: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  dropValue1 = value!;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomButtonContainer(
+                      width: double.infinity,
+                      height: 48.h,
+                      color: AppColors.yellow,
+                      textButton: "Saqlash",
+                      textColor: AppColors.textColorBlack,
+                      onTap: () {
+                        setState(() {
+                          itemCount += 1;
+                        });
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    CustomButtonContainer(
+                      height: 48.h,
+                      width: double.infinity,
+                      color: AppColors.textColorBlack,
+                      textButton: "Bekor qilish",
+                      textColor: AppColors.white,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
                   ],
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomButtonContainer(
-                  width: double.infinity,
-                  height: 48.h,
-                  color: AppColors.yellow,
-                  textButton: "Saqlash",
-                  textColor: AppColors.textColorBlack,
-                  onTap: () {
-                    setState(() {
-                      itemCount += 1;
-                    });
-                    Navigator.pop(context);
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                CustomButtonContainer(
-                  height: 48.h,
-                  width: double.infinity,
-                  color: AppColors.textColorBlack,
-                  textButton: "Bekor qilish",
-                  textColor: AppColors.white,
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         );

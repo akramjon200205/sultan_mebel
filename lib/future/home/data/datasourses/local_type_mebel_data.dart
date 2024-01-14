@@ -4,8 +4,7 @@ class DataTypesMebelList {
     "Oshxona Mebellari",
     "Oshxona Mebellari",
     "Oshxona Mebellari",
-    "Oshxona Mebellari",
-    "Oshxona Mebellari",
+    "Oshxona Mebellari",    
   ];
 
   

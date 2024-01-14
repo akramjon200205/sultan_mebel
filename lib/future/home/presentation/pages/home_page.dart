@@ -1,15 +1,19 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
 import 'package:sultan_mebel/common/components/custom_grid_add_container_widget.dart';
+import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/future/home/data/datasourses/local_type_mebel_data.dart';
 import 'package:sultan_mebel/future/home/presentation/widgets/carusel_slider_widget.dart';
+
+import '../bloc/home_bloc.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,6 +25,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   TextEditingController showDialogController = TextEditingController();
   int itemCount = 6;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<HomeBloc>().add(const HomeEvent());
+  }
 
   Future<void> showMyDialog() async {
     return await showDialog(
@@ -35,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomDialogTextFieldContainer(
-                  textFieldName: "Description",
+                  textFieldName: "Kategoriya nomi",
                   hintTextTextField: "Input something",
                   controller: showDialogController,
                 ),
@@ -49,10 +59,7 @@ class _HomePageState extends State<HomePage> {
                   textButton: "Saqlash",
                   textColor: AppColors.textColorBlack,
                   onTap: () {
-                    setState(() {
-                      DataTypesMebelList.mebel.add(showDialogController.text);
-                      itemCount += 1;
-                    });
+                   context.read<HomeBloc>().add(HomePostEvent(categoryName: showDialogController.text));
                     Navigator.of(context).pop();
                   },
                 ),
@@ -81,73 +88,85 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 30,
-            ),
-            const CarouselSliderWidget(),
-            const SizedBox(
-              height: 25,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: itemCount,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  childAspectRatio: 1.0,
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                ),
-                itemBuilder: (context, index) {
-                  if (index < itemCount - 1) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(
-                          Routes.productsPage,
-                          arguments: {
-                            'productName': DataTypesMebelList.mebel[index],
-                          },
-                        );
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: AppColors.grey,
-                          ),
-                          color: AppColors.yellow,
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Text(
-                          DataTypesMebelList.mebel[index],
-                          style: AppTextStyles.body16w5,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    );
-                  } else {
-                    return InkWell(
-                      onTap: () {
-                        showMyDialog();
-                        log(DataTypesMebelList.mebel.last);
-                        showDialogController.clear();
-                        setState(() {});
-                      },
-                      child: const CustomGridViewAddContainerWidget(),
-                    );
-                  }
-                },
+      body: BlocConsumer<HomeBloc, HomeState>(
+        listener: (context, state) {},
+        builder: (context, state) {
+          if (state.statusCategory == BlocStatus.inProgress ||state.statusPostCategory == BlocStatus.inProgress ) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.white,
               ),
+            );
+          }
+          return SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 30,
+                ),
+                CarouselSliderWidget(),
+                const SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 15),
+                  child: GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: state.categoryList?.length ?? 1,
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 1.0,
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 10,
+                    ),
+                    itemBuilder: (context, index) {
+                      if (state.categoryList != null && index < itemCount - 1) {
+                        return InkWell(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(
+                              Routes.productsPage,
+                              arguments: {
+                                'productName': state.categoryList?[index].name ?? '',
+                              },
+                            );
+                          },
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 1,
+                                color: AppColors.grey,
+                              ),
+                              color: AppColors.yellow,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Text(
+                              state.categoryList?[index].name ?? "",
+                              style: AppTextStyles.body16w5,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      } else {
+                        return InkWell(
+                          onTap: () {
+                            showMyDialog();
+                            log(DataTypesMebelList.mebel.last);
+                            showDialogController.clear();
+                            setState(() {});
+                          },
+                          child: const CustomGridViewAddContainerWidget(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

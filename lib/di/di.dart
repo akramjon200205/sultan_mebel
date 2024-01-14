@@ -8,35 +8,55 @@ import 'package:sultan_mebel/future/home/data/datasourses/ramote_datasource/cate
 import 'package:sultan_mebel/future/home/data/repositories/category_repositories_impl.dart';
 import 'package:sultan_mebel/future/home/domain/repositories/category_repositories.dart';
 import 'package:sultan_mebel/future/home/presentation/bloc/home_bloc.dart';
+import 'package:sultan_mebel/future/login/data/datasource/lodin_remote_datasouce.dart';
+import 'package:sultan_mebel/future/login/data/repositories/login_repositories_impl.dart';
+import 'package:sultan_mebel/future/login/domain/repositories/login_repositories.dart';
+import 'package:sultan_mebel/future/login/presentation/bloc/login_bloc.dart';
 
-final sl = GetIt.instance;
+final di = GetIt.instance;
 
 Future<void> init() async {
   // Blocs
-  sl.registerFactory(
+  di.registerFactory(
     () => HomeBloc(
-      repository: sl(),
+      repository: di(),
+    ),
+  );
+  di.registerFactory(
+    () => LoginBloc(
+      repository: di(),
     ),
   );
 
   // Repositories
-  sl.registerFactory<CategoryRepository>(
+  di.registerFactory<CategoryRepository>(
     () => CategoryRepositoriesImpl(
-      categoryRemoteDataSourceImpl: sl(),
-      networkInfo: sl(),
+      categoryRemoteDataSourceImpl: di(),
+      networkInfo: di(),
+    ),
+  );
+  di.registerFactory<LoginRepository>(
+    () => LoginRepositoryImpl(
+      remoteDataSourceImpl: di(),
+      networkInfo: di(),
     ),
   );
 
   // Datasources
-  sl.registerLazySingleton<CategoryRemoteDataSource>(
+  di.registerLazySingleton<CategoryRemoteDataSourceImpl>(
     () => CategoryRemoteDataSourceImpl(
-      dio: sl(),
+      dio: di(),
+    ),
+  );
+  di.registerLazySingleton<LoginRemoteDataSourceImpl>(
+    () => LoginRemoteDataSourceImpl(
+      dio: di(),
     ),
   );
 
   // Netqork Opstions
   final options = BaseOptions(
-      baseUrl: 'https://mebel-x8oi.onrender.com/',
+      baseUrl: 'https://www.youtube.com/',
       connectTimeout: const Duration(seconds: 50),
       receiveTimeout: const Duration(seconds: 30),
       headers: {
@@ -45,6 +65,10 @@ Future<void> init() async {
       });
 
   Dio dio = Dio(options);
+
+  // dio.interceptors.add();
+
+  di.registerSingleton<Dio>(dio);
 
   dio.interceptors.add(PrettyDioLogger(
       requestHeader: true,
@@ -56,13 +80,12 @@ Future<void> init() async {
       maxWidth: 90));
 
   // Network Info
-  sl.registerLazySingleton(() => InternetConnectionChecker());
-  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
+  di.registerLazySingleton(() => InternetConnectionChecker());
+  di.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(di()));
 
   // Local Data Managment cache
-  final SharedPreferences sharedPreferences =
-      await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => sharedPreferences);
+  final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  di.registerLazySingleton(() => sharedPreferences);
 
   // Local data management
 }

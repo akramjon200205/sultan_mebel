@@ -32,4 +32,21 @@ class CategoryRepositoriesImpl implements CategoryRepository {
       );
     }
   }
+
+  @override
+  Future<Either<Failure, CategoryModel>> postCatgories(String categoryName) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final postCategoryResult = await categoryRemoteDataSourceImpl.postCategories(categoryName);
+        return Right(postCategoryResult);
+      } on DioException catch (e) {
+        final failure = DioExceptions.fromDioError(e);
+        return Left(failure);
+      }
+    } else {
+      return const Left(
+        ConnectionFailure("Connection Failure"),
+      );
+    }
+  }
 }

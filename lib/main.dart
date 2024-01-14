@@ -6,22 +6,21 @@ import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/di/di.dart';
 import 'package:sultan_mebel/future/home/presentation/bloc/home_bloc.dart';
-import 'package:sultan_mebel/future/login/presentation/pages/login_page.dart';
-import 'package:sultan_mebel/future/order_page/presentation/page/order_page.dart';
-import 'package:sultan_mebel/future/selected_orders/presentation/pages/scheluted_orders_page.dart';
+import 'package:sultan_mebel/future/login/presentation/bloc/login_bloc.dart';
 
-import 'di/di.dart' as di;
+import 'di/di.dart' as sl;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await di.init();
+  await sl.init();
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-        statusBarColor: AppColors.textColorBlack,
-        statusBarBrightness: Brightness.dark,
-        statusBarIconBrightness: Brightness.light,
-        systemStatusBarContrastEnforced: true),
+      statusBarColor: AppColors.textColorBlack,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+      systemStatusBarContrastEnforced: true,
+    ),
   );
 
   runApp(const MyApp());
@@ -36,7 +35,8 @@ class MyApp extends StatelessWidget {
       builder: (context, child) {
         return MultiBlocProvider(
           providers: [
-            BlocProvider(create: (_) => sl<HomeBloc>()),
+            BlocProvider(create: (_) => di<HomeBloc>()),
+            BlocProvider(create: (_) => di<LoginBloc>()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

@@ -6,6 +6,7 @@ import 'package:sultan_mebel/future/home/data/models/category_model.dart';
 
 abstract class CategoryRemoteDataSource {
   Future<dynamic> categories();
+  Future<dynamic> postCategories(String categoryName);
 }
 
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
@@ -16,11 +17,16 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future categories() async {
-    final response = await dio.request('/api/v1/categories/',
-        options: Options(method: 'GET', headers: {
+    final response = await dio.request(
+      '/api/v1/categories/',
+      options: Options(
+        method: 'GET',
+        headers: {
           'accept': 'application/json',
           'Content-Type': 'application/json',
-        }));
+        },
+      ),
+    );
 
     var categoryList = (jsonDecode(response.data) as List)
         .map(
@@ -29,5 +35,19 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
         .toList();
 
     return categoryList;
+  }
+
+  @override
+  Future postCategories(String categoryName) async {
+    final response = await dio.request('/api/v1/categories/',
+        options: Options(
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: {"name": categoryName});
+    return CategoryModel.fromJson(response.data);
   }
 }

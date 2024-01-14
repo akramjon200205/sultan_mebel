@@ -4,17 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/assets.dart';
 
-class CarouselSliderWidget extends StatefulWidget {
-  const CarouselSliderWidget({
+class CarouselSliderWidget extends StatelessWidget {
+  CarouselSliderWidget({
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<CarouselSliderWidget> createState() => _CarouselSliderWidgetState();
-}
-
-class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
   CarouselController controller = CarouselController();
+
   @override
   Widget build(BuildContext context) {
     return CarouselSlider.builder(
@@ -46,10 +42,7 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
         enableInfiniteScroll: false,
         enlargeStrategy: CenterPageEnlargeStrategy.height,
         initialPage: 1,
-        autoPlay: false,
-        // autoPlay: true,
-        // autoPlayCurve: Curves.easeIn,
-        // autoPlayInterval: const Duration(seconds: 5),
+        autoPlay: false,       
         scrollPhysics: const BouncingScrollPhysics(),
       ),
     );

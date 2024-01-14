@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:sultan_mebel/core/error/failure.dart';
+import 'package:sultan_mebel/future/home/data/models/error_model.dart';
 
 class ServerException implements Exception {}
 
@@ -25,7 +26,7 @@ class DioExceptions implements Exception {
       case DioExceptionType.badResponse:
         return handleError(
           dioError.response?.statusCode,
-          dioError.response?.data["message"],
+          ErrorCategory.fromJson(dioError.response?.data).detail ?? '',
         );
       case DioExceptionType.connectionError:
         return  const ConnectionFailure("Connection error");

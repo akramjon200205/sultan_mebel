@@ -38,5 +38,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         },
       );
     });
+    on<HomePostEvent>(
+      (event, emit) async {
+        emit(
+          state.copyWith(statusPostCategory: BlocStatus.inProgress),
+        );
+        final result = await repository.postCatgories(event.categoryName);
+        result.fold((l) {
+          if (l is ConnectionFailure) {
+            emit(
+              state.copyWith(statusPostCategory: BlocStatus.connectionFailed, message: l.message),
+            );
+          } else if (l is UnautorizedFailure) {
+            emit(state.copyWith(statusPostCategory: BlocStatus.unAutorized, message: l.message));
+          }
+          emit(state.copyWith(statusPostCategory: BlocStatus.failed, message: l.message));
+        }, (r) {
+          List<CategoryModel> list = [];
+          list.addAll(state.categoryList ?? []);
+          list.add(r);
+          emit(state.copyWith(statusPostCategory: BlocStatus.completed, categoryList: list));
+        });
+      },
+    );
   }
 }

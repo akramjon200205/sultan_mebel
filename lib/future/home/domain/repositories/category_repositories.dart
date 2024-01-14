@@ -4,4 +4,5 @@ import 'package:sultan_mebel/future/home/data/models/category_model.dart';
 
 abstract class CategoryRepository {
   Future<Either<Failure, List<CategoryModel>>> getCatgories();
+  Future<Either<Failure, CategoryModel>> postCatgories(String categoryName);
 }

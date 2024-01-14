@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
-import 'package:sultan_mebel/future/product/presentation/pages/product_page.dart';
 import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_container_widget.dart';
 import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_page_drop_down_widget.dart';
 

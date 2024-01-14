@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$HomeState {
   BlocStatus get statusCategory => throw _privateConstructorUsedError;
+  BlocStatus get statusPostCategory => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   List<CategoryModel>? get categoryList => throw _privateConstructorUsedError;
+  CategoryModel? get categoryModel => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $HomeStateCopyWith<HomeState> get copyWith =>
@@ -32,8 +34,10 @@ abstract class $HomeStateCopyWith<$Res> {
   @useResult
   $Res call(
       {BlocStatus statusCategory,
+      BlocStatus statusPostCategory,
       String? message,
-      List<CategoryModel>? categoryList});
+      List<CategoryModel>? categoryList,
+      CategoryModel? categoryModel});
 }
 
 /// @nodoc
@@ -50,13 +54,19 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @override
   $Res call({
     Object? statusCategory = null,
+    Object? statusPostCategory = null,
     Object? message = freezed,
     Object? categoryList = freezed,
+    Object? categoryModel = freezed,
   }) {
     return _then(_value.copyWith(
       statusCategory: null == statusCategory
           ? _value.statusCategory
           : statusCategory // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostCategory: null == statusPostCategory
+          ? _value.statusPostCategory
+          : statusPostCategory // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -66,6 +76,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
           ? _value.categoryList
           : categoryList // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>?,
+      categoryModel: freezed == categoryModel
+          ? _value.categoryModel
+          : categoryModel // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ) as $Val);
   }
 }
@@ -80,8 +94,10 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {BlocStatus statusCategory,
+      BlocStatus statusPostCategory,
       String? message,
-      List<CategoryModel>? categoryList});
+      List<CategoryModel>? categoryList,
+      CategoryModel? categoryModel});
 }
 
 /// @nodoc
@@ -96,13 +112,19 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? statusCategory = null,
+    Object? statusPostCategory = null,
     Object? message = freezed,
     Object? categoryList = freezed,
+    Object? categoryModel = freezed,
   }) {
     return _then(_$HomeStateImpl(
       statusCategory: null == statusCategory
           ? _value.statusCategory
           : statusCategory // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostCategory: null == statusPostCategory
+          ? _value.statusPostCategory
+          : statusPostCategory // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -112,6 +134,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
           ? _value._categoryList
           : categoryList // ignore: cast_nullable_to_non_nullable
               as List<CategoryModel>?,
+      categoryModel: freezed == categoryModel
+          ? _value.categoryModel
+          : categoryModel // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ));
   }
 }
@@ -121,14 +147,19 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 class _$HomeStateImpl extends _HomeState {
   const _$HomeStateImpl(
       {this.statusCategory = BlocStatus.notInitialized,
+      this.statusPostCategory = BlocStatus.notInitialized,
       this.message,
-      final List<CategoryModel>? categoryList})
+      final List<CategoryModel>? categoryList,
+      this.categoryModel})
       : _categoryList = categoryList,
         super._();
 
   @override
   @JsonKey()
   final BlocStatus statusCategory;
+  @override
+  @JsonKey()
+  final BlocStatus statusPostCategory;
   @override
   final String? message;
   final List<CategoryModel>? _categoryList;
@@ -142,8 +173,11 @@ class _$HomeStateImpl extends _HomeState {
   }
 
   @override
+  final CategoryModel? categoryModel;
+
+  @override
   String toString() {
-    return 'HomeState(statusCategory: $statusCategory, message: $message, categoryList: $categoryList)';
+    return 'HomeState(statusCategory: $statusCategory, statusPostCategory: $statusPostCategory, message: $message, categoryList: $categoryList, categoryModel: $categoryModel)';
   }
 
   @override
@@ -153,14 +187,23 @@ class _$HomeStateImpl extends _HomeState {
             other is _$HomeStateImpl &&
             (identical(other.statusCategory, statusCategory) ||
                 other.statusCategory == statusCategory) &&
+            (identical(other.statusPostCategory, statusPostCategory) ||
+                other.statusPostCategory == statusPostCategory) &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality()
-                .equals(other._categoryList, _categoryList));
+                .equals(other._categoryList, _categoryList) &&
+            (identical(other.categoryModel, categoryModel) ||
+                other.categoryModel == categoryModel));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, statusCategory, message,
-      const DeepCollectionEquality().hash(_categoryList));
+  int get hashCode => Object.hash(
+      runtimeType,
+      statusCategory,
+      statusPostCategory,
+      message,
+      const DeepCollectionEquality().hash(_categoryList),
+      categoryModel);
 
   @JsonKey(ignore: true)
   @override
@@ -172,16 +215,22 @@ class _$HomeStateImpl extends _HomeState {
 abstract class _HomeState extends HomeState {
   const factory _HomeState(
       {final BlocStatus statusCategory,
+      final BlocStatus statusPostCategory,
       final String? message,
-      final List<CategoryModel>? categoryList}) = _$HomeStateImpl;
+      final List<CategoryModel>? categoryList,
+      final CategoryModel? categoryModel}) = _$HomeStateImpl;
   const _HomeState._() : super._();
 
   @override
   BlocStatus get statusCategory;
   @override
+  BlocStatus get statusPostCategory;
+  @override
   String? get message;
   @override
   List<CategoryModel>? get categoryList;
+  @override
+  CategoryModel? get categoryModel;
   @override
   @JsonKey(ignore: true)
   _$$HomeStateImplCopyWith<_$HomeStateImpl> get copyWith =>
