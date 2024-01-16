@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/assets.dart';
+import 'package:sultan_mebel/common/components/app_bar_widget.dart';
 import 'package:sultan_mebel/common/components/custom_app_bar_action_widget.dart';
 import 'package:sultan_mebel/common/local_data.dart';
 import 'package:sultan_mebel/future/notifications/presentation/pages/notifications_page.dart';
@@ -30,70 +31,49 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColors.textColorBlack,
-        centerTitle: true,
-        title: Text(
-          "Sultan Mebel",
-          style: AppTextStyles.body18w6.copyWith(
-            color: AppColors.white,
-            fontWeight: FontWeight.w700,
+    return SafeArea(
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: CustomAppBarWidget(
+            arrowBackIcon: false,
           ),
         ),
-        actions: [
-          CustomAppBarActionWidget(
-            iconTextAssets: Assets.icons.iconNotification,
-            function: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const NotificationsPage();
-                  },
-                ),
-              );
-            },
-          ),
-          const SizedBox(
-            width: 15,
-          ),
-        ],
-      ),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: controller,
-        children: pages,
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: AppColors.textColorBlack,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(
-            bottomIcons.length,
-            (index) => InkWell(
-              borderRadius: BorderRadius.circular(5),
-              onTap: () {
-                nextPage(index);
-              },
-              child: Container(
-                alignment: Alignment.center,
-                height: 40,
-                width: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColors.grey,
-                    width: 1,
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: controller,
+          children: pages,
+        ),
+        bottomNavigationBar: BottomAppBar(
+          color: AppColors.textColorBlack,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(
+              bottomIcons.length,
+              (index) => InkWell(
+                borderRadius: BorderRadius.circular(5),
+                onTap: () {
+                  nextPage(index);
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: AppColors.grey,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(5),
+                    color: AppColors.customContainerColor,
                   ),
-                  borderRadius: BorderRadius.circular(5),
-                  color: AppColors.customContainerColor,
-                ),
-                child: SvgPicture.asset(
-                  bottomIcons[index],
-                  width: 20,
-                  height: 20,
-                  fit: BoxFit.scaleDown,
-                  color: selectedIndex == index ? AppColors.yellow : AppColors.white,
+                  child: SvgPicture.asset(
+                    bottomIcons[index],
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.scaleDown,
+                    color: selectedIndex == index ? AppColors.yellow : AppColors.white,
+                  ),
                 ),
               ),
             ),

@@ -18,6 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeState {
   BlocStatus get statusCategory => throw _privateConstructorUsedError;
   BlocStatus get statusPostCategory => throw _privateConstructorUsedError;
+  BlocStatus get statusGetProductCategory => throw _privateConstructorUsedError;
+  BlocStatus get statusPostProductCategory =>
+      throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   List<CategoryModel>? get categoryList => throw _privateConstructorUsedError;
   CategoryModel? get categoryModel => throw _privateConstructorUsedError;
@@ -35,6 +38,8 @@ abstract class $HomeStateCopyWith<$Res> {
   $Res call(
       {BlocStatus statusCategory,
       BlocStatus statusPostCategory,
+      BlocStatus statusGetProductCategory,
+      BlocStatus statusPostProductCategory,
       String? message,
       List<CategoryModel>? categoryList,
       CategoryModel? categoryModel});
@@ -55,6 +60,8 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? statusCategory = null,
     Object? statusPostCategory = null,
+    Object? statusGetProductCategory = null,
+    Object? statusPostProductCategory = null,
     Object? message = freezed,
     Object? categoryList = freezed,
     Object? categoryModel = freezed,
@@ -67,6 +74,14 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
       statusPostCategory: null == statusPostCategory
           ? _value.statusPostCategory
           : statusPostCategory // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusGetProductCategory: null == statusGetProductCategory
+          ? _value.statusGetProductCategory
+          : statusGetProductCategory // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostProductCategory: null == statusPostProductCategory
+          ? _value.statusPostProductCategory
+          : statusPostProductCategory // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -95,6 +110,8 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   $Res call(
       {BlocStatus statusCategory,
       BlocStatus statusPostCategory,
+      BlocStatus statusGetProductCategory,
+      BlocStatus statusPostProductCategory,
       String? message,
       List<CategoryModel>? categoryList,
       CategoryModel? categoryModel});
@@ -113,6 +130,8 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? statusCategory = null,
     Object? statusPostCategory = null,
+    Object? statusGetProductCategory = null,
+    Object? statusPostProductCategory = null,
     Object? message = freezed,
     Object? categoryList = freezed,
     Object? categoryModel = freezed,
@@ -125,6 +144,14 @@ class __$$HomeStateImplCopyWithImpl<$Res>
       statusPostCategory: null == statusPostCategory
           ? _value.statusPostCategory
           : statusPostCategory // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusGetProductCategory: null == statusGetProductCategory
+          ? _value.statusGetProductCategory
+          : statusGetProductCategory // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostProductCategory: null == statusPostProductCategory
+          ? _value.statusPostProductCategory
+          : statusPostProductCategory // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -148,6 +175,8 @@ class _$HomeStateImpl extends _HomeState {
   const _$HomeStateImpl(
       {this.statusCategory = BlocStatus.notInitialized,
       this.statusPostCategory = BlocStatus.notInitialized,
+      this.statusGetProductCategory = BlocStatus.notInitialized,
+      this.statusPostProductCategory = BlocStatus.notInitialized,
       this.message,
       final List<CategoryModel>? categoryList,
       this.categoryModel})
@@ -160,6 +189,12 @@ class _$HomeStateImpl extends _HomeState {
   @override
   @JsonKey()
   final BlocStatus statusPostCategory;
+  @override
+  @JsonKey()
+  final BlocStatus statusGetProductCategory;
+  @override
+  @JsonKey()
+  final BlocStatus statusPostProductCategory;
   @override
   final String? message;
   final List<CategoryModel>? _categoryList;
@@ -177,7 +212,7 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(statusCategory: $statusCategory, statusPostCategory: $statusPostCategory, message: $message, categoryList: $categoryList, categoryModel: $categoryModel)';
+    return 'HomeState(statusCategory: $statusCategory, statusPostCategory: $statusPostCategory, statusGetProductCategory: $statusGetProductCategory, statusPostProductCategory: $statusPostProductCategory, message: $message, categoryList: $categoryList, categoryModel: $categoryModel)';
   }
 
   @override
@@ -189,6 +224,12 @@ class _$HomeStateImpl extends _HomeState {
                 other.statusCategory == statusCategory) &&
             (identical(other.statusPostCategory, statusPostCategory) ||
                 other.statusPostCategory == statusPostCategory) &&
+            (identical(
+                    other.statusGetProductCategory, statusGetProductCategory) ||
+                other.statusGetProductCategory == statusGetProductCategory) &&
+            (identical(other.statusPostProductCategory,
+                    statusPostProductCategory) ||
+                other.statusPostProductCategory == statusPostProductCategory) &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality()
                 .equals(other._categoryList, _categoryList) &&
@@ -201,6 +242,8 @@ class _$HomeStateImpl extends _HomeState {
       runtimeType,
       statusCategory,
       statusPostCategory,
+      statusGetProductCategory,
+      statusPostProductCategory,
       message,
       const DeepCollectionEquality().hash(_categoryList),
       categoryModel);
@@ -216,6 +259,8 @@ abstract class _HomeState extends HomeState {
   const factory _HomeState(
       {final BlocStatus statusCategory,
       final BlocStatus statusPostCategory,
+      final BlocStatus statusGetProductCategory,
+      final BlocStatus statusPostProductCategory,
       final String? message,
       final List<CategoryModel>? categoryList,
       final CategoryModel? categoryModel}) = _$HomeStateImpl;
@@ -225,6 +270,10 @@ abstract class _HomeState extends HomeState {
   BlocStatus get statusCategory;
   @override
   BlocStatus get statusPostCategory;
+  @override
+  BlocStatus get statusGetProductCategory;
+  @override
+  BlocStatus get statusPostProductCategory;
   @override
   String? get message;
   @override

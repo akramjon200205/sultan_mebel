@@ -1,22 +1,29 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
+import 'dart:developer';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
-import 'package:sultan_mebel/common/assets.dart';
-import 'package:sultan_mebel/common/components/custom_app_bar_action_widget.dart';
+import 'package:sultan_mebel/common/components/app_bar_widget.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
-import 'package:sultan_mebel/future/notifications/presentation/pages/notifications_page.dart';
+import 'package:sultan_mebel/future/home/data/models/category_model.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
 import 'package:sultan_mebel/future/products/presentation/wigets/products_grid_view_widget.dart';
 
+import '../../../../common/enums/bloc_status.dart';
+import '../../../home/presentation/bloc/home_bloc.dart';
+
+// ignore: must_be_immutable
 class ProductsPage extends StatefulWidget {
   String productsCategoriesName;
+  int index;
   ProductsPage({
     Key? key,
     required this.productsCategoriesName,
+    required this.index,
   }) : super(key: key);
 
   @override
@@ -24,26 +31,62 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  TextEditingController showDialogController = TextEditingController();
-  int itemCount = 6;
-  List<String> dropListValue = [
-    "Umumiy",
-    "Oshhona",
-    "Uy",
-    "Mebel",
-    "Savdo",
-  ];
-  String dropValue = "";
-  String dropValue1 = "";
+  TextEditingController productNameController = TextEditingController();
+  TextEditingController productPriceController = TextEditingController();
+  TextEditingController productSizeController = TextEditingController();
+  List<CategoryModel> dropCategory = [];
+  List<String> dropListValue = [];
+  String? dropValue = "";
+  String? dropValue1 = "";
+  Map<int, String> result = {};
+
+  void getCategories(BuildContext context) {
+    dropCategory = context.read<HomeBloc>().state.categoryList ?? [];
+
+    dropListValue.addAll(
+      dropCategory.map((e) => e.name ?? ''),
+    );
+
+    dropListValue = dropListValue.toSet().toList();
+
+    for (var element in dropCategory) {
+      int? id = element.id;
+      String? name = element.name;
+      if (id != null && name != null) {
+        result[id] = name;
+      }
+    }
+    dropValue = result[widget.index] ?? '';
+    log("${result[widget.index]}");
+    dropValue1 = result[widget.index] ?? '';
+    log("${result[widget.index]}");
+
+    if (widget.index >= 0 && widget.index < dropListValue.length) {
+      dropValue = result[widget.index + 1] ?? ''; // Adjust index if necessary
+      dropValue1 = result[widget.index + 1] ?? ''; // Adjust index if necessary
+    } else {
+      // Handle the case where widget.index is out of range
+      dropValue = ''; // Set to a default value or handle accordingly
+      dropValue1 = ''; // Set to a default value or handle accordingly
+    }
+  }
+
+  int findIdByName(String name, Map<int, String> map) {
+    for (var entry in map.entries) {
+      if (entry.value == name) {
+        return entry.key;
+      }
+    }
+    return -1; // Return -1 or any value indicating that the name was not found
+  }
 
   @override
   void initState() {
     super.initState();
-    dropValue = dropListValue[0];
-    dropValue1 = dropListValue[0];
+    getCategories(context);
   }
 
-  Future<void> showMyDialog() async {
+  Future<void> showMyProductsDialog() async {
     return await showDialog(
       context: context,
       builder: (context) {
@@ -63,7 +106,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     CustomDialogTextFieldContainer(
                       textFieldName: "Maxsulot nomi",
                       hintTextTextField: "Input something",
-                      controller: showDialogController,
+                      controller: productNameController,
                     ),
                     const SizedBox(
                       height: 10,
@@ -71,7 +114,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     CustomDialogTextFieldContainer(
                       textFieldName: "Narx",
                       hintTextTextField: "Input something",
-                      controller: showDialogController,
+                      controller: productPriceController,
                     ),
                     const SizedBox(
                       height: 10,
@@ -79,7 +122,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     CustomDialogTextFieldContainer(
                       textFieldName: "O'lcham",
                       hintTextTextField: "Input something",
-                      controller: showDialogController,
+                      controller: productSizeController,
                     ),
                     const SizedBox(
                       height: 15,
@@ -109,7 +152,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               dropdownColor: AppColors.textColorBlack,
-                              value: dropValue1,
+                              value: dropValue1 ?? '',
                               isDense: true,
                               style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
                               items: dropListValue.map<DropdownMenuItem<String>>((String value) {
@@ -145,7 +188,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       textColor: AppColors.textColorBlack,
                       onTap: () {
                         setState(() {
-                          itemCount += 1;
+                          widget.index += 1;
                         });
                         Navigator.pop(context);
                       },
@@ -175,123 +218,105 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.textColorBlack,
-        leading: Container(
-          width: 30,
-          height: 30,
-          alignment: Alignment.center,
-          child: InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: SvgPicture.asset(
-              Assets.icons.arrowBackIcon,
-              height: 20,
-              width: 20,
-              fit: BoxFit.scaleDown,
-            ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: CustomAppBarWidget(
+            arrowBackIcon: true,
           ),
         ),
-        centerTitle: true,
-        title: Text(
-          "Sultan Mebel",
-          style: AppTextStyles.body18w6.copyWith(
-            color: AppColors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        actions: [
-          CustomAppBarActionWidget(
-            iconTextAssets: Assets.icons.iconNotification,
-            function: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) {
-                    return const NotificationsPage();
-                  },
+        body: BlocConsumer<ProductsBloc, ProductsState>(
+          listener: (context, state) {},
+          builder: (context, state) {
+            if (state.statusGetProductCategory == BlocStatus.inProgress ||
+                state.statusGetProductCategory == BlocStatus.inProgress) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.white,
                 ),
               );
-            },
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            }
+
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
                 children: [
-                  Text(
-                    widget.productsCategoriesName,
-                    style: AppTextStyles.body20w4.copyWith(
-                      color: AppColors.white,
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          state.productsList?[0].name ?? '',
+                          style: AppTextStyles.body20w4.copyWith(
+                            color: AppColors.white,
+                          ),
+                        ),
+                        Container(
+                          height: 35,
+                          width: 150,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: AppColors.textColorBlack,
+                            border: Border.all(color: AppColors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              dropdownColor: AppColors.textColorBlack,
+                              value: dropValue ?? '',
+                              isDense: true,
+                              style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
+                              items: dropListValue.map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: AppTextStyles.body13w4.copyWith(
+                                      color: AppColors.white,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              isExpanded: true,
+                              onChanged: (value) {
+                                dropValue = value!;
+                                context.read<ProductsBloc>().add(
+                                      ProductsEvent(
+                                        findIdByName(dropValue!, result),
+                                      ),
+                                    );
+                                // ignore: invalid_use_of_visible_for_testing_member
+                                context.read<ProductsBloc>().emit(state);
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   Container(
-                    height: 35,
-                    width: 150,
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: AppColors.textColorBlack,
-                      border: Border.all(color: AppColors.grey, width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        dropdownColor: AppColors.textColorBlack,
-                        value: dropValue,
-                        isDense: true,
-                        style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
-                        items: dropListValue.map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: AppTextStyles.body13w4.copyWith(
-                                color: AppColors.white,
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                        isExpanded: true,
-                        onChanged: (value) {
-                          setState(() {
-                            dropValue = value!;
-                          });
-                        },
-                      ),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    child: ProductsPageGridViewWidget(
+                      index: widget.index,
+                      onTap: () {
+                        showMyProductsDialog();
+                      },
                     ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 15),
-              child: ProductsPageGridViewWidget(
-                itemcount: itemCount,
-                onTap: () {
-                  showMyDialog();
-                },
-              ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

@@ -3,11 +3,13 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_text_field_container.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
+import 'package:sultan_mebel/common/models/shared_model.dart';
 import 'package:sultan_mebel/future/login/presentation/widgets/background_ellipses.dart';
 import 'package:sultan_mebel/future/main/main_page.dart';
 
@@ -24,7 +26,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  SharedPreferences? sharedPreferences;
 
+  Future sharedPreferencesGet(BuildContext context) async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    if (sharedPreferences?.getString(SharedModel.accessToken) != null) {
+      Navigator.of(context).pushNamed(Routes.mainPage);
+    } else {
+      
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    sharedPreferencesGet(context);
+
+    log("${sharedPreferences?.getString(SharedModel.accessToken)}");
+  }
 
   @override
   Widget build(BuildContext context) {

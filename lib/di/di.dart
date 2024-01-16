@@ -12,6 +12,10 @@ import 'package:sultan_mebel/future/login/data/datasource/lodin_remote_datasouce
 import 'package:sultan_mebel/future/login/data/repositories/login_repositories_impl.dart';
 import 'package:sultan_mebel/future/login/domain/repositories/login_repositories.dart';
 import 'package:sultan_mebel/future/login/presentation/bloc/login_bloc.dart';
+import 'package:sultan_mebel/future/products/data/datasource/products_remote_datasource.dart';
+import 'package:sultan_mebel/future/products/data/repositories/products_repositories_impl.dart';
+import 'package:sultan_mebel/future/products/domain/repositories/products_repositories.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
 
 final di = GetIt.instance;
 
@@ -24,6 +28,11 @@ Future<void> init() async {
   );
   di.registerFactory(
     () => LoginBloc(
+      repository: di(),
+    ),
+  );
+  di.registerFactory(
+    () => ProductsBloc(
       repository: di(),
     ),
   );
@@ -41,6 +50,12 @@ Future<void> init() async {
       networkInfo: di(),
     ),
   );
+  di.registerFactory<ProductRepositories>(
+    () => ProductRepositoriesImpl(
+      productRemoteDataSouceImpl: di(),
+      networkInfo: di(),
+    ),
+  );
 
   // Datasources
   di.registerLazySingleton<CategoryRemoteDataSourceImpl>(
@@ -53,10 +68,15 @@ Future<void> init() async {
       dio: di(),
     ),
   );
+  di.registerLazySingleton<ProductRemoteDataSouceImpl>(
+    () => ProductRemoteDataSouceImpl(
+      dio: di(),
+    ),
+  );
 
   // Netqork Opstions
   final options = BaseOptions(
-      baseUrl: 'https://www.youtube.com/',
+      baseUrl: 'https://mebel-x8oi.onrender.com/',
       connectTimeout: const Duration(seconds: 50),
       receiveTimeout: const Duration(seconds: 30),
       headers: {

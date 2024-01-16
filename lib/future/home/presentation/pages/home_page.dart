@@ -12,6 +12,7 @@ import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/future/home/data/datasourses/local_type_mebel_data.dart';
 import 'package:sultan_mebel/future/home/presentation/widgets/carusel_slider_widget.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
 
 import '../bloc/home_bloc.dart';
 
@@ -24,7 +25,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController showDialogController = TextEditingController();
-  int itemCount = 6;
 
   @override
   void initState() {
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
                   textButton: "Saqlash",
                   textColor: AppColors.textColorBlack,
                   onTap: () {
-                   context.read<HomeBloc>().add(HomePostEvent(categoryName: showDialogController.text));
+                    context.read<HomeBloc>().add(HomePostEvent(categoryName: showDialogController.text));
                     Navigator.of(context).pop();
                   },
                 ),
@@ -91,7 +91,7 @@ class _HomePageState extends State<HomePage> {
       body: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {
-          if (state.statusCategory == BlocStatus.inProgress ||state.statusPostCategory == BlocStatus.inProgress ) {
+          if (state.statusCategory == BlocStatus.inProgress || state.statusPostCategory == BlocStatus.inProgress) {
             return const Center(
               child: CircularProgressIndicator(
                 color: AppColors.white,
@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> {
                   child: GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: state.categoryList?.length ?? 1,
+                    itemCount: (state.categoryList?.length ?? 0) + 1,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 1.0,
                       crossAxisCount: 3,
@@ -122,16 +122,23 @@ class _HomePageState extends State<HomePage> {
                       crossAxisSpacing: 10,
                     ),
                     itemBuilder: (context, index) {
-                      if (state.categoryList != null && index < itemCount - 1) {
+                      if (index != (state.categoryList?.length ?? 0)) {
+                        log(index.toString());
                         return InkWell(
                           onTap: () {
+                            context.read<ProductsBloc>().add(
+                                  ProductsEvent(
+                                    state.categoryList?[index].id,
+                                  ),
+                                );
                             Navigator.of(context).pushNamed(
                               Routes.productsPage,
                               arguments: {
                                 'productName': state.categoryList?[index].name ?? '',
+                                'index': index,
                               },
                             );
-                          },
+                          },  
                           child: Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
