@@ -34,11 +34,15 @@ class _ProductsPageState extends State<ProductsPage> {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   TextEditingController productSizeController = TextEditingController();
+
   List<CategoryModel> dropCategory = [];
   List<String> dropListValue = [];
+  List<Products> productList = [];
+
+  Map<int, String> result = {};
+
   String? dropValue = "";
   String? dropValue1 = "";
-  Map<int, String> result = {};
 
   void getCategories(BuildContext context) {
     dropCategory = context.read<HomeBloc>().state.categoryList ?? [];
@@ -56,10 +60,11 @@ class _ProductsPageState extends State<ProductsPage> {
         result[id] = name;
       }
     }
-    dropValue = result[widget.index] ?? '';
-    log("${result[widget.index]}");
-    dropValue1 = result[widget.index] ?? '';
-    log("${result[widget.index]}");
+    
+    // dropValue = result[widget.index] ?? '';
+    // log("${result[widget.index]}");
+    // dropValue1 = result[widget.index] ?? '';
+    // log("${result[widget.index]}");
 
     if (widget.index >= 0 && widget.index < dropListValue.length) {
       dropValue = result[widget.index + 1] ?? ''; // Adjust index if necessary
@@ -77,7 +82,7 @@ class _ProductsPageState extends State<ProductsPage> {
         return entry.key;
       }
     }
-    return -1; // Return -1 or any value indicating that the name was not found
+    return 0; // Return -1 or any value indicating that the name was not found
   }
 
   @override
@@ -139,41 +144,60 @@ class _ProductsPageState extends State<ProductsPage> {
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          height: 40,
-                          width: double.infinity,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: AppColors.textColorBlack,
-                            border: Border.all(color: AppColors.grey, width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              dropdownColor: AppColors.textColorBlack,
-                              value: dropValue1 ?? '',
-                              isDense: true,
-                              style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
-                              items: dropListValue.map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: AppTextStyles.body18w4.copyWith(
-                                      color: AppColors.white,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                              isExpanded: true,
-                              onChanged: (value) {
-                                setState(() {
-                                  dropValue1 = value!;
-                                });
-                              },
-                            ),
-                          ),
+                        BlocConsumer<ProductsBloc, ProductsState>(
+                          listener: (context, state) {},
+                          builder: (context, state) {
+                            if (state.statusGetProductCategory == BlocStatus.inProgress ||
+                                state.statusGetProductCategory == BlocStatus.inProgress) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColors.white,
+                                ),
+                              );
+                            }
+                            return Container(
+                              height: 40,
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(horizontal: 10),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: AppColors.textColorBlack,
+                                border: Border.all(color: AppColors.grey, width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  dropdownColor: AppColors.textColorBlack,
+                                  value: dropValue1 ?? '',
+                                  isDense: true,
+                                  style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
+                                  items: dropListValue.map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: AppTextStyles.body18w4.copyWith(
+                                          color: AppColors.white,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  isExpanded: true,
+                                  onChanged: (value) {
+                                    dropValue1 = value!;
+                                    setState(() {});
+                                    context.read<ProductsBloc>().add(
+                                          ProductsEvent(
+                                            findIdByName(dropValue!, result),
+                                          ),
+                                        );
+                                    // ignore: invalid_use_of_visible_for_testing_member
+                                    context.read<ProductsBloc>().emit(state);
+                                  },
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -187,10 +211,19 @@ class _ProductsPageState extends State<ProductsPage> {
                       textButton: "Saqlash",
                       textColor: AppColors.textColorBlack,
                       onTap: () {
-                        setState(() {
-                          widget.index += 1;
-                        });
-                        Navigator.pop(context);
+                        int id = findIdByName(dropValue1!, result);
+                        context.read<ProductsBloc>().add(
+                              ProductPostEvent(
+                                productNameController.text,
+                                productSizeController.text,
+                                id,
+                                double.parse(productPriceController.text),
+                              ),
+                            );
+                        productNameController.clear();
+                        productPriceController.clear();
+                        productSizeController.clear();
+                        Navigator.of(context).pop();
                       },
                     ),
                     const SizedBox(
@@ -203,6 +236,9 @@ class _ProductsPageState extends State<ProductsPage> {
                       textButton: "Bekor qilish",
                       textColor: AppColors.white,
                       onTap: () {
+                        productNameController.clear();
+                        productPriceController.clear();
+                        productSizeController.clear();
                         Navigator.of(context).pop();
                       },
                     ),
@@ -231,7 +267,7 @@ class _ProductsPageState extends State<ProductsPage> {
           listener: (context, state) {},
           builder: (context, state) {
             if (state.statusGetProductCategory == BlocStatus.inProgress ||
-                state.statusGetProductCategory == BlocStatus.inProgress) {
+                state.statusPostProductCategory == BlocStatus.inProgress) {
               return const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.white,
@@ -252,7 +288,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          state.productsList?[0].name ?? '',
+                          state.productsList?.name ?? '',
                           style: AppTextStyles.body20w4.copyWith(
                             color: AppColors.white,
                           ),

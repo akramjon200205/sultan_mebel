@@ -31,7 +31,7 @@ class Products {
   int? id;
   List<Images>? images;
   String? name;
-  int? price;
+  double? price;
   String? sizes;
   int? category;
 

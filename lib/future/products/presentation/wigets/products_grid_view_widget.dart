@@ -32,7 +32,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
       listener: (context, state) {},
       builder: (context, state) {
         if (state.statusGetProductCategory == BlocStatus.inProgress ||
-            state.statusGetProductCategory == BlocStatus.inProgress) {
+            state.statusPostProductCategory == BlocStatus.inProgress) {
           return const Center(
             child: CircularProgressIndicator(
               color: AppColors.white,
@@ -42,7 +42,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
         return GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: (state.productsList?[0].products?.length ?? 0) + 1,
+          itemCount: (state.productsList?.products?.length ?? 0) + 1,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 15,
@@ -50,7 +50,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
             childAspectRatio: 1,
           ),
           itemBuilder: (context, index) {
-            if (index != (state.productsList?[0].products?.length ?? 0)) {
+            if (index != (state.productsList?.products?.length ?? 0)) {
               return InkWell(
                 borderRadius: BorderRadius.circular(15),
                 splashColor: Colors.transparent,
@@ -80,14 +80,14 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              state.productsList?[0].products?[index].name ?? '',
+                              state.productsList?.products?[index].name ?? '',
                               style: AppTextStyles.body13w4.copyWith(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
                             Text(
-                              "${state.productsList?[0].products?[index].price ?? 0}",
+                              "${state.productsList?.products?[index].price ?? 0}",
                               style: AppTextStyles.body16w5.copyWith(
                                 color: AppColors.white,
                               ),

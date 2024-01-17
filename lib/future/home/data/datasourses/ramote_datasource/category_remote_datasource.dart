@@ -18,32 +18,34 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
 
   @override
   Future<List<CategoryModel>> categories() async {
-    try {
-      final response = await dio.request(
-        '/api/v1/categories/',
-        options: Options(
-          method: 'GET',
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        ),
-      );
+    final response = await dio.request(
+      '/api/v1/categories/',
+      options: Options(
+        method: 'GET',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+    var categoryList = (response.data as List).map((e) => CategoryModel.fromJson(e)).toList();
+    return categoryList;
+    // try {
 
-      // Print the response data to understand its structure
-      print(response.data);
+    //   // Print the response data to understand its structure
+    //   print(response.data);
 
-      // Check if the decoded JSON is a list
-      if (response.data is List) {
-        var categoryList = (response.data as List).map((e) => CategoryModel.fromJson(e)).toList();
-        return categoryList;
-      } else {
-        throw Exception("Invalid response format. Expected a List, but received ${response.data.runtimeType}.");
-      }
-    } catch (e) {
-      print("Error fetching categories: $e");
-      throw e; // Rethrow the exception to notify the calling code about the error
-    }
+    //   // Check if the decoded JSON is a list
+    //   if (response.data is List) {
+    //     var categoryList = (response.data as List).map((e) => CategoryModel.fromJson(e)).toList();
+    //     return categoryList;
+    //   } else {
+    //     throw Exception("Invalid response format. Expected a List, but received ${response.data.runtimeType}.");
+    //   }
+    // } catch (e) {
+    //   print("Error fetching categories: $e");
+    //   throw e; // Rethrow the exception to notify the calling code about the error
+    // }
   }
 
   @override

@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,7 +10,6 @@ import '../../../home/data/models/category_model.dart';
 part 'products_event.dart';
 part 'products_state.dart';
 part 'products_bloc.freezed.dart';
-
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   ProductRepositories repository;
@@ -37,6 +35,41 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
         },
       );
     });
-   
+    on<ProductPostEvent>((event, emit) async {
+      emit(state.copyWith(statusPostProductCategory: BlocStatus.inProgress));
+      final result = await repository.postProcduct(
+        event.productName,
+        event.productCategoryId,
+        event.productSize,
+        event.productPrice,
+      );
+      result.fold(
+        (l) {
+          if (l is ConnectionFailure) {
+            emit(
+              state.copyWith(statusPostProductCategory: BlocStatus.connectionFailed, message: l.message),
+            );
+          } else if (l is UnautorizedFailure) {
+            emit(state.copyWith(statusPostProductCategory: BlocStatus.unAutorized, message: l.message));
+          }
+          emit(
+            state.copyWith(statusPostProductCategory: BlocStatus.failed, message: l.message),
+          );
+        },
+        (r) {
+          CategoryModel list = CategoryModel();
+          CategoryModel categoryModel = CategoryModel(products: []);
+          categoryModel.products?.addAll(state.productsList?.products ?? []);
+          categoryModel.products?.add(r);
+          list = categoryModel;
+          emit(
+            state.copyWith(
+              statusPostProductCategory: BlocStatus.completed,
+              productsList: list,
+            ),
+          );
+        },
+      );
+    });
   }
 }

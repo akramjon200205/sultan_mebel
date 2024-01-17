@@ -11,3 +11,21 @@ class ProductsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+// ignore: must_be_immutable
+class ProductPostEvent extends ProductsEvent {
+  
+  final String productName;  
+  final String productSize;
+  final int productCategoryId;
+  final double productPrice;
+
+
+
+  ProductPostEvent(
+    this.productName,
+    this.productSize,
+    this.productCategoryId,
+    this.productPrice,
+  ) : super(productCategoryId);
+}

@@ -20,7 +20,7 @@ mixin _$ProductsState {
   BlocStatus get statusPostProductCategory =>
       throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  List<CategoryModel>? get productsList => throw _privateConstructorUsedError;
+  CategoryModel? get productsList => throw _privateConstructorUsedError;
   Products? get productsModel => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -38,7 +38,7 @@ abstract class $ProductsStateCopyWith<$Res> {
       {BlocStatus statusGetProductCategory,
       BlocStatus statusPostProductCategory,
       String? message,
-      List<CategoryModel>? productsList,
+      CategoryModel? productsList,
       Products? productsModel});
 }
 
@@ -77,7 +77,7 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
       productsList: freezed == productsList
           ? _value.productsList
           : productsList // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>?,
+              as CategoryModel?,
       productsModel: freezed == productsModel
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
@@ -98,7 +98,7 @@ abstract class _$$ProductsStateImplCopyWith<$Res>
       {BlocStatus statusGetProductCategory,
       BlocStatus statusPostProductCategory,
       String? message,
-      List<CategoryModel>? productsList,
+      CategoryModel? productsList,
       Products? productsModel});
 }
 
@@ -133,9 +133,9 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
       productsList: freezed == productsList
-          ? _value._productsList
+          ? _value.productsList
           : productsList // ignore: cast_nullable_to_non_nullable
-              as List<CategoryModel>?,
+              as CategoryModel?,
       productsModel: freezed == productsModel
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
@@ -151,10 +151,9 @@ class _$ProductsStateImpl extends _ProductsState {
       {this.statusGetProductCategory = BlocStatus.notInitialized,
       this.statusPostProductCategory = BlocStatus.notInitialized,
       this.message,
-      final List<CategoryModel>? productsList,
+      this.productsList,
       this.productsModel})
-      : _productsList = productsList,
-        super._();
+      : super._();
 
   @override
   @JsonKey()
@@ -164,16 +163,8 @@ class _$ProductsStateImpl extends _ProductsState {
   final BlocStatus statusPostProductCategory;
   @override
   final String? message;
-  final List<CategoryModel>? _productsList;
   @override
-  List<CategoryModel>? get productsList {
-    final value = _productsList;
-    if (value == null) return null;
-    if (_productsList is EqualUnmodifiableListView) return _productsList;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final CategoryModel? productsList;
   @override
   final Products? productsModel;
 
@@ -194,20 +185,15 @@ class _$ProductsStateImpl extends _ProductsState {
                     statusPostProductCategory) ||
                 other.statusPostProductCategory == statusPostProductCategory) &&
             (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality()
-                .equals(other._productsList, _productsList) &&
+            (identical(other.productsList, productsList) ||
+                other.productsList == productsList) &&
             (identical(other.productsModel, productsModel) ||
                 other.productsModel == productsModel));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      statusGetProductCategory,
-      statusPostProductCategory,
-      message,
-      const DeepCollectionEquality().hash(_productsList),
-      productsModel);
+  int get hashCode => Object.hash(runtimeType, statusGetProductCategory,
+      statusPostProductCategory, message, productsList, productsModel);
 
   @JsonKey(ignore: true)
   @override
@@ -221,7 +207,7 @@ abstract class _ProductsState extends ProductsState {
       {final BlocStatus statusGetProductCategory,
       final BlocStatus statusPostProductCategory,
       final String? message,
-      final List<CategoryModel>? productsList,
+      final CategoryModel? productsList,
       final Products? productsModel}) = _$ProductsStateImpl;
   const _ProductsState._() : super._();
 
@@ -232,7 +218,7 @@ abstract class _ProductsState extends ProductsState {
   @override
   String? get message;
   @override
-  List<CategoryModel>? get productsList;
+  CategoryModel? get productsList;
   @override
   Products? get productsModel;
   @override

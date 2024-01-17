@@ -6,7 +6,7 @@ class ProductsState with _$ProductsState {
     @Default(BlocStatus.notInitialized) final BlocStatus statusGetProductCategory,
     @Default(BlocStatus.notInitialized) final BlocStatus statusPostProductCategory,
     final String? message,
-    final List<CategoryModel>? productsList,
+    final CategoryModel? productsList,
     final Products? productsModel,
   }) = _ProductsState;
 

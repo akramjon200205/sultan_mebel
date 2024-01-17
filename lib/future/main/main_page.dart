@@ -20,13 +20,15 @@ class _MainPageState extends State<MainPage> {
   PageController controller = PageController(initialPage: 0);
 
   nextPage(int index) {
-    selectedIndex = index;
-    controller.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
-    setState(() {});
+    if (selectedIndex != index) {
+      selectedIndex = index;
+      controller.animateToPage(
+        index,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
+      setState(() {});
+    }
   }
 
   @override
