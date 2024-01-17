@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/assets.dart';
 
+// ignore: must_be_immutable
 class CarouselSliderWidget extends StatelessWidget {
   CarouselSliderWidget({
     Key? key,

@@ -1,6 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,13 +57,8 @@ class _ProductsPageState extends State<ProductsPage> {
       if (id != null && name != null) {
         result[id] = name;
       }
-    }
+    }  
     
-    // dropValue = result[widget.index] ?? '';
-    // log("${result[widget.index]}");
-    // dropValue1 = result[widget.index] ?? '';
-    // log("${result[widget.index]}");
-
     if (widget.index >= 0 && widget.index < dropListValue.length) {
       dropValue = result[widget.index + 1] ?? ''; // Adjust index if necessary
       dropValue1 = result[widget.index + 1] ?? ''; // Adjust index if necessary

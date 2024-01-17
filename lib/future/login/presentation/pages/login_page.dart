@@ -11,7 +11,6 @@ import 'package:sultan_mebel/common/components/custom_text_field_container.dart'
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/models/shared_model.dart';
 import 'package:sultan_mebel/future/login/presentation/widgets/background_ellipses.dart';
-import 'package:sultan_mebel/future/main/main_page.dart';
 
 import '../../../../common/routes.dart';
 import '../bloc/login_bloc.dart';
@@ -31,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   Future sharedPreferencesGet(BuildContext context) async {
     sharedPreferences = await SharedPreferences.getInstance();
     if (sharedPreferences?.getString(SharedModel.accessToken) != null) {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushNamed(Routes.mainPage);
     } else {
       
