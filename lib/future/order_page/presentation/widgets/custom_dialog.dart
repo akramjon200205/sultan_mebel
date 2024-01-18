@@ -10,10 +10,11 @@ Future<void>  showMyDialog(
 ) async {
   return await showDialog(
     context: context,
+  
     builder: (context) {
       return Padding(
         padding: padding,
-        child: Dialog(
+        child: Dialog(          
           backgroundColor: AppColors.textColorBlack,
           alignment: Alignment.topCenter,
           child: Padding(

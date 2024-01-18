@@ -10,11 +10,12 @@ class CustomDialogTextFieldContainer extends StatelessWidget {
   String textFieldName;
   String hintTextTextField;
   TextEditingController controller;
+  final TextInputType? keyboardType;
   CustomDialogTextFieldContainer({
     Key? key,
     required this.textFieldName,
     required this.hintTextTextField,
-    required this.controller,
+    required this.controller, this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -34,9 +35,11 @@ class CustomDialogTextFieldContainer extends StatelessWidget {
           style: AppTextStyles.body18w4.copyWith(
             color: AppColors.grey,
           ),
+          keyboardType: keyboardType,
           decoration: InputDecoration(
             isDense: true,
             filled: true,
+            
             fillColor: AppColors.customContainerColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),

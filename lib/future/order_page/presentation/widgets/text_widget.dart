@@ -19,10 +19,13 @@ class CustomRowText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(
-          mainText,
+          "$mainText:",
           style: AppTextStyles.body18w5.copyWith(
             color: AppColors.white,
           ),
+        ),
+        const SizedBox(
+          width: 10,
         ),
         Text(
           subText,

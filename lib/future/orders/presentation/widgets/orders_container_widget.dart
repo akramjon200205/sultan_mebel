@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
+import 'package:sultan_mebel/future/order_page/presentation/widgets/text_widget.dart';
 
 class OrdersContainerWidget extends StatelessWidget {
   const OrdersContainerWidget({super.key});
@@ -8,10 +9,10 @@ class OrdersContainerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
+      height: 150,
       padding: const EdgeInsets.symmetric(
         horizontal: 20,
-        vertical: 20,
+        vertical: 15,
       ),
       decoration: BoxDecoration(
         color: AppColors.textColorBlack,
@@ -23,44 +24,29 @@ class OrdersContainerWidget extends StatelessWidget {
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Ibrohimov Jamoliddin",
-                    style: AppTextStyles.body18w5.copyWith(
-                      color: AppColors.white,
-                    ),
-                  ),
-                  Text(
-                    "+998888116646",
-                    style: AppTextStyles.body14w3.copyWith(
-                      color: AppColors.greyTextColor,
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Mars",
-                style: AppTextStyles.body11w4.copyWith(
-                  color: AppColors.white,
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
-            ],
+          CustomRowText(
+            mainText: "Id",
+            subText: "12345",
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: CustomRowText(
+              mainText: "Tugallangan sana",
+              subText: "12.12.2022",
+            ),
+          ),
+          CustomRowText(
+            mainText: "Ibrohimov Jamoliddin",
+            subText: "+99888666372",
+          ),
+          const Spacer(),
           Text(
-            "12.12.2022",
-            style: AppTextStyles.body18w5.copyWith(
+            "Mars",
+            style: AppTextStyles.body11w4.copyWith(
               color: AppColors.white,
+              fontWeight: FontWeight.w300,
             ),
           ),
         ],
@@ -68,3 +54,4 @@ class OrdersContainerWidget extends StatelessWidget {
     );
   }
 }
+  
