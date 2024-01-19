@@ -6,6 +6,7 @@ import 'package:sultan_mebel/core/error/exeption.dart';
 import 'package:sultan_mebel/core/error/failure.dart';
 import 'package:sultan_mebel/core/platform/network_info.dart';
 import 'package:sultan_mebel/future/branch/data/datasource/remote_datasource/branchs_remote_datasource.dart';
+import 'package:sultan_mebel/future/branch/data/models/werehouse_model.dart';
 import 'package:sultan_mebel/future/branch/domain/repositories/branchs_repository.dart';
 
 class BranchsRepositoryImpl implements BranchRepository {
@@ -16,7 +17,7 @@ class BranchsRepositoryImpl implements BranchRepository {
     required this.networkInfo,
   });
   @override
-  Future<Either<Failure, List<BranchModel>>> getBranchs() async {
+  Future<Either<Failure, List<WereHouseModel>>> getBranchs() async {
     if (await networkInfo.isConnected) {
       try {
         final branchsResult = await branchsRemoteDataSourceImpl.getBranchs();

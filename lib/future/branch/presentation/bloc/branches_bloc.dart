@@ -6,6 +6,7 @@ import 'package:sultan_mebel/core/error/failure.dart';
 import 'package:sultan_mebel/future/branch/domain/repositories/branchs_repository.dart';
 
 import '../../../../common/enums/bloc_status.dart';
+import '../../data/models/werehouse_model.dart';
 
 part 'branches_event.dart';
 part 'branches_state.dart';

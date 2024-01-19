@@ -15,7 +15,8 @@ class CustomDialogTextFieldContainer extends StatelessWidget {
     Key? key,
     required this.textFieldName,
     required this.hintTextTextField,
-    required this.controller, this.keyboardType,
+    required this.controller,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -39,7 +40,6 @@ class CustomDialogTextFieldContainer extends StatelessWidget {
           decoration: InputDecoration(
             isDense: true,
             filled: true,
-            
             fillColor: AppColors.customContainerColor,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20),

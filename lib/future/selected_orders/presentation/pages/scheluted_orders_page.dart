@@ -19,6 +19,12 @@ class _SchelutedOrderPageState extends State<SchelutedOrderPage> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: CustomAppBarWidget(
+            arrowBackIcon: false,
+          ),
+        ),
         body: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(

@@ -6,6 +6,8 @@ import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_container_widget.dart';
 import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_page_drop_down_widget.dart';
 
+import '../../../../common/components/app_bar_widget.dart';
+
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
 
@@ -100,6 +102,12 @@ class _CartPageState extends State<CartPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: CustomAppBarWidget(
+          arrowBackIcon: false,
+        ),
+      ),
       body: SizedBox(
         height: size.height,
         width: size.width,
@@ -125,39 +133,29 @@ class _CartPageState extends State<CartPage> {
               const SizedBox(
                 height: 10,
               ),
-              productItmCount == 0
-                  ? Container(
-                      height: 250,
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      child: Text(
-                        "Maxsulotlar tanlanmagan",
-                        style: AppTextStyles.body24w5.copyWith(
-                          color: AppColors.white,
-                        ),
-                      ),
-                    )
-                  : SizedBox(
-                      child: Expanded(
-                        child: ListView.separated(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return CartContainerWidget(
-                              // function: () {},
-                              number: 1,
-                              controller: controller,
-                            );
-                          },
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              height: 25,
-                            );
-                          },
-                          itemCount: productItmCount,
-                        ),
-                      ),
-                    ),
+              // Column(
+              //   children: List.generate(
+              //     productItmCount,
+              //     (index) => CartContainerWidget(number: 1, controller: controller),
+              //   ),
+              // ),
+              ListView.separated(
+                shrinkWrap: true,
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return CartContainerWidget(
+                    number: 1,
+                    controller: controller,
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 25,
+                  );
+                },
+                itemCount: productItmCount,
+              ),
               const SizedBox(
                 height: 30,
               ),

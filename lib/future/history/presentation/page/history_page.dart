@@ -3,6 +3,7 @@ import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/future/history/presentation/widgets/history_custom_widget.dart';
 
+import '../../../../common/components/app_bar_widget.dart';
 import '../widgets/calendar_widget.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -20,6 +21,12 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+        appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: CustomAppBarWidget(
+          arrowBackIcon: false,
+        ),
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(

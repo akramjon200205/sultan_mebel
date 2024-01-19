@@ -183,21 +183,25 @@ class _ProductsDialogWidgetState extends State<ProductsDialogWidget> {
                     textButton: "Saqlash",
                     textColor: AppColors.textColorBlack,
                     onTap: () {
-                      int id = findIdByName(dropValue1!, result);
-                      context.read<ProductsBloc>().add(
-                            ProductPostEvent(
-                              productNameController.text,
-                              productSizeController.text,
-                              id,
-                              double.parse(productPriceController.text),
-                            ),
-                          );
-                      productNameController.clear();
-                      productPriceController.clear();
-                      productSizeController.clear();
-                      // ignore: invalid_use_of_visible_for_testing_member
-                      context.read<ProductsBloc>().emit(state);
-                      Navigator.of(context).pop();
+                      if (productNameController.text.isNotEmpty &&
+                          productPriceController.text.isNotEmpty &&
+                          productSizeController.text.isNotEmpty) {
+                        int id = findIdByName(dropValue1!, result);
+                        context.read<ProductsBloc>().add(
+                              ProductPostEvent(
+                                productNameController.text,
+                                productSizeController.text,
+                                id,
+                                double.parse(productPriceController.text),
+                              ),
+                            );
+                        productNameController.clear();
+                        productPriceController.clear();
+                        productSizeController.clear();
+                        // ignore: invalid_use_of_visible_for_testing_member
+                        context.read<ProductsBloc>().emit(state);
+                        Navigator.of(context).pop();
+                      }
                     },
                   ),
                   const SizedBox(

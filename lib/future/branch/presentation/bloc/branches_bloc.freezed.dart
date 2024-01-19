@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BranchesState {
   BlocStatus get statusBranchs => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  List<BranchModel>? get branchsList => throw _privateConstructorUsedError;
+  List<WereHouseModel>? get branchsList => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $BranchesStateCopyWith<BranchesState> get copyWith =>
@@ -34,7 +34,7 @@ abstract class $BranchesStateCopyWith<$Res> {
   $Res call(
       {BlocStatus statusBranchs,
       String? message,
-      List<BranchModel>? branchsList});
+      List<WereHouseModel>? branchsList});
 }
 
 /// @nodoc
@@ -66,7 +66,7 @@ class _$BranchesStateCopyWithImpl<$Res, $Val extends BranchesState>
       branchsList: freezed == branchsList
           ? _value.branchsList
           : branchsList // ignore: cast_nullable_to_non_nullable
-              as List<BranchModel>?,
+              as List<WereHouseModel>?,
     ) as $Val);
   }
 }
@@ -82,7 +82,7 @@ abstract class _$$BranchesStateImplCopyWith<$Res>
   $Res call(
       {BlocStatus statusBranchs,
       String? message,
-      List<BranchModel>? branchsList});
+      List<WereHouseModel>? branchsList});
 }
 
 /// @nodoc
@@ -112,7 +112,7 @@ class __$$BranchesStateImplCopyWithImpl<$Res>
       branchsList: freezed == branchsList
           ? _value._branchsList
           : branchsList // ignore: cast_nullable_to_non_nullable
-              as List<BranchModel>?,
+              as List<WereHouseModel>?,
     ));
   }
 }
@@ -123,7 +123,7 @@ class _$BranchesStateImpl extends _BranchesState {
   const _$BranchesStateImpl(
       {this.statusBranchs = BlocStatus.notInitialized,
       this.message,
-      final List<BranchModel>? branchsList})
+      final List<WereHouseModel>? branchsList})
       : _branchsList = branchsList,
         super._();
 
@@ -132,9 +132,9 @@ class _$BranchesStateImpl extends _BranchesState {
   final BlocStatus statusBranchs;
   @override
   final String? message;
-  final List<BranchModel>? _branchsList;
+  final List<WereHouseModel>? _branchsList;
   @override
-  List<BranchModel>? get branchsList {
+  List<WereHouseModel>? get branchsList {
     final value = _branchsList;
     if (value == null) return null;
     if (_branchsList is EqualUnmodifiableListView) return _branchsList;
@@ -174,7 +174,7 @@ abstract class _BranchesState extends BranchesState {
   const factory _BranchesState(
       {final BlocStatus statusBranchs,
       final String? message,
-      final List<BranchModel>? branchsList}) = _$BranchesStateImpl;
+      final List<WereHouseModel>? branchsList}) = _$BranchesStateImpl;
   const _BranchesState._() : super._();
 
   @override
@@ -182,7 +182,7 @@ abstract class _BranchesState extends BranchesState {
   @override
   String? get message;
   @override
-  List<BranchModel>? get branchsList;
+  List<WereHouseModel>? get branchsList;
   @override
   @JsonKey(ignore: true)
   _$$BranchesStateImplCopyWith<_$BranchesStateImpl> get copyWith =>

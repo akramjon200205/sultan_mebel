@@ -14,6 +14,7 @@ import 'package:sultan_mebel/future/home/data/datasourses/local_type_mebel_data.
 import 'package:sultan_mebel/future/home/presentation/widgets/carusel_slider_widget.dart';
 import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
 
+import '../../../../common/components/app_bar_widget.dart';
 import '../bloc/home_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -88,6 +89,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+        appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: CustomAppBarWidget(
+          arrowBackIcon: false,
+        ),
+      ),
       body: BlocConsumer<HomeBloc, HomeState>(
         listener: (context, state) {},
         builder: (context, state) {

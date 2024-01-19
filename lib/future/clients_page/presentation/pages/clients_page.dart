@@ -9,6 +9,8 @@ import 'package:sultan_mebel/future/client/presentation/pages/client_page.dart';
 import 'package:sultan_mebel/future/clients_page/presentation/widgets/client_container_widget.dart';
 import 'package:sultan_mebel/future/clients_page/presentation/widgets/phone_number_text_field.dart';
 
+import '../../../../common/components/app_bar_widget.dart';
+
 class ClientsPage extends StatefulWidget {
   const ClientsPage({super.key});
 
@@ -111,6 +113,12 @@ class _ClientsPageState extends State<ClientsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(60),
+        child: CustomAppBarWidget(
+          arrowBackIcon: false,
+        ),
+      ),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 30, bottom: 25),
         itemBuilder: (context, index) {

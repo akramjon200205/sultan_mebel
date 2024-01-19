@@ -5,7 +5,7 @@ import 'package:sultan_mebel/common/assets.dart';
 import 'package:sultan_mebel/common/components/custom_app_bar_action_widget.dart';
 
 class NotificationsPage extends StatefulWidget {
-  const   NotificationsPage({super.key});
+  const NotificationsPage({super.key});
 
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
@@ -37,20 +37,6 @@ class _NotificationsPageState extends State<NotificationsPage> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        actions: [
-          CustomAppBarActionWidget(
-            iconTextAssets: Assets.icons.iconUser,
-            function: () {},
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          CustomAppBarActionWidget(
-            margin: const EdgeInsets.only(right: 15),
-            iconTextAssets: Assets.icons.iconNotification,
-            function: () {},
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),

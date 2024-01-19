@@ -3,8 +3,10 @@ import 'package:dio/dio.dart';
 
 import 'package:sultan_mebel/common/models/branch_model.dart';
 
+import '../../models/werehouse_model.dart';
+
 abstract class BranchsRemoteDataSource {
-  Future<List<BranchModel>> getBranchs();
+  Future<List<WereHouseModel >> getBranchs();
 }
 
 class BranchsRemoteDataSourceImpl implements BranchsRemoteDataSource {
@@ -13,9 +15,9 @@ class BranchsRemoteDataSourceImpl implements BranchsRemoteDataSource {
     required this.dio,
   });
   @override
-  Future<List<BranchModel>> getBranchs() async {
+  Future<List<WereHouseModel>> getBranchs() async {
     final response = await dio.request(
-      'api/v1/branches/',
+      'api/v1/warehouse/',
       options: Options(
         method: 'GET',
         headers: {
@@ -26,7 +28,7 @@ class BranchsRemoteDataSourceImpl implements BranchsRemoteDataSource {
     );
     var branchesList = (response.data as List)
         .map(
-          (e) => BranchModel.fromJson(e),
+          (e) => WereHouseModel.fromJson(e),
         )
         .toList();
     return branchesList;

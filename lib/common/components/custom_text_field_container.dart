@@ -10,11 +10,15 @@ class CustomTextFieldContainer extends StatelessWidget {
   String textFieldName;
   String hintTextTextField;
   TextEditingController controller;
+  bool? validate;
+  final String? errorText;
   CustomTextFieldContainer({
     Key? key,
     required this.textFieldName,
     required this.hintTextTextField,
     required this.controller,
+    this.validate,
+    this.errorText,
   }) : super(key: key);
 
   @override
@@ -49,6 +53,10 @@ class CustomTextFieldContainer extends StatelessWidget {
             hintStyle: AppTextStyles.body18w4.copyWith(
               color: AppColors.grey,
             ),
+            errorStyle: AppTextStyles.body18w4.copyWith(
+              color: AppColors.redColor,
+            ),
+            errorText: validate ?? false ? errorText : null,
             contentPadding: const EdgeInsets.symmetric(
               horizontal: 15,
               vertical: 10,

@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/assets.dart';
+import 'package:sultan_mebel/common/routes.dart';
 
 // ignore: must_be_immutable
 class CustomAppBarWidget extends StatelessWidget {
@@ -45,19 +46,24 @@ class CustomAppBarWidget extends StatelessWidget {
                 color: AppColors.white,
               ),
             ),
-            Container(
-              width: 35,
-              height: 35,
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.yellow,
-              ),
-              child: SvgPicture.asset(
-                Assets.icons.iconNotification,
-                width: 20,
-                height: 20,
-                fit: BoxFit.scaleDown,
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(Routes.notification);
+              },
+              child: Container(
+                width: 35,
+                height: 35,
+                alignment: Alignment.center,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.yellow,
+                ),
+                child: SvgPicture.asset(
+                  Assets.icons.iconNotification,
+                  width: 20,
+                  height: 20,
+                  fit: BoxFit.scaleDown,
+                ),
               ),
             ),
           ],

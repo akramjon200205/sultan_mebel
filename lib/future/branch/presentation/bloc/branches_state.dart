@@ -6,7 +6,7 @@ class BranchesState with _$BranchesState {
     @Default(BlocStatus.notInitialized) final BlocStatus statusBranchs,
       
     final String? message,
-    final List<BranchModel>? branchsList,
+    final List<WereHouseModel>? branchsList,
     
   }) = _BranchesState;
 
