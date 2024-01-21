@@ -45,9 +45,6 @@ class _ProductsPageState extends State<ProductsPage> {
   void initState() {
     super.initState();
     context.read<WarehouseBloc>().add(const WarehouseEvent());
-    //  context.read<ProductsBloc>().add(
-    //       ProductsEvent(widget.id),
-    //     );
     dropValue = context.read<WarehouseBloc>().state.branchNames?[0];
   }
 
@@ -158,9 +155,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                     (element) => element.startsWith(dropValue!),
                                   )]
                                       .id;
-                                });
-                                // ignore: invalid_use_of_visible_for_testing_member
-                                context.read<WarehouseBloc>().emit(state);
+                                });                                
                               },
                             ),
                           ),
@@ -181,17 +176,8 @@ class _ProductsPageState extends State<ProductsPage> {
                           context,
                           widget.id,
                           idWarehouse!,
+                          dropValue!,
                         );
-                        context.read<ProductsBloc>().add(
-                              ProductsEvent(
-                                widget.id,
-                                state
-                                    .branchList?[state.branchNames!.indexWhere(
-                                  (element) => element.startsWith(dropValue!),
-                                )]
-                                    .id,
-                              ),
-                            );
                       },
                     ),
                   ),

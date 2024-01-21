@@ -18,9 +18,9 @@ class ProductsEvent extends Equatable {
 class ProductPostEvent extends ProductsEvent {
   final String productName;
   final String productSize;
-  final int productCategoryId;
+  final int? productCategoryId;
   final double productPrice;
-  final int warehouseId;
+  final int? warehouseId;
 
   ProductPostEvent(
     this.productName,

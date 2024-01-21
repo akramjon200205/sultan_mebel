@@ -30,9 +30,9 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
   @override
   void initState() {
     super.initState();
-    // context.read<ProductsBloc>().add(ProductsOfWarehouseEvent(
-    //       idCategory: widget.index,
-    //       idWarehouse: widget.idWarehouse,
+    // context.read<ProductsBloc>().add(ProductsEvent(
+    //       widget.index,
+    //       widget.idWarehouse,
     //     ));
   }
 

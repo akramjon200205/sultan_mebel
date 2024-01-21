@@ -32,9 +32,7 @@ class _Icons extends _AssetsHolder {
 class _Images extends _AssetsHolder {
   const _Images() : super('assets/images');
 
-  String get ellipseBig => "$basePath/ellipse_big.svg";
-  String get ellipseMiddle => "$basePath/ellipse_middle.svg";
-  String get ellipseSmall => "$basePath/ellipse_small.svg";
   String get mebel => "$basePath/mebel.png";
   String get kitchenPhoto => "$basePath/kitchen_photo.png";
+  String get backgroundCircles => "$basePath/background_circles.png";
 }

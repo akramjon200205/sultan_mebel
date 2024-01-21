@@ -18,27 +18,6 @@ part 'products_bloc.freezed.dart';
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   ProductRepositories repository;
   ProductsBloc({required this.repository}) : super(const ProductsState()) {
-    // on<ProductsEvent>((event, emit) async {
-    //   emit(state.copyWith(statusGetProductCategory: BlocStatus.inProgress));
-    //   final result = await repository.getProductsList(event.id);
-    //   result.fold(
-    //     (l) {
-    //       if (l is ConnectionFailure) {
-    //         emit(
-    //           state.copyWith(statusGetProductCategory: BlocStatus.connectionFailed, message: l.message),
-    //         );
-    //       } else if (l is UnautorizedFailure) {
-    //         emit(state.copyWith(statusGetProductCategory: BlocStatus.unAutorized, message: l.message));
-    //       }
-    //       emit(
-    //         state.copyWith(statusGetProductCategory: BlocStatus.failed, message: l.message),
-    //       );
-    //     },
-    //     (r) {
-    //       emit(state.copyWith(statusGetProductCategory: BlocStatus.completed, productsList: r));
-    //     },
-    //   );
-    // });
     on<ProductsEvent>((event, emit) async {
       emit(state.copyWith(statusGetProductCategory: BlocStatus.inProgress));
       final result = await repository.getProductsOfWarehouse(event.idCategory, event.idWarehouse);
@@ -65,7 +44,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       emit(state.copyWith(statusPostProductCategory: BlocStatus.inProgress));
       final result = await repository.postProcduct(
         event.productName,
-        event.productCategoryId,
+        event.productCategoryId!,
         event.productSize,
         event.productPrice,
       );

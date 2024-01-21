@@ -106,12 +106,10 @@ class _HomePageState extends State<HomePage> {
             );
           }
           return SingleChildScrollView(
+            padding: const EdgeInsets.symmetric().copyWith(top: 30, bottom: 20),
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                const SizedBox(
-                  height: 30,
-                ),
                 CarouselSliderWidget(),
                 const SizedBox(
                   height: 25,
@@ -133,11 +131,6 @@ class _HomePageState extends State<HomePage> {
                         log(index.toString());
                         return InkWell(
                           onTap: () {
-                            // context.read<ProductsBloc>().add(
-                            //       ProductsEvent(
-                            //         state.categoryList?[index].id,
-                            //       ),
-                            //     );
                             Navigator.of(context).pushNamed(
                               Routes.productsPage,
                               arguments: {
