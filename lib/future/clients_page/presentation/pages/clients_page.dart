@@ -111,59 +111,61 @@ class _ClientsPageState extends State<ClientsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: CustomAppBarWidget(
-          arrowBackIcon: false,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.backgroundColor,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(60),
+          child: CustomAppBarWidget(
+            arrowBackIcon: false,
+          ),
         ),
-      ),
-      body: ListView.separated(
-        padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 30, bottom: 25),
-        itemBuilder: (context, index) {
-          if (index < 5) {
-            return InkWell(
+        body: ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 30, bottom: 25),
+          itemBuilder: (context, index) {
+            if (index < 5) {
+              return InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const ClientPage();
+                        },
+                      ),
+                    );
+                  },
+                  child: const ClientContainerWidget());
+            } else {
+              return InkWell(
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const ClientPage();
-                      },
-                    ),
-                  );
+                  showMyDialog();
                 },
-                child: const ClientContainerWidget());
-          } else {
-            return InkWell(
-              onTap: () {
-                showMyDialog();
-              },
-              borderRadius: BorderRadius.circular(15),
-              child: Container(
-                alignment: Alignment.center,
-                height: 70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: AppColors.textColorBlack,
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  alignment: Alignment.center,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    color: AppColors.textColorBlack,
+                  ),
+                  child: SvgPicture.asset(
+                    Assets.icons.plusIcon,
+                    height: 25,
+                    width: 25,
+                    fit: BoxFit.scaleDown,
+                  ),
                 ),
-                child: SvgPicture.asset(
-                  Assets.icons.plusIcon,
-                  height: 25,
-                  width: 25,
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
+              );
+            }
+          },
+          separatorBuilder: (context, index) {
+            return const SizedBox(
+              height: 15,
             );
-          }
-        },
-        separatorBuilder: (context, index) {
-          return const SizedBox(
-            height: 15,
-          );
-        },
-        itemCount: 6,
+          },
+          itemCount: 6,
+        ),
       ),
     );
   }

@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:sultan_mebel/future/home/data/models/category_model.dart';
+import 'package:sultan_mebel/future/products/data/model/branch_model.dart';
+
+import '../../../../common/models/products_model.dart';
+import '../model/warehouse_items_model.dart';
 
 abstract class ProductRemoteDataSource {
-  Future<CategoryModel> getProducts(int? id);
-  Future<Products> postProduct(
+  Future<List<WarehouseItemsModel>> getProducts(int? id);
+  Future<List<WarehouseItemsModel>> getProductsOfWarehouse(int? idCategory, int? idWarehouse);
+  Future<ProductsModel> postProduct(
     String name,
     int categoryId,
     String size,
@@ -17,9 +21,9 @@ class ProductRemoteDataSouceImpl extends ProductRemoteDataSource {
     required this.dio,
   });
   @override
-  Future<CategoryModel> getProducts(int? id) async {
+  Future<List<WarehouseItemsModel>> getProducts(int? id) async {
     try {
-      final response = await dio.request('/api/v1/categories/$id/',
+      final response = await dio.request('/api/v1/warehouse-items/?category_id=$id',
           options: Options(
             method: 'GET',
             headers: {
@@ -28,26 +32,15 @@ class ProductRemoteDataSouceImpl extends ProductRemoteDataSource {
             },
           ));
 
-      var productsList = CategoryModel.fromJson(response.data);
+      var productsList = (response.data as List).map((e) => WarehouseItemsModel.fromJson(e)).toList();
       return productsList;
-      // if (response.data is List) {
-      //   // Case: Response is a List
-      //   var categoryList = (response.data as List).map((e) => CategoryModel.fromJson(e)).toList();
-      //   return categoryList;
-      // } else if (response.data is Map<String, dynamic>) {
-      //   // Case: Response is a single object (Map)
-      //   var categoryModel = CategoryModel.fromJson(response.data);
-      //   return [categoryModel]; // Wrap the single object in a List
-      // } else {
-      //   throw Exception("Invalid response format. Expected a List or Map, but received ${response.data.runtimeType}.");
-      // }
     } catch (e) {
       throw e;
     }
   }
 
   @override
-  Future<Products> postProduct(String name, int categoryId, String size, double price) async {
+  Future<ProductsModel> postProduct(String name, int categoryId, String size, double price) async {
     final responce = await dio.request(
       '/api/v1/products/',
       options: Options(
@@ -64,6 +57,21 @@ class ProductRemoteDataSouceImpl extends ProductRemoteDataSource {
         "category": categoryId,
       },
     );
-    return Products.fromJson(responce.data);
+    return ProductsModel.fromJson(responce.data);
+  }
+
+  @override
+  Future<List<WarehouseItemsModel>> getProductsOfWarehouse(int? idCategory, int? idWarehouse) async {
+    final response = await dio.request('/api/v1/warehouse-items/?warehouse_id=$idWarehouse&category_id=$idCategory',
+        options: Options(
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        ));
+
+    var branchList = (response.data as List).map((e) => WarehouseItemsModel.fromJson(e)).toList();
+    return branchList;
   }
 }

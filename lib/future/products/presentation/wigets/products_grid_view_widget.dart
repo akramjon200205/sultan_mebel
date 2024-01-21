@@ -7,19 +7,19 @@ import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_grid_add_container_widget.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/routes.dart';
-import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
 
-import '../../../home/data/models/category_model.dart';
-import '../../../home/presentation/bloc/home_bloc.dart';
+import '../bloc/products/products_bloc.dart';
 
 // ignore: must_be_immutable
 class ProductsPageGridViewWidget extends StatefulWidget {
   final Function()? onTap;
   final int index;
+  final int idWarehouse;
   const ProductsPageGridViewWidget({
     Key? key,
     required this.onTap,
     required this.index,
+    required this.idWarehouse,
   }) : super(key: key);
 
   @override
@@ -27,7 +27,15 @@ class ProductsPageGridViewWidget extends StatefulWidget {
 }
 
 class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget> {
- 
+  @override
+  void initState() {
+    super.initState();
+    // context.read<ProductsBloc>().add(ProductsOfWarehouseEvent(
+    //       idCategory: widget.index,
+    //       idWarehouse: widget.idWarehouse,
+    //     ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsBloc, ProductsState>(
@@ -44,7 +52,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
         return GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          itemCount: (state.productsList?.products?.length ?? 0) + 1,
+          itemCount: (state.productsList?.length ?? 0) + 1,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 15,
@@ -52,7 +60,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
             childAspectRatio: 1,
           ),
           itemBuilder: (context, index) {
-            if (index != (state.productsList?.products?.length ?? 0)) {
+            if (index != (state.productsList?.length ?? 0)) {
               return InkWell(
                 borderRadius: BorderRadius.circular(15),
                 splashColor: Colors.transparent,
@@ -82,14 +90,14 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              state.productsList?.products?[index].name ?? '',
+                              state.productsList?[index].product?.name ?? '',
                               style: AppTextStyles.body13w4.copyWith(
                                 color: AppColors.white,
                                 fontWeight: FontWeight.w300,
                               ),
                             ),
                             Text(
-                              "${state.productsList?.products?[index].price ?? 0}",
+                              "${state.productsList?[index].amount ?? 0}",
                               style: AppTextStyles.body16w5.copyWith(
                                 color: AppColors.white,
                               ),

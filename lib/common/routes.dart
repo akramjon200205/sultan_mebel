@@ -62,7 +62,7 @@ class Routes {
           return CupertinoPageRoute(
             settings: const RouteSettings(),
             builder: (_) =>  ProductsPage(
-              index: args?['index'],
+              id: args?['index'],
               productsCategoriesName: args?['productName'],
             ),
           );

@@ -1,17 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
 import 'package:sultan_mebel/future/home/presentation/bloc/home_bloc.dart';
-import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
 
 import '../../../../common/components/custom_button_container.dart';
 import '../../../../common/enums/bloc_status.dart';
 import '../../../home/data/models/category_model.dart';
+import '../bloc/products/products_bloc.dart';
 import 'find_by_id_name.dart';
 
-Future<void> showMyProductsDialog(BuildContext context, int index) async {
+Future<void> showMyProductsDialog(BuildContext context, int index, int idWarehouse) async {
   return await showDialog(
     context: context,
     builder: (context) {
@@ -23,7 +27,7 @@ Future<void> showMyProductsDialog(BuildContext context, int index) async {
             backgroundColor: AppColors.textColorBlack,
             alignment: Alignment.topCenter,
             insetPadding: const EdgeInsets.symmetric(horizontal: 25),
-            child: ProductsDialogWidget(index: index),
+            child: ProductsDialogWidget(id: index, idWarehouse: idWarehouse),
           ),
         ),
       );
@@ -32,11 +36,13 @@ Future<void> showMyProductsDialog(BuildContext context, int index) async {
 }
 
 class ProductsDialogWidget extends StatefulWidget {
-  final int index;
+  final int id;
+  final int idWarehouse;
   const ProductsDialogWidget({
-    super.key,
-    required this.index,
-  });
+    Key? key,
+    required this.id,
+    required this.idWarehouse,
+  }) : super(key: key);
 
   @override
   State<ProductsDialogWidget> createState() => _ProductsDialogWidgetState();
@@ -70,11 +76,7 @@ class _ProductsDialogWidgetState extends State<ProductsDialogWidget> {
       }
     }
 
-    if (widget.index >= 0 && widget.index < dropListValue.length) {
-      dropValue1 = result[widget.index + 1] ?? ''; // Adjust index if necessary
-    } else {
-      dropValue1 = ''; // Set to a default value or handle accordingly
-    }
+    dropValue1 = result[widget.id] ?? '';
   }
 
   @override
@@ -118,8 +120,7 @@ class _ProductsDialogWidgetState extends State<ProductsDialogWidget> {
           BlocConsumer<ProductsBloc, ProductsState>(
             listener: (context, state) {},
             builder: (context, state) {
-              if (state.statusGetProductCategory == BlocStatus.inProgress ||
-                  state.statusPostProductCategory == BlocStatus.inProgress) {
+              if (state.statusPostProductCategory == BlocStatus.inProgress) {
                 return const Center(
                   child: CircularProgressIndicator(
                     color: AppColors.white,
@@ -187,19 +188,15 @@ class _ProductsDialogWidgetState extends State<ProductsDialogWidget> {
                           productPriceController.text.isNotEmpty &&
                           productSizeController.text.isNotEmpty) {
                         int id = findIdByName(dropValue1!, result);
+                        log("$id");
                         context.read<ProductsBloc>().add(
-                              ProductPostEvent(
-                                productNameController.text,
-                                productSizeController.text,
-                                id,
-                                double.parse(productPriceController.text),
-                              ),
+                              ProductPostEvent(productNameController.text, productSizeController.text, id,
+                                  double.parse(productPriceController.text), widget.idWarehouse),
                             );
                         productNameController.clear();
                         productPriceController.clear();
                         productSizeController.clear();
-                        // ignore: invalid_use_of_visible_for_testing_member
-                        context.read<ProductsBloc>().emit(state);
+
                         Navigator.of(context).pop();
                       }
                     },

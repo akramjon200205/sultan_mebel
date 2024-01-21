@@ -7,9 +7,10 @@ import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/di/di.dart';
 import 'package:sultan_mebel/future/home/presentation/bloc/home_bloc.dart';
 import 'package:sultan_mebel/future/login/presentation/bloc/login_bloc.dart';
-import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
 import 'di/di.dart' as sl;
+import 'future/products/presentation/bloc/products/products_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,8 +38,9 @@ class MyApp extends StatelessWidget {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (_) => di<HomeBloc>()),
-            BlocProvider(create: (_) => di<LoginBloc>()),            
-            BlocProvider(create: (_) => di<ProductsBloc>()),            
+            BlocProvider(create: (_) => di<LoginBloc>()),
+            BlocProvider(create: (_) => di<ProductsBloc>()),
+            BlocProvider(create: (_) => di<WarehouseBloc>()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -47,7 +49,6 @@ class MyApp extends StatelessWidget {
           ),
         );
       },
-      // child: const SchelutedOrderPage(),
     );
   }
 }

@@ -12,9 +12,9 @@ import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/future/home/data/datasourses/local_type_mebel_data.dart';
 import 'package:sultan_mebel/future/home/presentation/widgets/carusel_slider_widget.dart';
-import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
 
 import '../../../../common/components/app_bar_widget.dart';
+import '../../../products/presentation/bloc/products/products_bloc.dart';
 import '../bloc/home_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -89,7 +89,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-        appBar: PreferredSize(
+      appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: CustomAppBarWidget(
           arrowBackIcon: false,
@@ -133,21 +133,22 @@ class _HomePageState extends State<HomePage> {
                         log(index.toString());
                         return InkWell(
                           onTap: () {
-                            context.read<ProductsBloc>().add(
-                                  ProductsEvent(
-                                    state.categoryList?[index].id,
-                                  ),
-                                );
+                            // context.read<ProductsBloc>().add(
+                            //       ProductsEvent(
+                            //         state.categoryList?[index].id,
+                            //       ),
+                            //     );
                             Navigator.of(context).pushNamed(
                               Routes.productsPage,
                               arguments: {
                                 'productName': state.categoryList?[index].name ?? '',
-                                'index': index,
+                                'index': state.categoryList?[index].id,
                               },
                             );
-                          },  
+                          },
                           child: Container(
                             alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                             decoration: BoxDecoration(
                               border: Border.all(
                                 width: 1,
@@ -158,7 +159,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                             child: Text(
                               state.categoryList?[index].name ?? "",
-                              style: AppTextStyles.body16w5,
+                              style: AppTextStyles.body14w4,
                               textAlign: TextAlign.center,
                             ),
                           ),

@@ -3,9 +3,11 @@ part of 'products_bloc.dart';
 
 // ignore: must_be_immutable
 class ProductsEvent extends Equatable {
-  int? id;
+  int? idCategory;
+  int? idWarehouse;
   ProductsEvent(
-    this.id,
+    this.idCategory,
+    this.idWarehouse,
   );
 
   @override
@@ -14,18 +16,30 @@ class ProductsEvent extends Equatable {
 
 // ignore: must_be_immutable
 class ProductPostEvent extends ProductsEvent {
-  
-  final String productName;  
+  final String productName;
   final String productSize;
   final int productCategoryId;
   final double productPrice;
-
-
+  final int warehouseId;
 
   ProductPostEvent(
     this.productName,
     this.productSize,
     this.productCategoryId,
     this.productPrice,
-  ) : super(productCategoryId);
+    this.warehouseId,
+  ) : super(
+          productCategoryId,
+          warehouseId,
+        );
 }
+
+// ignore: must_be_immutable
+// class ProductsOfWarehouseEvent extends ProductsEvent {
+//   int? idCategory;
+//   int? idWarehouse;
+//   ProductsOfWarehouseEvent({
+//     this.idCategory,
+//     this.idWarehouse,
+//   }) : super(idCategory, idWarehouse);
+// }

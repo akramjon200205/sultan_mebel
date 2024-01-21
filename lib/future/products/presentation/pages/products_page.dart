@@ -1,25 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/app_bar_widget.dart';
-import 'package:sultan_mebel/future/home/data/models/category_model.dart';
-import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
-import 'package:sultan_mebel/future/products/presentation/wigets/products_grid_view_widget.dart';
+import 'package:sultan_mebel/future/products/data/model/branch_model.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/products/products_bloc.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
 import '../../../../common/enums/bloc_status.dart';
-import '../wigets/find_by_id_name.dart';
 import '../wigets/products_diolog_widget.dart';
+import '../wigets/products_grid_view_widget.dart';
 
 // ignore: must_be_immutable
 class ProductsPage extends StatefulWidget {
   String productsCategoriesName;
-  int index;
+  int id;
   ProductsPage({
     Key? key,
     required this.productsCategoriesName,
-    required this.index,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -30,9 +32,10 @@ class _ProductsPageState extends State<ProductsPage> {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   TextEditingController productSizeController = TextEditingController();
+  int? idWarehouse = 0;
 
-  List<CategoryModel> dropCategory = [];
-  List<String> dropListValue = [];
+  List<String> dropListValue = ["Item1", "item2", "Item3"];
+  List<BranchModel> dropCategory = [];
 
   Map<int, String> result = {};
 
@@ -41,6 +44,11 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   void initState() {
     super.initState();
+    context.read<WarehouseBloc>().add(const WarehouseEvent());
+    //  context.read<ProductsBloc>().add(
+    //       ProductsEvent(widget.id),
+    //     );
+    dropValue = context.read<WarehouseBloc>().state.branchNames?[0];
   }
 
   @override
@@ -54,20 +62,33 @@ class _ProductsPageState extends State<ProductsPage> {
             arrowBackIcon: true,
           ),
         ),
-        body: BlocConsumer<ProductsBloc, ProductsState>(
-          listener: (context, state) {},
-          builder: (context, state) {
-            if (state.statusGetProductCategory == BlocStatus.inProgress ||
-                state.statusPostProductCategory == BlocStatus.inProgress) {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.white,
-                ),
-              );
-            }
-            return SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
+        body: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: BlocConsumer<WarehouseBloc, WarehouseState>(
+            listener: (context, state) {
+              if (state.statusGetWarehouse == BlocStatus.completed) {
+                dropValue = context.read<WarehouseBloc>().state.branchNames?[0];
+                context.read<ProductsBloc>().add(
+                      ProductsEvent(
+                        widget.id,
+                        state
+                            .branchList?[state.branchNames!.indexWhere(
+                          (element) => element.startsWith(dropValue!),
+                        )]
+                            .id,
+                      ),
+                    );
+              }
+            },
+            builder: (context, state) {
+              if (state.statusGetWarehouse == BlocStatus.inProgress) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.white,
+                  ),
+                );
+              }
+              return Column(
                 children: [
                   const SizedBox(
                     height: 20,
@@ -78,7 +99,7 @@ class _ProductsPageState extends State<ProductsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          state.productsList?.name ?? '',
+                          widget.productsCategoriesName,
                           style: AppTextStyles.body20w4.copyWith(
                             color: AppColors.white,
                           ),
@@ -96,10 +117,13 @@ class _ProductsPageState extends State<ProductsPage> {
                           child: DropdownButtonHideUnderline(
                             child: DropdownButton<String>(
                               dropdownColor: AppColors.textColorBlack,
-                              value: dropValue ?? '',
+                              value: dropValue,
                               isDense: true,
                               style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
-                              items: dropListValue.map<DropdownMenuItem<String>>((String value) {
+                              items: (state.branchNames ?? dropListValue)
+                                  .toSet()
+                                  .toList()
+                                  .map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(
@@ -112,18 +136,35 @@ class _ProductsPageState extends State<ProductsPage> {
                               }).toList(),
                               isExpanded: true,
                               onChanged: (value) {
-                                dropValue = value!;
+                                setState(() {
+                                  dropValue = value!;
+                                });
+                                log("${state.branchList?[state.branchNames!.indexWhere(
+                                  (element) => element.startsWith(dropValue!),
+                                )].id}");
                                 context.read<ProductsBloc>().add(
                                       ProductsEvent(
-                                        findIdByName(dropValue!, result),
+                                        widget.id,
+                                        state
+                                            .branchList?[state.branchNames!.indexWhere(
+                                          (element) => element.startsWith(dropValue!),
+                                        )]
+                                            .id,
                                       ),
-                                    );                                
+                                    );
+                                setState(() {
+                                  idWarehouse = state
+                                      .branchList?[state.branchNames!.indexWhere(
+                                    (element) => element.startsWith(dropValue!),
+                                  )]
+                                      .id;
+                                });
                                 // ignore: invalid_use_of_visible_for_testing_member
-                                context.read<ProductsBloc>().emit(state);
+                                context.read<WarehouseBloc>().emit(state);
                               },
                             ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -133,16 +174,31 @@ class _ProductsPageState extends State<ProductsPage> {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: ProductsPageGridViewWidget(
-                      index: widget.index,
+                      index: widget.id,
+                      idWarehouse: idWarehouse ?? 0,
                       onTap: () {
-                        showMyProductsDialog(context, widget.index);
+                        showMyProductsDialog(
+                          context,
+                          widget.id,
+                          idWarehouse!,
+                        );
+                        context.read<ProductsBloc>().add(
+                              ProductsEvent(
+                                widget.id,
+                                state
+                                    .branchList?[state.branchNames!.indexWhere(
+                                  (element) => element.startsWith(dropValue!),
+                                )]
+                                    .id,
+                              ),
+                            );
                       },
                     ),
                   ),
                 ],
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

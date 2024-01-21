@@ -13,9 +13,14 @@ import 'package:sultan_mebel/future/login/data/repositories/login_repositories_i
 import 'package:sultan_mebel/future/login/domain/repositories/login_repositories.dart';
 import 'package:sultan_mebel/future/login/presentation/bloc/login_bloc.dart';
 import 'package:sultan_mebel/future/products/data/datasource/products_remote_datasource.dart';
+import 'package:sultan_mebel/future/products/data/datasource/warehouse_remote_datasurce.dart';
 import 'package:sultan_mebel/future/products/data/repositories/products_repositories_impl.dart';
+import 'package:sultan_mebel/future/products/data/repositories/warehouse_repositories_impl.dart';
 import 'package:sultan_mebel/future/products/domain/repositories/products_repositories.dart';
-import 'package:sultan_mebel/future/products/presentation/bloc/products_bloc.dart';
+import 'package:sultan_mebel/future/products/domain/repositories/warehouse_repositories.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
+
+import '../future/products/presentation/bloc/products/products_bloc.dart';
 
 final di = GetIt.instance;
 
@@ -33,6 +38,11 @@ Future<void> init() async {
   );
   di.registerFactory(
     () => ProductsBloc(
+      repository: di(),
+    ),
+  );
+  di.registerFactory(
+    () => WarehouseBloc(
       repository: di(),
     ),
   );
@@ -56,6 +66,12 @@ Future<void> init() async {
       networkInfo: di(),
     ),
   );
+  di.registerFactory<WarehouseRepository>(
+    () => WarehouseRepositoriesImpl(
+      wareHouseRemoteDataSourceImpl: di(),
+      networkInfo: di(),
+    ),
+  );
 
   // Datasources
   di.registerLazySingleton<CategoryRemoteDataSourceImpl>(
@@ -70,6 +86,11 @@ Future<void> init() async {
   );
   di.registerLazySingleton<ProductRemoteDataSouceImpl>(
     () => ProductRemoteDataSouceImpl(
+      dio: di(),
+    ),
+  );
+  di.registerLazySingleton<WareHouseRemoteDataSourceImpl>(
+    () => WareHouseRemoteDataSourceImpl(
       dio: di(),
     ),
   );

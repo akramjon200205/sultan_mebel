@@ -19,9 +19,13 @@ mixin _$ProductsState {
   BlocStatus get statusGetProductCategory => throw _privateConstructorUsedError;
   BlocStatus get statusPostProductCategory =>
       throw _privateConstructorUsedError;
+  BlocStatus get statusGetBranchs => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  CategoryModel? get productsList => throw _privateConstructorUsedError;
-  Products? get productsModel => throw _privateConstructorUsedError;
+  List<WarehouseItemsModel>? get productsList =>
+      throw _privateConstructorUsedError;
+  ProductsModel? get productsModel => throw _privateConstructorUsedError;
+  List<BranchModel>? get branchList => throw _privateConstructorUsedError;
+  List<String>? get branch => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductsStateCopyWith<ProductsState> get copyWith =>
@@ -37,9 +41,12 @@ abstract class $ProductsStateCopyWith<$Res> {
   $Res call(
       {BlocStatus statusGetProductCategory,
       BlocStatus statusPostProductCategory,
+      BlocStatus statusGetBranchs,
       String? message,
-      CategoryModel? productsList,
-      Products? productsModel});
+      List<WarehouseItemsModel>? productsList,
+      ProductsModel? productsModel,
+      List<BranchModel>? branchList,
+      List<String>? branch});
 }
 
 /// @nodoc
@@ -57,9 +64,12 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
   $Res call({
     Object? statusGetProductCategory = null,
     Object? statusPostProductCategory = null,
+    Object? statusGetBranchs = null,
     Object? message = freezed,
     Object? productsList = freezed,
     Object? productsModel = freezed,
+    Object? branchList = freezed,
+    Object? branch = freezed,
   }) {
     return _then(_value.copyWith(
       statusGetProductCategory: null == statusGetProductCategory
@@ -70,6 +80,10 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
           ? _value.statusPostProductCategory
           : statusPostProductCategory // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      statusGetBranchs: null == statusGetBranchs
+          ? _value.statusGetBranchs
+          : statusGetBranchs // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -77,11 +91,19 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
       productsList: freezed == productsList
           ? _value.productsList
           : productsList // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
+              as List<WarehouseItemsModel>?,
       productsModel: freezed == productsModel
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
-              as Products?,
+              as ProductsModel?,
+      branchList: freezed == branchList
+          ? _value.branchList
+          : branchList // ignore: cast_nullable_to_non_nullable
+              as List<BranchModel>?,
+      branch: freezed == branch
+          ? _value.branch
+          : branch // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -97,9 +119,12 @@ abstract class _$$ProductsStateImplCopyWith<$Res>
   $Res call(
       {BlocStatus statusGetProductCategory,
       BlocStatus statusPostProductCategory,
+      BlocStatus statusGetBranchs,
       String? message,
-      CategoryModel? productsList,
-      Products? productsModel});
+      List<WarehouseItemsModel>? productsList,
+      ProductsModel? productsModel,
+      List<BranchModel>? branchList,
+      List<String>? branch});
 }
 
 /// @nodoc
@@ -115,9 +140,12 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? statusGetProductCategory = null,
     Object? statusPostProductCategory = null,
+    Object? statusGetBranchs = null,
     Object? message = freezed,
     Object? productsList = freezed,
     Object? productsModel = freezed,
+    Object? branchList = freezed,
+    Object? branch = freezed,
   }) {
     return _then(_$ProductsStateImpl(
       statusGetProductCategory: null == statusGetProductCategory
@@ -128,18 +156,30 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
           ? _value.statusPostProductCategory
           : statusPostProductCategory // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
+      statusGetBranchs: null == statusGetBranchs
+          ? _value.statusGetBranchs
+          : statusGetBranchs // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
       productsList: freezed == productsList
-          ? _value.productsList
+          ? _value._productsList
           : productsList // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
+              as List<WarehouseItemsModel>?,
       productsModel: freezed == productsModel
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
-              as Products?,
+              as ProductsModel?,
+      branchList: freezed == branchList
+          ? _value._branchList
+          : branchList // ignore: cast_nullable_to_non_nullable
+              as List<BranchModel>?,
+      branch: freezed == branch
+          ? _value._branch
+          : branch // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -150,10 +190,16 @@ class _$ProductsStateImpl extends _ProductsState {
   const _$ProductsStateImpl(
       {this.statusGetProductCategory = BlocStatus.notInitialized,
       this.statusPostProductCategory = BlocStatus.notInitialized,
+      this.statusGetBranchs = BlocStatus.notInitialized,
       this.message,
-      this.productsList,
-      this.productsModel})
-      : super._();
+      final List<WarehouseItemsModel>? productsList,
+      this.productsModel,
+      final List<BranchModel>? branchList,
+      final List<String>? branch})
+      : _productsList = productsList,
+        _branchList = branchList,
+        _branch = branch,
+        super._();
 
   @override
   @JsonKey()
@@ -162,15 +208,45 @@ class _$ProductsStateImpl extends _ProductsState {
   @JsonKey()
   final BlocStatus statusPostProductCategory;
   @override
+  @JsonKey()
+  final BlocStatus statusGetBranchs;
+  @override
   final String? message;
+  final List<WarehouseItemsModel>? _productsList;
   @override
-  final CategoryModel? productsList;
+  List<WarehouseItemsModel>? get productsList {
+    final value = _productsList;
+    if (value == null) return null;
+    if (_productsList is EqualUnmodifiableListView) return _productsList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
-  final Products? productsModel;
+  final ProductsModel? productsModel;
+  final List<BranchModel>? _branchList;
+  @override
+  List<BranchModel>? get branchList {
+    final value = _branchList;
+    if (value == null) return null;
+    if (_branchList is EqualUnmodifiableListView) return _branchList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _branch;
+  @override
+  List<String>? get branch {
+    final value = _branch;
+    if (value == null) return null;
+    if (_branch is EqualUnmodifiableListView) return _branch;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'ProductsState(statusGetProductCategory: $statusGetProductCategory, statusPostProductCategory: $statusPostProductCategory, message: $message, productsList: $productsList, productsModel: $productsModel)';
+    return 'ProductsState(statusGetProductCategory: $statusGetProductCategory, statusPostProductCategory: $statusPostProductCategory, statusGetBranchs: $statusGetBranchs, message: $message, productsList: $productsList, productsModel: $productsModel, branchList: $branchList, branch: $branch)';
   }
 
   @override
@@ -184,16 +260,29 @@ class _$ProductsStateImpl extends _ProductsState {
             (identical(other.statusPostProductCategory,
                     statusPostProductCategory) ||
                 other.statusPostProductCategory == statusPostProductCategory) &&
+            (identical(other.statusGetBranchs, statusGetBranchs) ||
+                other.statusGetBranchs == statusGetBranchs) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.productsList, productsList) ||
-                other.productsList == productsList) &&
+            const DeepCollectionEquality()
+                .equals(other._productsList, _productsList) &&
             (identical(other.productsModel, productsModel) ||
-                other.productsModel == productsModel));
+                other.productsModel == productsModel) &&
+            const DeepCollectionEquality()
+                .equals(other._branchList, _branchList) &&
+            const DeepCollectionEquality().equals(other._branch, _branch));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, statusGetProductCategory,
-      statusPostProductCategory, message, productsList, productsModel);
+  int get hashCode => Object.hash(
+      runtimeType,
+      statusGetProductCategory,
+      statusPostProductCategory,
+      statusGetBranchs,
+      message,
+      const DeepCollectionEquality().hash(_productsList),
+      productsModel,
+      const DeepCollectionEquality().hash(_branchList),
+      const DeepCollectionEquality().hash(_branch));
 
   @JsonKey(ignore: true)
   @override
@@ -206,9 +295,12 @@ abstract class _ProductsState extends ProductsState {
   const factory _ProductsState(
       {final BlocStatus statusGetProductCategory,
       final BlocStatus statusPostProductCategory,
+      final BlocStatus statusGetBranchs,
       final String? message,
-      final CategoryModel? productsList,
-      final Products? productsModel}) = _$ProductsStateImpl;
+      final List<WarehouseItemsModel>? productsList,
+      final ProductsModel? productsModel,
+      final List<BranchModel>? branchList,
+      final List<String>? branch}) = _$ProductsStateImpl;
   const _ProductsState._() : super._();
 
   @override
@@ -216,11 +308,17 @@ abstract class _ProductsState extends ProductsState {
   @override
   BlocStatus get statusPostProductCategory;
   @override
+  BlocStatus get statusGetBranchs;
+  @override
   String? get message;
   @override
-  CategoryModel? get productsList;
+  List<WarehouseItemsModel>? get productsList;
   @override
-  Products? get productsModel;
+  ProductsModel? get productsModel;
+  @override
+  List<BranchModel>? get branchList;
+  @override
+  List<String>? get branch;
   @override
   @JsonKey(ignore: true)
   _$$ProductsStateImplCopyWith<_$ProductsStateImpl> get copyWith =>

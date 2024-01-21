@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
-import 'package:sultan_mebel/common/assets.dart';
-import 'package:sultan_mebel/common/components/custom_app_bar_action_widget.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});

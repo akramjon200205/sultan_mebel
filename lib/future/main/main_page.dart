@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
-import 'package:sultan_mebel/common/components/app_bar_widget.dart';
 import 'package:sultan_mebel/common/local_data.dart';
 
 class MainPage extends StatefulWidget {
