@@ -214,7 +214,6 @@ class _ProductsDialogWidgetState extends State<ProductsDialogWidget> {
                         productNameController.clear();
                         productPriceController.clear();
                         productSizeController.clear();
-
                         Navigator.of(context).pop();
                       }
                     },

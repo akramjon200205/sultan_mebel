@@ -12,6 +12,10 @@ import 'package:sultan_mebel/future/login/data/datasource/lodin_remote_datasouce
 import 'package:sultan_mebel/future/login/data/repositories/login_repositories_impl.dart';
 import 'package:sultan_mebel/future/login/domain/repositories/login_repositories.dart';
 import 'package:sultan_mebel/future/login/presentation/bloc/login_bloc.dart';
+import 'package:sultan_mebel/future/product/data/datasource/remote_datasource/product_remote_datasource.dart';
+import 'package:sultan_mebel/future/product/data/repositories_impl/product_repository_impl.dart';
+import 'package:sultan_mebel/future/product/domain/repositories/product_repository.dart';
+import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
 import 'package:sultan_mebel/future/products/data/datasource/products_remote_datasource.dart';
 import 'package:sultan_mebel/future/products/data/datasource/warehouse_remote_datasurce.dart';
 import 'package:sultan_mebel/future/products/data/repositories/products_repositories_impl.dart';
@@ -27,24 +31,19 @@ final di = GetIt.instance;
 Future<void> init() async {
   // Blocs
   di.registerFactory(
-    () => HomeBloc(
-      repository: di(),
-    ),
+    () => HomeBloc(repository: di()),
   );
   di.registerFactory(
-    () => LoginBloc(
-      repository: di(),
-    ),
+    () => LoginBloc(repository: di()),
   );
   di.registerFactory(
-    () => ProductsBloc(
-      repository: di(),
-    ),
+    () => ProductsBloc(repository: di()),
   );
   di.registerFactory(
-    () => WarehouseBloc(
-      repository: di(),
-    ),
+    () => WarehouseBloc(repository: di()),
+  );
+  di.registerFactory(
+    () => ProductBloc(repository: di()),
   );
 
   // Repositories
@@ -60,7 +59,7 @@ Future<void> init() async {
       networkInfo: di(),
     ),
   );
-  di.registerFactory<ProductRepositories>(
+  di.registerFactory<ProductsRepositories>(
     () => ProductRepositoriesImpl(
       productRemoteDataSouceImpl: di(),
       networkInfo: di(),
@@ -69,6 +68,12 @@ Future<void> init() async {
   di.registerFactory<WarehouseRepository>(
     () => WarehouseRepositoriesImpl(
       wareHouseRemoteDataSourceImpl: di(),
+      networkInfo: di(),
+    ),
+  );
+  di.registerFactory<ProductRepository>(
+    () => ProductRepositoryImpl(
+      productRemoteDatasource: di(),
       networkInfo: di(),
     ),
   );
@@ -84,8 +89,8 @@ Future<void> init() async {
       dio: di(),
     ),
   );
-  di.registerLazySingleton<ProductRemoteDataSouceImpl>(
-    () => ProductRemoteDataSouceImpl(
+  di.registerLazySingleton<ProductsRemoteDataSourceImpl>(
+    () => ProductsRemoteDataSourceImpl(
       dio: di(),
     ),
   );
@@ -94,10 +99,16 @@ Future<void> init() async {
       dio: di(),
     ),
   );
+  di.registerLazySingleton<ProductRemoteDatasourceImpl>(
+    () => ProductRemoteDatasourceImpl(
+      dio: di(),
+    ),
+  );
 
   // Netqork Opstions
   final options = BaseOptions(
-      baseUrl: 'https://karimjonofficial.pythonanywhere.com/',
+      baseUrl: 'https://mebel-x8oi.onrender.com/',
+      // baseUrl: 'https://karimjonofficial.pythonanywhere.com/',
       connectTimeout: const Duration(seconds: 50),
       receiveTimeout: const Duration(seconds: 30),
       headers: {

@@ -30,10 +30,6 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
   @override
   void initState() {
     super.initState();
-    // context.read<ProductsBloc>().add(ProductsEvent(
-    //       widget.index,
-    //       widget.idWarehouse,
-    //     ));
   }
 
   @override
@@ -50,6 +46,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
           );
         }
         return GridView.builder(
+          padding: const EdgeInsets.symmetric().copyWith(bottom: 30),
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: (state.productsList?.length ?? 0) + 1,
@@ -65,7 +62,9 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
                 borderRadius: BorderRadius.circular(15),
                 splashColor: Colors.transparent,
                 onTap: () {
-                  Navigator.of(context).pushNamed(Routes.productPage);
+                  Navigator.of(context).pushNamed(Routes.productPage, arguments:{
+                     'id' : state.productsList?[index].id,
+                  });
                 },
                 child: Container(
                   decoration: BoxDecoration(

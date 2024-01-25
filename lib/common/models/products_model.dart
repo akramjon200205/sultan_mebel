@@ -1,6 +1,3 @@
-
-import 'package:sultan_mebel/common/models/images_model.dart';
-
 class ProductsModel {
   int? id;
   List<Images>? images;
@@ -36,6 +33,28 @@ class ProductsModel {
     data['price'] = this.price;
     data['sizes'] = this.sizes;
     data['category'] = this.category;
+    return data;
+  }
+}
+
+class Images {
+  int? id;
+  int? product;
+  int? image;
+
+  Images({this.id, this.product, this.image});
+
+  Images.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    product = json['product'];
+    image = json['image'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['product'] = this.product;
+    data['image'] = this.image;
     return data;
   }
 }

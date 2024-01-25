@@ -11,8 +11,8 @@ import 'package:sultan_mebel/future/products/domain/repositories/products_reposi
 
 import '../../../../common/models/products_model.dart';
 
-class ProductRepositoriesImpl implements ProductRepositories {
-  final ProductRemoteDataSouceImpl productRemoteDataSouceImpl;
+class ProductRepositoriesImpl implements ProductsRepositories {
+  final ProductsRemoteDataSourceImpl productRemoteDataSouceImpl;
   final NetworkInfo networkInfo;
   ProductRepositoriesImpl({
     required this.productRemoteDataSouceImpl,
@@ -39,18 +39,18 @@ class ProductRepositoriesImpl implements ProductRepositories {
   @override
   Future<Either<Failure, ProductsModel>> postProcduct(String name, int categoryId, String size, double price) async {
     if (await networkInfo.isConnected) {
-      try {
-        final prostProductResult = await productRemoteDataSouceImpl.postProduct(name, categoryId, size, price);
-        return Right(prostProductResult);
-      } on DioException catch (e) {
-        final failure = DioExceptions.fromDioError(e);
-        return Left(failure);
+        try {
+          final prostProductResult = await productRemoteDataSouceImpl.postProduct(name, categoryId, size, price);
+          return Right(prostProductResult);
+        } on DioException catch (e) {
+          final failure = DioExceptions.fromDioError(e);
+          return Left(failure);
+        }
+      } else {
+        return const Left(
+          ConnectionFailure("Connection Failure"),
+        );
       }
-    } else {
-      return const Left(
-        ConnectionFailure("Connection Failure"),
-      );
-    }
   }
 
   @override

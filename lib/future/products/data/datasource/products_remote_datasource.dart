@@ -1,10 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:sultan_mebel/future/products/data/model/branch_model.dart';
-
 import '../../../../common/models/products_model.dart';
 import '../model/warehouse_items_model.dart';
 
-abstract class ProductRemoteDataSource {
+abstract class ProductsRemoteDataSource {
   Future<List<WarehouseItemsModel>> getProducts(int? id);
   Future<List<WarehouseItemsModel>> getProductsOfWarehouse(int? idCategory, int? idWarehouse);
   Future<ProductsModel> postProduct(
@@ -15,9 +13,9 @@ abstract class ProductRemoteDataSource {
   );
 }
 
-class ProductRemoteDataSouceImpl extends ProductRemoteDataSource {
+class ProductsRemoteDataSourceImpl extends ProductsRemoteDataSource {
   Dio dio;
-  ProductRemoteDataSouceImpl({
+  ProductsRemoteDataSourceImpl({
     required this.dio,
   });
   @override
@@ -62,14 +60,16 @@ class ProductRemoteDataSouceImpl extends ProductRemoteDataSource {
 
   @override
   Future<List<WarehouseItemsModel>> getProductsOfWarehouse(int? idCategory, int? idWarehouse) async {
-    final response = await dio.request('/api/v1/warehouse-items/?warehouse_id=$idWarehouse&category_id=$idCategory',
-        options: Options(
-          method: 'GET',
-          headers: {
-            'accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-        ));
+    final response = await dio.request(
+      '/api/v1/warehouse-items/?warehouse_id=$idWarehouse&category_id=$idCategory',
+      options: Options(
+        method: 'GET',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
 
     var branchList = (response.data as List).map((e) => WarehouseItemsModel.fromJson(e)).toList();
     return branchList;

@@ -16,7 +16,7 @@ part 'products_state.dart';
 part 'products_bloc.freezed.dart';
 
 class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
-  ProductRepositories repository;
+  ProductsRepositories repository;
   ProductsBloc({required this.repository}) : super(const ProductsState()) {
     on<ProductsEvent>((event, emit) async {
       emit(state.copyWith(statusGetProductCategory: BlocStatus.inProgress));

@@ -1,18 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
+import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
+
+import 'save_dialog_widget.dart';
 
 // ignore: must_be_immutable
 class ChoosenCategoryContainerWidget extends StatefulWidget {
-  Function onTap;
-  ChoosenCategoryContainerWidget({
+  const ChoosenCategoryContainerWidget({
     Key? key,
-    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -23,7 +24,7 @@ class _ChoosenCategoryContainerWidgetState extends State<ChoosenCategoryContaine
   TextEditingController firstController = TextEditingController();
   TextEditingController secondController = TextEditingController();
   TextEditingController thirdController = TextEditingController();
-  
+
   List<String> dropListValue = [
     "Umumiy",
     "Oshhona",
@@ -32,6 +33,20 @@ class _ChoosenCategoryContainerWidgetState extends State<ChoosenCategoryContaine
     "Savdo",
   ];
   String dropValue = "";
+
+  Future<void> showMyDialog() async {
+    return await showDialog(
+      context: context,
+      builder: (context) {
+        return const Dialog(
+          insetPadding: EdgeInsets.symmetric(horizontal: 20),
+          backgroundColor: AppColors.textColorBlack,
+          alignment: Alignment.center,
+          child: SaveProductDialog(),
+        );
+      },
+    );
+  }
 
   @override
   void initState() {
@@ -55,28 +70,25 @@ class _ChoosenCategoryContainerWidgetState extends State<ChoosenCategoryContaine
       child: Column(
         children: [
           CustomDialogTextFieldContainer(
-            textFieldName: "Description",
-            hintTextTextField: "Input Something",
+            textFieldName: "Maxsulot nomi",
+            hintTextTextField:context.read<ProductBloc>().state.productsModel?.name ??  "Maxsulot nomini kiriting",
             controller: firstController,
           ),
-          const SizedBox(
-            height: 10,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 15),
+            child: CustomDialogTextFieldContainer(
+              textFieldName: "Narxi",
+              hintTextTextField:context.read<ProductBloc>().state.productsModel?.price.toString() ?? "Maxsulot narxini kiriting",
+              controller: firstController,
+            ),
           ),
           CustomDialogTextFieldContainer(
-            textFieldName: "Description",
-            hintTextTextField: "Input Something",
+            textFieldName: "O'lchami",
+            hintTextTextField:context.read<ProductBloc>().state.productsModel?.sizes ?? "Maxsulot o'lchamini kiriting",
             controller: firstController,
           ),
           const SizedBox(
-            height: 10,
-          ),
-          CustomDialogTextFieldContainer(
-            textFieldName: "Description",
-            hintTextTextField: "Input Something",
-            controller: firstController,
-          ),
-          const SizedBox(
-            height: 10,
+            height: 15,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -137,7 +149,7 @@ class _ChoosenCategoryContainerWidgetState extends State<ChoosenCategoryContaine
             color: AppColors.yellow,
             textButton: "Saqlash",
             textColor: AppColors.textColorBlack,
-            onTap: ()=> widget.onTap(),
+            onTap: () => showMyDialog(),
           ),
         ],
       ),

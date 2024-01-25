@@ -28,8 +28,8 @@ class CustomDialogTextFieldContainer extends StatelessWidget {
           textFieldName,
           style: AppTextStyles.body18w4.copyWith(color: AppColors.greyTextColor),
         ),
-        SizedBox(
-          height: 5.h,
+        const SizedBox(
+          height: 5,
         ),
         TextField(
           controller: controller,
