@@ -104,7 +104,9 @@ class _ProductPageState extends State<ProductPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const ChoosenCategoryContainerWidget(),
+                  ChoosenCategoryContainerWidget(
+                    productsId: widget.id,
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

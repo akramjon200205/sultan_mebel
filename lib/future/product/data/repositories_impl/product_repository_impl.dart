@@ -33,4 +33,21 @@ class ProductRepositoryImpl implements ProductRepository {
       );
     }
   }
+  
+  @override
+  Future<Either<Failure, ProductsModel>> postProduct(String? name, double? price, String? sizes, int? category, int? id) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final postCategoryResult = await productRemoteDatasource.postProduct(name, price, sizes, category, id);
+        return Right(postCategoryResult);
+      } on DioException catch (e) {
+        final failure = DioExceptions.fromDioError(e);
+        return Left(failure);
+      }
+    } else {
+      return const Left(
+        ConnectionFailure("Connection Failure"),
+      );
+    }
+  }
 }

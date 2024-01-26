@@ -5,6 +5,13 @@ import 'package:sultan_mebel/common/models/products_model.dart';
 
 abstract class ProductRemoteDatasource {
   Future<ProductsModel> getProduct(int? id);
+  Future<ProductsModel> postProduct(
+    String? name,
+    double? price,
+    String? sizes,
+    int? category,
+    int? id,
+  );
 }
 
 class ProductRemoteDatasourceImpl implements ProductRemoteDatasource {
@@ -27,5 +34,21 @@ class ProductRemoteDatasourceImpl implements ProductRemoteDatasource {
     );
     var product = ProductsModel.fromJson(response.data);
     return product;
+  }
+
+  @override
+  Future<ProductsModel> postProduct(String? name, double? price, String? sizes, int? category, int? id) async {
+    final response = await dio.request(
+      '/api/v1/products/$id/',
+      options: Options(
+        method: 'PUT',
+        headers: {
+          'accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      ),
+      data: {"name": name, "price": price, "sizes": sizes, "category": category},
+    );
+    return ProductsModel.fromJson(response.data);
   }
 }

@@ -35,9 +35,6 @@ class _ProductsPageState extends State<ProductsPage> {
   int? idWarehouse = 0;
 
   List<String> dropListValue = ["Item1", "item2", "Item3"];
-  List<BranchModel> dropCategory = [];
-
-  Map<int, String> result = {};
 
   String? dropValue = "";
 
@@ -106,65 +103,65 @@ class _ProductsPageState extends State<ProductsPage> {
                             color: AppColors.white,
                           ),
                         ),
-                        // Container(
-                        //   height: 35,
-                        //   width: 150,
-                        //   padding: const EdgeInsets.symmetric(horizontal: 10),
-                        //   alignment: Alignment.center,
-                        //   decoration: BoxDecoration(
-                        //     color: AppColors.textColorBlack,
-                        //     border: Border.all(color: AppColors.grey, width: 1),
-                        //     borderRadius: BorderRadius.circular(10),
-                        //   ),
-                        //   child: DropdownButtonHideUnderline(
-                        //     child: DropdownButton<String>(
-                        //       dropdownColor: AppColors.textColorBlack,
-                        //       value: dropValue,
-                        //       isDense: true,
-                        //       style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
-                        //       items: (state.branchNames ?? dropListValue)
-                        //           .toSet()
-                        //           .toList()
-                        //           .map<DropdownMenuItem<String>>((String value) {
-                        //         return DropdownMenuItem<String>(
-                        //           value: value,
-                        //           child: Text(
-                        //             value,
-                        //             style: AppTextStyles.body13w4.copyWith(
-                        //               color: AppColors.white,
-                        //             ),
-                        //           ),
-                        //         );
-                        //       }).toList(),
-                        //       isExpanded: true,
-                        //       onChanged: (value) {
-                        //         setState(() {
-                        //           dropValue = value!;
-                        //         });
-                        //         log("${state.branchList?[state.branchNames!.indexWhere(
-                        //           (element) => element.startsWith(dropValue!),
-                        //         )].id}");
-                        //         context.read<ProductsBloc>().add(
-                        //               ProductsEvent(
-                        //                 widget.id,
-                        //                 state
-                        //                     .branchList?[state.branchNames!.indexWhere(
-                        //                   (element) => element.startsWith(dropValue!),
-                        //                 )]
-                        //                     .id,
-                        //               ),
-                        //             );
-                        //         setState(() {
-                        //           idWarehouse = state
-                        //               .branchList?[state.branchNames!.indexWhere(
-                        //             (element) => element.startsWith(dropValue!),
-                        //           )]
-                        //               .id;
-                        //         });
-                        //       },
-                        //     ),
-                        //   ),
-                        // )
+                        Container(
+                          height: 35,
+                          width: 150,
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: AppColors.textColorBlack,
+                            border: Border.all(color: AppColors.grey, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              dropdownColor: AppColors.textColorBlack,
+                              value: dropValue,
+                              isDense: true,
+                              style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
+                              items: (state.branchNames ?? dropListValue)
+                                  .toSet()
+                                  .toList()
+                                  .map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: AppTextStyles.body13w4.copyWith(
+                                      color: AppColors.white,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              isExpanded: true,
+                              onChanged: (value) {
+                                setState(() {
+                                  dropValue = value!;
+                                });
+                                log("${state.branchList?[state.branchNames!.indexWhere(
+                                  (element) => element.startsWith(dropValue!),
+                                )].id}");
+                                context.read<ProductsBloc>().add(
+                                      ProductsEvent(
+                                        widget.id,
+                                        state
+                                            .branchList?[state.branchNames!.indexWhere(
+                                          (element) => element.startsWith(dropValue!),
+                                        )]
+                                            .id,
+                                      ),
+                                    );
+                                setState(() {
+                                  idWarehouse = state
+                                      .branchList?[state.branchNames!.indexWhere(
+                                    (element) => element.startsWith(dropValue!),
+                                  )]
+                                      .id;
+                                });
+                              },
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),

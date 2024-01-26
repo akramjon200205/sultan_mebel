@@ -1,13 +1,16 @@
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 
 class SaveProductDialog extends StatelessWidget {
+  final Function() onTap;
   const SaveProductDialog({
-    super.key,
-  });
+    Key? key,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +53,7 @@ class SaveProductDialog extends StatelessWidget {
                 color: AppColors.yellow,
                 textButton: "Tasdiqlash",
                 textColor: AppColors.textColorBlack,
-                onTap: () {
-                  Navigator.pop(context);
-                },
+                onTap: () => onTap(),
               ),
             ],
           ),

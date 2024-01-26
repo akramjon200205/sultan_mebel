@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ProductState {
   BlocStatus get statusGetProduct => throw _privateConstructorUsedError;
+  BlocStatus get statusPostProduct => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   ProductsModel? get productsModel => throw _privateConstructorUsedError;
+  ProductsModel? get postProduct => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductStateCopyWith<ProductState> get copyWith =>
@@ -33,8 +35,10 @@ abstract class $ProductStateCopyWith<$Res> {
   @useResult
   $Res call(
       {BlocStatus statusGetProduct,
+      BlocStatus statusPostProduct,
       String? message,
-      ProductsModel? productsModel});
+      ProductsModel? productsModel,
+      ProductsModel? postProduct});
 }
 
 /// @nodoc
@@ -51,13 +55,19 @@ class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
   @override
   $Res call({
     Object? statusGetProduct = null,
+    Object? statusPostProduct = null,
     Object? message = freezed,
     Object? productsModel = freezed,
+    Object? postProduct = freezed,
   }) {
     return _then(_value.copyWith(
       statusGetProduct: null == statusGetProduct
           ? _value.statusGetProduct
           : statusGetProduct // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostProduct: null == statusPostProduct
+          ? _value.statusPostProduct
+          : statusPostProduct // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -66,6 +76,10 @@ class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
       productsModel: freezed == productsModel
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
+              as ProductsModel?,
+      postProduct: freezed == postProduct
+          ? _value.postProduct
+          : postProduct // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
     ) as $Val);
   }
@@ -81,8 +95,10 @@ abstract class _$$ProductStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {BlocStatus statusGetProduct,
+      BlocStatus statusPostProduct,
       String? message,
-      ProductsModel? productsModel});
+      ProductsModel? productsModel,
+      ProductsModel? postProduct});
 }
 
 /// @nodoc
@@ -97,13 +113,19 @@ class __$$ProductStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? statusGetProduct = null,
+    Object? statusPostProduct = null,
     Object? message = freezed,
     Object? productsModel = freezed,
+    Object? postProduct = freezed,
   }) {
     return _then(_$ProductStateImpl(
       statusGetProduct: null == statusGetProduct
           ? _value.statusGetProduct
           : statusGetProduct // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostProduct: null == statusPostProduct
+          ? _value.statusPostProduct
+          : statusPostProduct // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -112,6 +134,10 @@ class __$$ProductStateImplCopyWithImpl<$Res>
       productsModel: freezed == productsModel
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
+              as ProductsModel?,
+      postProduct: freezed == postProduct
+          ? _value.postProduct
+          : postProduct // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
     ));
   }
@@ -122,21 +148,28 @@ class __$$ProductStateImplCopyWithImpl<$Res>
 class _$ProductStateImpl extends _ProductState {
   const _$ProductStateImpl(
       {this.statusGetProduct = BlocStatus.notInitialized,
+      this.statusPostProduct = BlocStatus.notInitialized,
       this.message,
-      this.productsModel})
+      this.productsModel,
+      this.postProduct})
       : super._();
 
   @override
   @JsonKey()
   final BlocStatus statusGetProduct;
   @override
+  @JsonKey()
+  final BlocStatus statusPostProduct;
+  @override
   final String? message;
   @override
   final ProductsModel? productsModel;
+  @override
+  final ProductsModel? postProduct;
 
   @override
   String toString() {
-    return 'ProductState(statusGetProduct: $statusGetProduct, message: $message, productsModel: $productsModel)';
+    return 'ProductState(statusGetProduct: $statusGetProduct, statusPostProduct: $statusPostProduct, message: $message, productsModel: $productsModel, postProduct: $postProduct)';
   }
 
   @override
@@ -146,14 +179,18 @@ class _$ProductStateImpl extends _ProductState {
             other is _$ProductStateImpl &&
             (identical(other.statusGetProduct, statusGetProduct) ||
                 other.statusGetProduct == statusGetProduct) &&
+            (identical(other.statusPostProduct, statusPostProduct) ||
+                other.statusPostProduct == statusPostProduct) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.productsModel, productsModel) ||
-                other.productsModel == productsModel));
+                other.productsModel == productsModel) &&
+            (identical(other.postProduct, postProduct) ||
+                other.postProduct == postProduct));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, statusGetProduct, message, productsModel);
+  int get hashCode => Object.hash(runtimeType, statusGetProduct,
+      statusPostProduct, message, productsModel, postProduct);
 
   @JsonKey(ignore: true)
   @override
@@ -165,16 +202,22 @@ class _$ProductStateImpl extends _ProductState {
 abstract class _ProductState extends ProductState {
   const factory _ProductState(
       {final BlocStatus statusGetProduct,
+      final BlocStatus statusPostProduct,
       final String? message,
-      final ProductsModel? productsModel}) = _$ProductStateImpl;
+      final ProductsModel? productsModel,
+      final ProductsModel? postProduct}) = _$ProductStateImpl;
   const _ProductState._() : super._();
 
   @override
   BlocStatus get statusGetProduct;
   @override
+  BlocStatus get statusPostProduct;
+  @override
   String? get message;
   @override
   ProductsModel? get productsModel;
+  @override
+  ProductsModel? get postProduct;
   @override
   @JsonKey(ignore: true)
   _$$ProductStateImplCopyWith<_$ProductStateImpl> get copyWith =>

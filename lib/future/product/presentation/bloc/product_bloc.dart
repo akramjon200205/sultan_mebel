@@ -30,8 +30,43 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             state.copyWith(statusGetProduct: BlocStatus.failed, message: l.message),
           );
         },
-        (r) {},
+        (r) {
+          emit(
+            state.copyWith(statusGetProduct: BlocStatus.completed, productsModel: r),
+          );
+        },
       );
     });
+    on<ProductPostEvent>(
+      (event, emit) async {
+        emit(
+          state.copyWith(statusPostProduct: BlocStatus.inProgress),
+        );
+        final result = await repository.postProduct(
+          event.name,
+          event.price,
+          event.sizes,
+          event.category,
+          event.idproduct,
+        );
+        result.fold((l) {
+          if (l is ConnectionFailure) {
+            emit(
+              state.copyWith(statusPostProduct: BlocStatus.connectionFailed, message: l.message),
+            );
+          } else if (l is UnautorizedFailure) {
+            emit(state.copyWith(statusPostProduct: BlocStatus.unAutorized, message: l.message));
+          }
+          emit(state.copyWith(statusPostProduct: BlocStatus.failed, message: l.message));
+        }, (r) {
+          emit(
+            state.copyWith(
+              statusPostProduct: BlocStatus.completed,
+              productsModel: r,
+            ),
+          );
+        });
+      },
+    );
   }
 }

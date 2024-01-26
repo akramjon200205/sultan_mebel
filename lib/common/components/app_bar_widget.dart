@@ -30,7 +30,9 @@ class CustomAppBarWidget extends StatelessWidget {
           children: [
             arrowBackIcon
                 ? InkWell(
-                    onTap: () => Navigator.of(context).pop(),
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
                     child: SvgPicture.asset(
                       Assets.icons.arrowBackIcon,
                       alignment: Alignment.center,
