@@ -18,9 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ProductState {
   BlocStatus get statusGetProduct => throw _privateConstructorUsedError;
   BlocStatus get statusPostProduct => throw _privateConstructorUsedError;
+  BlocStatus get statusPutAmount => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   ProductsModel? get productsModel => throw _privateConstructorUsedError;
   ProductsModel? get postProduct => throw _privateConstructorUsedError;
+  WarehouseItemsModel? get putAmount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductStateCopyWith<ProductState> get copyWith =>
@@ -36,9 +38,11 @@ abstract class $ProductStateCopyWith<$Res> {
   $Res call(
       {BlocStatus statusGetProduct,
       BlocStatus statusPostProduct,
+      BlocStatus statusPutAmount,
       String? message,
       ProductsModel? productsModel,
-      ProductsModel? postProduct});
+      ProductsModel? postProduct,
+      WarehouseItemsModel? putAmount});
 }
 
 /// @nodoc
@@ -56,9 +60,11 @@ class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
   $Res call({
     Object? statusGetProduct = null,
     Object? statusPostProduct = null,
+    Object? statusPutAmount = null,
     Object? message = freezed,
     Object? productsModel = freezed,
     Object? postProduct = freezed,
+    Object? putAmount = freezed,
   }) {
     return _then(_value.copyWith(
       statusGetProduct: null == statusGetProduct
@@ -68,6 +74,10 @@ class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
       statusPostProduct: null == statusPostProduct
           ? _value.statusPostProduct
           : statusPostProduct // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPutAmount: null == statusPutAmount
+          ? _value.statusPutAmount
+          : statusPutAmount // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -81,6 +91,10 @@ class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
           ? _value.postProduct
           : postProduct // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
+      putAmount: freezed == putAmount
+          ? _value.putAmount
+          : putAmount // ignore: cast_nullable_to_non_nullable
+              as WarehouseItemsModel?,
     ) as $Val);
   }
 }
@@ -96,9 +110,11 @@ abstract class _$$ProductStateImplCopyWith<$Res>
   $Res call(
       {BlocStatus statusGetProduct,
       BlocStatus statusPostProduct,
+      BlocStatus statusPutAmount,
       String? message,
       ProductsModel? productsModel,
-      ProductsModel? postProduct});
+      ProductsModel? postProduct,
+      WarehouseItemsModel? putAmount});
 }
 
 /// @nodoc
@@ -114,9 +130,11 @@ class __$$ProductStateImplCopyWithImpl<$Res>
   $Res call({
     Object? statusGetProduct = null,
     Object? statusPostProduct = null,
+    Object? statusPutAmount = null,
     Object? message = freezed,
     Object? productsModel = freezed,
     Object? postProduct = freezed,
+    Object? putAmount = freezed,
   }) {
     return _then(_$ProductStateImpl(
       statusGetProduct: null == statusGetProduct
@@ -126,6 +144,10 @@ class __$$ProductStateImplCopyWithImpl<$Res>
       statusPostProduct: null == statusPostProduct
           ? _value.statusPostProduct
           : statusPostProduct // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPutAmount: null == statusPutAmount
+          ? _value.statusPutAmount
+          : statusPutAmount // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -139,6 +161,10 @@ class __$$ProductStateImplCopyWithImpl<$Res>
           ? _value.postProduct
           : postProduct // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
+      putAmount: freezed == putAmount
+          ? _value.putAmount
+          : putAmount // ignore: cast_nullable_to_non_nullable
+              as WarehouseItemsModel?,
     ));
   }
 }
@@ -149,9 +175,11 @@ class _$ProductStateImpl extends _ProductState {
   const _$ProductStateImpl(
       {this.statusGetProduct = BlocStatus.notInitialized,
       this.statusPostProduct = BlocStatus.notInitialized,
+      this.statusPutAmount = BlocStatus.notInitialized,
       this.message,
       this.productsModel,
-      this.postProduct})
+      this.postProduct,
+      this.putAmount})
       : super._();
 
   @override
@@ -161,15 +189,20 @@ class _$ProductStateImpl extends _ProductState {
   @JsonKey()
   final BlocStatus statusPostProduct;
   @override
+  @JsonKey()
+  final BlocStatus statusPutAmount;
+  @override
   final String? message;
   @override
   final ProductsModel? productsModel;
   @override
   final ProductsModel? postProduct;
+  @override
+  final WarehouseItemsModel? putAmount;
 
   @override
   String toString() {
-    return 'ProductState(statusGetProduct: $statusGetProduct, statusPostProduct: $statusPostProduct, message: $message, productsModel: $productsModel, postProduct: $postProduct)';
+    return 'ProductState(statusGetProduct: $statusGetProduct, statusPostProduct: $statusPostProduct, statusPutAmount: $statusPutAmount, message: $message, productsModel: $productsModel, postProduct: $postProduct, putAmount: $putAmount)';
   }
 
   @override
@@ -181,16 +214,27 @@ class _$ProductStateImpl extends _ProductState {
                 other.statusGetProduct == statusGetProduct) &&
             (identical(other.statusPostProduct, statusPostProduct) ||
                 other.statusPostProduct == statusPostProduct) &&
+            (identical(other.statusPutAmount, statusPutAmount) ||
+                other.statusPutAmount == statusPutAmount) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.productsModel, productsModel) ||
                 other.productsModel == productsModel) &&
             (identical(other.postProduct, postProduct) ||
-                other.postProduct == postProduct));
+                other.postProduct == postProduct) &&
+            (identical(other.putAmount, putAmount) ||
+                other.putAmount == putAmount));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, statusGetProduct,
-      statusPostProduct, message, productsModel, postProduct);
+  int get hashCode => Object.hash(
+      runtimeType,
+      statusGetProduct,
+      statusPostProduct,
+      statusPutAmount,
+      message,
+      productsModel,
+      postProduct,
+      putAmount);
 
   @JsonKey(ignore: true)
   @override
@@ -203,9 +247,11 @@ abstract class _ProductState extends ProductState {
   const factory _ProductState(
       {final BlocStatus statusGetProduct,
       final BlocStatus statusPostProduct,
+      final BlocStatus statusPutAmount,
       final String? message,
       final ProductsModel? productsModel,
-      final ProductsModel? postProduct}) = _$ProductStateImpl;
+      final ProductsModel? postProduct,
+      final WarehouseItemsModel? putAmount}) = _$ProductStateImpl;
   const _ProductState._() : super._();
 
   @override
@@ -213,11 +259,15 @@ abstract class _ProductState extends ProductState {
   @override
   BlocStatus get statusPostProduct;
   @override
+  BlocStatus get statusPutAmount;
+  @override
   String? get message;
   @override
   ProductsModel? get productsModel;
   @override
   ProductsModel? get postProduct;
+  @override
+  WarehouseItemsModel? get putAmount;
   @override
   @JsonKey(ignore: true)
   _$$ProductStateImplCopyWith<_$ProductStateImpl> get copyWith =>

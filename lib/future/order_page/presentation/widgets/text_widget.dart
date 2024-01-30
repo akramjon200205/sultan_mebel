@@ -20,17 +20,18 @@ class CustomRowText extends StatelessWidget {
       children: [
         Text(
           "$mainText:",
-          style: AppTextStyles.body18w5.copyWith(
+          style: AppTextStyles.body16w5.copyWith(
             color: AppColors.white,
           ),
         ),
         const SizedBox(
-          width: 10,
+          width: 5,
         ),
         Text(
           subText,
-          style: AppTextStyles.body14w3.copyWith(
+          style: AppTextStyles.body12w4.copyWith(
             color: AppColors.white,
+            fontWeight: FontWeight.w300,
           ),
         ),
       ],

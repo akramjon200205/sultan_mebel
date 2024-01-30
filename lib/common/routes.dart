@@ -47,7 +47,8 @@ class Routes {
           return CupertinoPageRoute(
             settings: const RouteSettings(),
             builder: (_) => ProductPage(
-              id: args?['id'],
+              idProduct: args?['idProduct'],             
+              idCategory: args?['idCategory'],
             ),
           );
         case clientPage:
@@ -64,7 +65,7 @@ class Routes {
           return CupertinoPageRoute(
             settings: const RouteSettings(),
             builder: (_) =>  ProductsPage(
-              id: args?['index'],
+              idCategory: args?['idCategory'],
               productsCategoriesName: args?['productName'],
             ),
           );

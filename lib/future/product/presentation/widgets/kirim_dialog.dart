@@ -1,11 +1,25 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_dialog_text_field.dart';
+import 'package:sultan_mebel/common/enums/bloc_status.dart';
+import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
+import 'package:sultan_mebel/future/products/presentation/wigets/find_by_id_name.dart';
 
 class KirimDialog extends StatefulWidget {
-  const KirimDialog({super.key});
+  final int? idProduct;
+
+  const KirimDialog({
+    Key? key,
+    this.idProduct,
+  }) : super(key: key);
 
   @override
   State<KirimDialog> createState() => _KirimDialogState();
@@ -20,12 +34,33 @@ class _KirimDialogState extends State<KirimDialog> {
     "Mebel",
     "Savdo",
   ];
+  Map<int, String>? request = {};
+  List<String>? branchNameList = [];
   String dropValue = "";
+
+  void getBranchs() {
+    final categoryList = context.read<WarehouseBloc>().state.branchList;
+    if (categoryList != null) {
+      for (var element in categoryList) {
+        branchNameList?.add(element.branch?.name ?? '');
+      }
+    }
+    // ignore: prefer_for_elements_to_map_fromiterable
+    request = Map.fromIterable(
+      categoryList!,
+      key: (element) => element.branch.id,
+      value: (element) => element.branch?.name,
+    );
+
+    if (branchNameList!.isNotEmpty) {
+      dropValue = branchNameList![0];
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    dropValue = dropListValue[0];
+    getBranchs();
   }
 
   @override
@@ -39,6 +74,7 @@ class _KirimDialogState extends State<KirimDialog> {
             textFieldName: "Miqdor",
             hintTextTextField: "Miqdor",
             controller: controller,
+            keyboardType: TextInputType.number,
           ),
           const SizedBox(
             height: 20,
@@ -59,7 +95,7 @@ class _KirimDialogState extends State<KirimDialog> {
                 value: dropValue,
                 isDense: true,
                 style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
-                items: dropListValue.map<DropdownMenuItem<String>>((String value) {
+                items: branchNameList?.map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(
@@ -86,7 +122,19 @@ class _KirimDialogState extends State<KirimDialog> {
             color: AppColors.yellow,
             textButton: "Saqlash",
             textColor: AppColors.textColorBlack,
-            onTap: () {},
+            onTap: () {
+              log("$dropValue: ${findIdByName(dropValue, request!)}");
+              log("prodict Id: ${widget.idProduct}");
+              context.read<ProductBloc>().add(
+                    ProductPutAmount(
+                      findIdByName(dropValue, request!),
+                      controller.text.isNotEmpty ? int.parse(controller.text) : 0,
+                      widget.idProduct,
+                    ),
+                  );
+
+              Navigator.pop(context);
+            },
             width: 150,
             height: 42,
           ),

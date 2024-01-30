@@ -17,10 +17,10 @@ class LoginRepositoryImpl extends LoginRepository {
   });
 
   @override
-  Future<Either<Failure, String>> login(String? phone, String? password) async {
+  Future<Either<Failure, String>> login(String? userName, String? password) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSourceImpl.login(phone, password);
+        final result = await remoteDataSourceImpl.login(userName, password);
         return Right(result);
       } on DioException catch (e) {
         final failure = DioExceptions.fromDioError(e);
@@ -30,4 +30,6 @@ class LoginRepositoryImpl extends LoginRepository {
       return const Left(ConnectionFailure("Connection error"));
     }
   }
+
+ 
 }

@@ -13,12 +13,12 @@ import '../bloc/products/products_bloc.dart';
 // ignore: must_be_immutable
 class ProductsPageGridViewWidget extends StatefulWidget {
   final Function()? onTap;
-  final int index;
+  final int idCategory;
   final int idWarehouse;
   const ProductsPageGridViewWidget({
     Key? key,
     required this.onTap,
-    required this.index,
+    required this.idCategory,
     required this.idWarehouse,
   }) : super(key: key);
 
@@ -62,8 +62,9 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
                 borderRadius: BorderRadius.circular(15),
                 splashColor: Colors.transparent,
                 onTap: () {
-                  Navigator.of(context).pushNamed(Routes.productPage, arguments:{
-                     'id' : state.productsList?[index].id,
+                  Navigator.of(context).pushNamed(Routes.productPage, arguments: {
+                    'idProduct': state.productsList?[index].id,                    
+                    'idCategory': widget.idCategory,
                   });
                 },
                 child: Container(

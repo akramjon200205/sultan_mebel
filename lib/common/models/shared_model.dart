@@ -1,4 +1,4 @@
 class SharedModel {
-  static String accessToken = '';
-  static String resfreshToken = '';
+  static String accessToken = 'accessToken';
+  static String refreshToken = 'refreshToken';
 }

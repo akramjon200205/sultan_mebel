@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/app_bar_widget.dart';
-import 'package:sultan_mebel/future/products/data/model/branch_model.dart';
 import 'package:sultan_mebel/future/products/presentation/bloc/products/products_bloc.dart';
 import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
@@ -17,11 +16,11 @@ import '../wigets/products_grid_view_widget.dart';
 // ignore: must_be_immutable
 class ProductsPage extends StatefulWidget {
   String productsCategoriesName;
-  int id;
+  int idCategory;
   ProductsPage({
     Key? key,
     required this.productsCategoriesName,
-    required this.id,
+    required this.idCategory,
   }) : super(key: key);
 
   @override
@@ -32,7 +31,7 @@ class _ProductsPageState extends State<ProductsPage> {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productPriceController = TextEditingController();
   TextEditingController productSizeController = TextEditingController();
-  int? idWarehouse = 0;
+  int? idWarehouse = 1;
 
   List<String> dropListValue = ["Item1", "item2", "Item3"];
 
@@ -69,7 +68,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 dropValue = context.read<WarehouseBloc>().state.branchNames?[0];
                 context.read<ProductsBloc>().add(
                       ProductsEvent(
-                        widget.id,
+                        widget.idCategory,
                         state
                             .branchList?[state.branchNames!.indexWhere(
                           (element) => element.startsWith(dropValue!),
@@ -143,7 +142,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                 )].id}");
                                 context.read<ProductsBloc>().add(
                                       ProductsEvent(
-                                        widget.id,
+                                        widget.idCategory,
                                         state
                                             .branchList?[state.branchNames!.indexWhere(
                                           (element) => element.startsWith(dropValue!),
@@ -171,12 +170,13 @@ class _ProductsPageState extends State<ProductsPage> {
                   Container(
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     child: ProductsPageGridViewWidget(
-                      index: widget.id,
+                      idCategory: widget.idCategory,
                       idWarehouse: idWarehouse ?? 0,
                       onTap: () {
+                        log("$idWarehouse");
                         showMyProductsDialog(
                           context,
-                          widget.id,
+                          widget.idCategory,
                           idWarehouse!,
                           dropValue!,
                         );

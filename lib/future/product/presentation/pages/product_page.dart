@@ -1,33 +1,52 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/assets.dart';
 import 'package:sultan_mebel/common/components/app_bar_widget.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
+import 'package:sultan_mebel/common/models/shared_model.dart';
 import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
-import 'package:sultan_mebel/future/product/presentation/widgets/product_page_container_widget.dart';
 import 'package:sultan_mebel/future/product/presentation/widgets/kirim_dialog.dart';
+import 'package:sultan_mebel/future/product/presentation/widgets/product_page_container_widget.dart';
+
+import '../../../../common/routes.dart';
 
 class ProductPage extends StatefulWidget {
-  final int id;
-  const ProductPage({super.key, required this.id});
+  final int idProduct;
+  final int idCategory;
+  const ProductPage({
+    Key? key,
+    required this.idProduct,
+    required this.idCategory,
+  }) : super(key: key);
 
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  Future<void> showMyDialogKirim() async {
+  SharedPreferences? sharedPreferences;
+
+  Future<void> showMyDialogKirim({
+    int? idProduct,
+  }) async {
     return await showDialog(
       context: context,
       builder: (context) {
-        return const Dialog(
+        return Dialog(
           backgroundColor: AppColors.textColorBlack,
           alignment: Alignment.center,
-          child: KirimDialog(),
+          child: KirimDialog(
+            idProduct: idProduct,
+          ),
         );
       },
     );
@@ -35,7 +54,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
-    context.read<ProductBloc>().add(ProductEvent(widget.id));
+    context.read<ProductBloc>().add(ProductEvent(widget.idProduct));
     super.initState();
   }
 
@@ -52,7 +71,15 @@ class _ProductPageState extends State<ProductPage> {
           padding: const EdgeInsets.symmetric(horizontal: 15),
           physics: const BouncingScrollPhysics(),
           child: BlocConsumer<ProductBloc, ProductState>(
-            listener: (context, state) {},
+            listener: (context, state) async {
+              if (state.statusPutAmount == BlocStatus.unAutorized) {
+                sharedPreferences = await SharedPreferences.getInstance();
+
+                sharedPreferences?.clear();
+                // ignore: use_build_context_synchronously
+                Navigator.pushNamed(context, Routes.login);
+              }
+            },
             builder: (context, state) {
               if (state.statusGetProduct == BlocStatus.inProgress) {
                 return const Center(
@@ -105,7 +132,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 20,
                   ),
                   ChoosenCategoryContainerWidget(
-                    productsId: widget.id,
+                    productsId: widget.idProduct,
                   ),
                   const SizedBox(
                     height: 20,
@@ -118,7 +145,9 @@ class _ProductPageState extends State<ProductPage> {
                     textButton: "Kirim qilish",
                     textColor: AppColors.textColorBlack,
                     onTap: () {
-                      showMyDialogKirim();
+                      showMyDialogKirim(
+                        idProduct: context.read<ProductBloc>().state.productsModel?.id,
+                      );
                     },
                   ),
                   const SizedBox(

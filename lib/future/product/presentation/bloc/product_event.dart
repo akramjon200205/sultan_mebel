@@ -18,8 +18,21 @@ class ProductPostEvent extends ProductEvent {
   int? category;
   int? idproduct;
 
-  ProductPostEvent(this.name,  this.price, this.sizes, this.category, this.idproduct) : super(idproduct);
+  ProductPostEvent(this.name, this.price, this.sizes, this.category, this.idproduct) : super(idproduct);
 
   @override
   List<Object> get props => [];
+}
+
+// ignore: must_be_immutable
+class ProductPutAmount extends ProductEvent {
+  int? idWareHouse;  
+  int? amount;
+  int? idProduct;  
+
+ProductPutAmount(
+    this.idWareHouse,    
+    this.amount,
+    this.idProduct,    
+  ) : super(idProduct);
 }

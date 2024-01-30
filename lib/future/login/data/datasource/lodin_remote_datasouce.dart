@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../common/models/shared_model.dart';
 
 abstract class HomeRemoteDataSource {
-  Future<dynamic> login(String? phone, String? password);
+  Future<dynamic> login(String? username, String? password);
 }
 
 class LoginRemoteDataSourceImpl extends HomeRemoteDataSource {
@@ -33,8 +34,13 @@ class LoginRemoteDataSourceImpl extends HomeRemoteDataSource {
         },
       ),
     );
+    
+    log("access: ${responce.data['access']}");
+    log("refresh: ${responce.data['refresh']}");
     prefs.setString(SharedModel.accessToken, responce.data['access']);
-    prefs.setString(SharedModel.resfreshToken, responce.data['refresh']);
+    prefs.setString(SharedModel.refreshToken, responce.data['refresh']);
+    log("access: ${prefs.getString(SharedModel.accessToken)}");
+    log("refresh: ${prefs.getString(SharedModel.refreshToken)}");
     return responce.data['access'];
   }
 }

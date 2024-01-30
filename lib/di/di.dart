@@ -43,7 +43,7 @@ Future<void> init() async {
     () => WarehouseBloc(repository: di()),
   );
   di.registerFactory(
-    () => ProductBloc(repository: di()),
+    () => ProductBloc(repository: di(),),
   );
 
   // Repositories

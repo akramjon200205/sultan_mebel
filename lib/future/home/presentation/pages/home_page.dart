@@ -14,7 +14,6 @@ import 'package:sultan_mebel/future/home/data/datasourses/local_type_mebel_data.
 import 'package:sultan_mebel/future/home/presentation/widgets/carusel_slider_widget.dart';
 
 import '../../../../common/components/app_bar_widget.dart';
-import '../../../products/presentation/bloc/products/products_bloc.dart';
 import '../bloc/home_bloc.dart';
 
 class HomePage extends StatefulWidget {
@@ -135,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                               Routes.productsPage,
                               arguments: {
                                 'productName': state.categoryList?[index].name ?? '',
-                                'index': state.categoryList?[index].id,
+                                'idCategory': state.categoryList?[index].id,
                               },
                             );
                           },
