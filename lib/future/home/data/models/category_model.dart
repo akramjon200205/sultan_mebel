@@ -1,4 +1,3 @@
-import '../../../../common/models/products_model.dart';
 
 class CategoryModel {
   int? id;

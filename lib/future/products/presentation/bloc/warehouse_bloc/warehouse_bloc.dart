@@ -1,12 +1,11 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sultan_mebel/future/products/domain/repositories/warehouse_repositories.dart';
 
 import '../../../../../common/enums/bloc_status.dart';
 import '../../../../../core/error/failure.dart';
 import '../../../data/model/branch_model.dart';
-import '../../../domain/repositories/products_repositories.dart';
 
 part 'warehouse_event.dart';
 part 'warehouse_state.dart';

@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:sultan_mebel/common/models/products_model.dart';
 import 'package:sultan_mebel/core/error/failure.dart';
-import 'package:sultan_mebel/future/login/domain/repositories/login_repositories.dart';
 import 'package:sultan_mebel/future/product/domain/repositories/product_repository.dart';
 import 'package:sultan_mebel/future/products/data/model/warehouse_items_model.dart';
 

@@ -5,7 +5,6 @@ import 'package:sultan_mebel/core/error/exeption.dart';
 import 'package:sultan_mebel/core/error/failure.dart';
 import 'package:sultan_mebel/core/platform/network_info.dart';
 import 'package:sultan_mebel/future/products/data/datasource/products_remote_datasource.dart';
-import 'package:sultan_mebel/future/products/data/model/branch_model.dart';
 import 'package:sultan_mebel/future/products/data/model/warehouse_items_model.dart';
 import 'package:sultan_mebel/future/products/domain/repositories/products_repositories.dart';
 

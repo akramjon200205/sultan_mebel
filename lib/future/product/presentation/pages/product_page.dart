@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +11,6 @@ import 'package:sultan_mebel/common/assets.dart';
 import 'package:sultan_mebel/common/components/app_bar_widget.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
-import 'package:sultan_mebel/common/models/shared_model.dart';
 import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
 import 'package:sultan_mebel/future/product/presentation/widgets/kirim_dialog.dart';
 import 'package:sultan_mebel/future/product/presentation/widgets/product_page_container_widget.dart';
