@@ -7,6 +7,8 @@ import 'package:sultan_mebel/common/models/products_model.dart';
 import 'package:sultan_mebel/core/error/failure.dart';
 import 'package:sultan_mebel/future/product/domain/repositories/product_repository.dart';
 import 'package:sultan_mebel/future/products/data/model/warehouse_items_model.dart';
+import 'package:sultan_mebel/future/products/domain/repositories/products_repositories.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/products/products_bloc.dart';
 
 import '../../../../common/enums/bloc_status.dart';
 
@@ -100,6 +102,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
             state.copyWith(
               statusPutAmount: BlocStatus.completed,
               productsModel: list,
+              putAmount: r,
             ),
           );
         });

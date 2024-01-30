@@ -16,6 +16,7 @@ import 'package:sultan_mebel/future/product/presentation/widgets/kirim_dialog.da
 import 'package:sultan_mebel/future/product/presentation/widgets/product_page_container_widget.dart';
 
 import '../../../../common/routes.dart';
+import '../../../products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
 class ProductPage extends StatefulWidget {
   final int idProduct;
@@ -145,7 +146,7 @@ class _ProductPageState extends State<ProductPage> {
                     onTap: () {
                       showMyDialogKirim(
                         idProduct: context.read<ProductBloc>().state.productsModel?.id,
-                      );
+                      ).then((value) => context.read<WarehouseBloc>().add(const WarehouseEvent()));
                     },
                   ),
                   const SizedBox(

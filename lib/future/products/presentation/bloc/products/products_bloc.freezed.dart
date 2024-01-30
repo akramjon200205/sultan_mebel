@@ -24,6 +24,7 @@ mixin _$ProductsState {
   List<WarehouseItemsModel>? get productsList =>
       throw _privateConstructorUsedError;
   ProductsModel? get productsModel => throw _privateConstructorUsedError;
+  int? get amount => throw _privateConstructorUsedError;
   List<BranchModel>? get branchList => throw _privateConstructorUsedError;
   List<String>? get branch => throw _privateConstructorUsedError;
 
@@ -45,6 +46,7 @@ abstract class $ProductsStateCopyWith<$Res> {
       String? message,
       List<WarehouseItemsModel>? productsList,
       ProductsModel? productsModel,
+      int? amount,
       List<BranchModel>? branchList,
       List<String>? branch});
 }
@@ -68,6 +70,7 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
     Object? message = freezed,
     Object? productsList = freezed,
     Object? productsModel = freezed,
+    Object? amount = freezed,
     Object? branchList = freezed,
     Object? branch = freezed,
   }) {
@@ -96,6 +99,10 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int?,
       branchList: freezed == branchList
           ? _value.branchList
           : branchList // ignore: cast_nullable_to_non_nullable
@@ -123,6 +130,7 @@ abstract class _$$ProductsStateImplCopyWith<$Res>
       String? message,
       List<WarehouseItemsModel>? productsList,
       ProductsModel? productsModel,
+      int? amount,
       List<BranchModel>? branchList,
       List<String>? branch});
 }
@@ -144,6 +152,7 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? productsList = freezed,
     Object? productsModel = freezed,
+    Object? amount = freezed,
     Object? branchList = freezed,
     Object? branch = freezed,
   }) {
@@ -172,6 +181,10 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
           ? _value.productsModel
           : productsModel // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int?,
       branchList: freezed == branchList
           ? _value._branchList
           : branchList // ignore: cast_nullable_to_non_nullable
@@ -194,6 +207,7 @@ class _$ProductsStateImpl extends _ProductsState {
       this.message,
       final List<WarehouseItemsModel>? productsList,
       this.productsModel,
+      this.amount,
       final List<BranchModel>? branchList,
       final List<String>? branch})
       : _productsList = productsList,
@@ -224,6 +238,8 @@ class _$ProductsStateImpl extends _ProductsState {
 
   @override
   final ProductsModel? productsModel;
+  @override
+  final int? amount;
   final List<BranchModel>? _branchList;
   @override
   List<BranchModel>? get branchList {
@@ -246,7 +262,7 @@ class _$ProductsStateImpl extends _ProductsState {
 
   @override
   String toString() {
-    return 'ProductsState(statusGetProductCategory: $statusGetProductCategory, statusPostProductCategory: $statusPostProductCategory, statusGetBranchs: $statusGetBranchs, message: $message, productsList: $productsList, productsModel: $productsModel, branchList: $branchList, branch: $branch)';
+    return 'ProductsState(statusGetProductCategory: $statusGetProductCategory, statusPostProductCategory: $statusPostProductCategory, statusGetBranchs: $statusGetBranchs, message: $message, productsList: $productsList, productsModel: $productsModel, amount: $amount, branchList: $branchList, branch: $branch)';
   }
 
   @override
@@ -267,6 +283,7 @@ class _$ProductsStateImpl extends _ProductsState {
                 .equals(other._productsList, _productsList) &&
             (identical(other.productsModel, productsModel) ||
                 other.productsModel == productsModel) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
             const DeepCollectionEquality()
                 .equals(other._branchList, _branchList) &&
             const DeepCollectionEquality().equals(other._branch, _branch));
@@ -281,6 +298,7 @@ class _$ProductsStateImpl extends _ProductsState {
       message,
       const DeepCollectionEquality().hash(_productsList),
       productsModel,
+      amount,
       const DeepCollectionEquality().hash(_branchList),
       const DeepCollectionEquality().hash(_branch));
 
@@ -299,6 +317,7 @@ abstract class _ProductsState extends ProductsState {
       final String? message,
       final List<WarehouseItemsModel>? productsList,
       final ProductsModel? productsModel,
+      final int? amount,
       final List<BranchModel>? branchList,
       final List<String>? branch}) = _$ProductsStateImpl;
   const _ProductsState._() : super._();
@@ -315,6 +334,8 @@ abstract class _ProductsState extends ProductsState {
   List<WarehouseItemsModel>? get productsList;
   @override
   ProductsModel? get productsModel;
+  @override
+  int? get amount;
   @override
   List<BranchModel>? get branchList;
   @override

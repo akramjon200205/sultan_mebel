@@ -22,6 +22,7 @@ mixin _$ProductState {
   String? get message => throw _privateConstructorUsedError;
   ProductsModel? get productsModel => throw _privateConstructorUsedError;
   ProductsModel? get postProduct => throw _privateConstructorUsedError;
+  int? get amount => throw _privateConstructorUsedError;
   WarehouseItemsModel? get putAmount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,6 +43,7 @@ abstract class $ProductStateCopyWith<$Res> {
       String? message,
       ProductsModel? productsModel,
       ProductsModel? postProduct,
+      int? amount,
       WarehouseItemsModel? putAmount});
 }
 
@@ -64,6 +66,7 @@ class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
     Object? message = freezed,
     Object? productsModel = freezed,
     Object? postProduct = freezed,
+    Object? amount = freezed,
     Object? putAmount = freezed,
   }) {
     return _then(_value.copyWith(
@@ -91,6 +94,10 @@ class _$ProductStateCopyWithImpl<$Res, $Val extends ProductState>
           ? _value.postProduct
           : postProduct // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int?,
       putAmount: freezed == putAmount
           ? _value.putAmount
           : putAmount // ignore: cast_nullable_to_non_nullable
@@ -114,6 +121,7 @@ abstract class _$$ProductStateImplCopyWith<$Res>
       String? message,
       ProductsModel? productsModel,
       ProductsModel? postProduct,
+      int? amount,
       WarehouseItemsModel? putAmount});
 }
 
@@ -134,6 +142,7 @@ class __$$ProductStateImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? productsModel = freezed,
     Object? postProduct = freezed,
+    Object? amount = freezed,
     Object? putAmount = freezed,
   }) {
     return _then(_$ProductStateImpl(
@@ -161,6 +170,10 @@ class __$$ProductStateImplCopyWithImpl<$Res>
           ? _value.postProduct
           : postProduct // ignore: cast_nullable_to_non_nullable
               as ProductsModel?,
+      amount: freezed == amount
+          ? _value.amount
+          : amount // ignore: cast_nullable_to_non_nullable
+              as int?,
       putAmount: freezed == putAmount
           ? _value.putAmount
           : putAmount // ignore: cast_nullable_to_non_nullable
@@ -179,6 +192,7 @@ class _$ProductStateImpl extends _ProductState {
       this.message,
       this.productsModel,
       this.postProduct,
+      this.amount,
       this.putAmount})
       : super._();
 
@@ -198,11 +212,13 @@ class _$ProductStateImpl extends _ProductState {
   @override
   final ProductsModel? postProduct;
   @override
+  final int? amount;
+  @override
   final WarehouseItemsModel? putAmount;
 
   @override
   String toString() {
-    return 'ProductState(statusGetProduct: $statusGetProduct, statusPostProduct: $statusPostProduct, statusPutAmount: $statusPutAmount, message: $message, productsModel: $productsModel, postProduct: $postProduct, putAmount: $putAmount)';
+    return 'ProductState(statusGetProduct: $statusGetProduct, statusPostProduct: $statusPostProduct, statusPutAmount: $statusPutAmount, message: $message, productsModel: $productsModel, postProduct: $postProduct, amount: $amount, putAmount: $putAmount)';
   }
 
   @override
@@ -221,6 +237,7 @@ class _$ProductStateImpl extends _ProductState {
                 other.productsModel == productsModel) &&
             (identical(other.postProduct, postProduct) ||
                 other.postProduct == postProduct) &&
+            (identical(other.amount, amount) || other.amount == amount) &&
             (identical(other.putAmount, putAmount) ||
                 other.putAmount == putAmount));
   }
@@ -234,6 +251,7 @@ class _$ProductStateImpl extends _ProductState {
       message,
       productsModel,
       postProduct,
+      amount,
       putAmount);
 
   @JsonKey(ignore: true)
@@ -251,6 +269,7 @@ abstract class _ProductState extends ProductState {
       final String? message,
       final ProductsModel? productsModel,
       final ProductsModel? postProduct,
+      final int? amount,
       final WarehouseItemsModel? putAmount}) = _$ProductStateImpl;
   const _ProductState._() : super._();
 
@@ -266,6 +285,8 @@ abstract class _ProductState extends ProductState {
   ProductsModel? get productsModel;
   @override
   ProductsModel? get postProduct;
+  @override
+  int? get amount;
   @override
   WarehouseItemsModel? get putAmount;
   @override

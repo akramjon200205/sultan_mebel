@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,6 +9,7 @@ import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_grid_add_container_widget.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/routes.dart';
+import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
 
 import '../bloc/products/products_bloc.dart';
 
@@ -27,6 +30,7 @@ class ProductsPageGridViewWidget extends StatefulWidget {
 }
 
 class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget> {
+  int? amount;
   @override
   void initState() {
     super.initState();
@@ -35,7 +39,11 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsBloc, ProductsState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (context.read<ProductBloc>().state.putAmount == BlocStatus.completed) {
+          log("${context.read<ProductBloc>().state.putAmount}");
+        }
+      },
       builder: (context, state) {
         if (state.statusGetProductCategory == BlocStatus.inProgress ||
             state.statusPostProductCategory == BlocStatus.inProgress) {
@@ -62,8 +70,9 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
                 borderRadius: BorderRadius.circular(15),
                 splashColor: Colors.transparent,
                 onTap: () {
+                  amount = state.productsList?[index].id;
                   Navigator.of(context).pushNamed(Routes.productPage, arguments: {
-                    'idProduct': state.productsList?[index].id,                    
+                    'idProduct': state.productsList?[index].id,
                     'idCategory': widget.idCategory,
                   });
                 },
@@ -101,7 +110,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
                               style: AppTextStyles.body16w5.copyWith(
                                 color: AppColors.white,
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),

@@ -8,7 +8,7 @@ class ProductState with _$ProductState {
     @Default(BlocStatus.notInitialized) final BlocStatus statusPutAmount,
     final String? message,
     final ProductsModel? productsModel,
-    final ProductsModel? postProduct,
+    final ProductsModel? postProduct,    
     final WarehouseItemsModel? putAmount,
   }) = _ProductState;
 

@@ -9,6 +9,7 @@ class ProductsState with _$ProductsState {
     final String? message,
     final List<WarehouseItemsModel>? productsList,
     final ProductsModel? productsModel,
+    final int? amount,
     final List<BranchModel>? branchList,
     final List<String>? branch,
   }) = _ProductsState;
