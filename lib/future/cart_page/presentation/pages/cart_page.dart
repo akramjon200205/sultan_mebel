@@ -132,13 +132,7 @@ class _CartPageState extends State<CartPage> {
               ),
               const SizedBox(
                 height: 10,
-              ),
-              // Column(
-              //   children: List.generate(
-              //     productItmCount,
-              //     (index) => CartContainerWidget(number: 1, controller: controller),
-              //   ),
-              // ),
+              ),              
               ListView.separated(
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(horizontal: 15),

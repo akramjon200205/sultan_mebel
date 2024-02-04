@@ -19,9 +19,11 @@ import 'save_dialog_widget.dart';
 // ignore: must_be_immutable
 class ChoosenCategoryContainerWidget extends StatefulWidget {
   final int? productsId;
+  final int? categoryId;
   const ChoosenCategoryContainerWidget({
     Key? key,
-    required this.productsId,
+    this.productsId,
+    this.categoryId,
   }) : super(key: key);
 
   @override
@@ -82,11 +84,12 @@ class _ChoosenCategoryContainerWidgetState extends State<ChoosenCategoryContaine
       key: (element) => element.id,
       value: (element) => element.name,
     );
+
     request.forEach((id, name) {
       log("Category ID: $id, Category Name: $name");
     });
     if (categoryNameList!.isNotEmpty) {
-      dropValue = categoryNameList![0];
+      dropValue = findNameById(widget.categoryId!, request);
     }
   }
 

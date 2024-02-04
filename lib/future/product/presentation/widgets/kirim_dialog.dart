@@ -131,7 +131,7 @@ class _KirimDialogState extends State<KirimDialog> {
                       widget.idProduct,
                     ),
                   );
-
+              context.read<WarehouseBloc>().add(const WarehouseEvent());
               Navigator.pop(context);
             },
             width: 150,

@@ -132,6 +132,7 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   ChoosenCategoryContainerWidget(
                     productsId: widget.idProduct,
+                    categoryId: widget.idCategory,
                   ),
                   const SizedBox(
                     height: 20,
@@ -146,7 +147,7 @@ class _ProductPageState extends State<ProductPage> {
                     onTap: () {
                       showMyDialogKirim(
                         idProduct: context.read<ProductBloc>().state.productsModel?.id,
-                      ).then((value) => context.read<WarehouseBloc>().add(const WarehouseEvent()));
+                      );
                     },
                   ),
                   const SizedBox(
