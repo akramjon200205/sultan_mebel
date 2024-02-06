@@ -72,7 +72,7 @@ class _ProductsPageGridViewWidgetState extends State<ProductsPageGridViewWidget>
                 onTap: () {
                   amount = state.productsList?[index].id;
                   Navigator.of(context).pushNamed(Routes.productPage, arguments: {
-                    'idProduct': state.productsList?[index].id,
+                    'idProduct': state.productsList![index].product?.id,
                     'idCategory': widget.idCategory,
                   });
                 },

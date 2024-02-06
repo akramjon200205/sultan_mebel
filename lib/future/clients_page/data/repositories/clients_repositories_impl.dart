@@ -31,4 +31,25 @@ class ClientsRepositoriesImpl extends ClientsRepositories {
       return const Left(ConnectionFailure("Connection error"));
     }
   }
+
+  @override
+  Future<Either<Failure, dynamic>> postClients(
+      {String? firstName, String? lastName, String? phone, String? address}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await clientsRemoteDataSourceImpl.postClients(
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+          address: address,
+        );
+        return Right(result);
+      } on DioException catch (e) {
+        final failure = DioExceptions.fromDioError(e);
+        return Left(failure);
+      }
+    } else {
+      return const Left(ConnectionFailure("Connection error"));
+    }
+  }
 }

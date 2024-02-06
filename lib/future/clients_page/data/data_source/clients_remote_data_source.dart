@@ -6,6 +6,7 @@ import 'package:sultan_mebel/common/models/customer_model.dart';
 
 abstract class ClientsRemoteDataSource {
   Future<dynamic> clients();
+  Future<CustomerModel> postClients({String? firstName, String? lastName, String? phone, String? address});
 }
 
 class ClientsRemoteDataSourceImpl extends ClientsRemoteDataSource {
@@ -27,12 +28,28 @@ class ClientsRemoteDataSourceImpl extends ClientsRemoteDataSource {
       ),
     );
 
-    var customerList = (jsonDecode(responce.data) as List)
-        .map(
-          (e) => CustomerModel.fromJson(e),
-        )
-        .toList();
+    var customerList = (responce.data as List).map((e) => CustomerModel.fromJson(e)).toList();
 
     return customerList;
+  }
+
+  @override
+  Future<CustomerModel> postClients({String? firstName, String? lastName, String? phone, String? address}) async {
+    final response = await dio.request('/api/v1/customers/',
+        options: Options(
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+        ),
+        data: jsonEncode({
+          "first_name": firstName,
+          "last_name": lastName,
+          "phone": phone,
+          "address": address,
+        }));
+
+    return CustomerModel.fromJson(response.data);
   }
 }

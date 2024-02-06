@@ -4,6 +4,10 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sultan_mebel/core/platform/network_info.dart';
 import 'package:sultan_mebel/core/platform/pretty_dio_logger.dart';
+import 'package:sultan_mebel/future/clients_page/data/data_source/clients_remote_data_source.dart';
+import 'package:sultan_mebel/future/clients_page/data/repositories/clients_repositories_impl.dart';
+import 'package:sultan_mebel/future/clients_page/domain/repositories/clients_repositories.dart';
+import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_bloc.dart';
 import 'package:sultan_mebel/future/home/data/datasourses/ramote_datasource/category_remote_datasource.dart';
 import 'package:sultan_mebel/future/home/data/repositories/category_repositories_impl.dart';
 import 'package:sultan_mebel/future/home/domain/repositories/category_repositories.dart';
@@ -45,6 +49,9 @@ Future<void> init() async {
   di.registerFactory(
     () => ProductBloc(repository: di(),),
   );
+  di.registerFactory(
+    () => ClientsBloc(repository: di(),),
+  );
 
   // Repositories
   di.registerFactory<CategoryRepository>(
@@ -77,6 +84,12 @@ Future<void> init() async {
       networkInfo: di(),
     ),
   );
+  di.registerFactory<ClientsRepositories>(
+    () => ClientsRepositoriesImpl(
+      clientsRemoteDataSourceImpl: di(),
+      networkInfo: di(),
+    ),
+  );
 
   // Datasources
   di.registerLazySingleton<CategoryRemoteDataSourceImpl>(
@@ -104,11 +117,16 @@ Future<void> init() async {
       dio: di(),
     ),
   );
+  di.registerLazySingleton<ClientsRemoteDataSourceImpl>(
+    () => ClientsRemoteDataSourceImpl(
+      dio: di(),
+    ),
+  );
 
   // Netqork Opstions
   final options = BaseOptions(
-      baseUrl: 'https://mebel-x8oi.onrender.com/',
-      // baseUrl: 'https://karimjonofficial.pythonanywhere.com/',
+      // baseUrl: 'https://mebel-x8oi.onrender.com/',
+      baseUrl: 'https://karimjonofficial.pythonanywhere.com/',
       connectTimeout: const Duration(seconds: 50),
       receiveTimeout: const Duration(seconds: 30),
       headers: {

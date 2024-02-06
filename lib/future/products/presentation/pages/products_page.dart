@@ -77,7 +77,6 @@ class _ProductsPageState extends State<ProductsPage> {
                       ),
                     );
               }
-              
             },
             builder: (context, state) {
               if (state.statusGetWarehouse == BlocStatus.inProgress) {

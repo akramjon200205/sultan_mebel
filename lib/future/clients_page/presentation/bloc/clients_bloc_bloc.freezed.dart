@@ -15,32 +15,36 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$ClientsBlocState {
-  BlocStatus get statusClients => throw _privateConstructorUsedError;
+mixin _$ClientsState {
+  BlocStatus get statusGetClients => throw _privateConstructorUsedError;
+  BlocStatus get statusPostClients => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   List<CustomerModel>? get clientsList => throw _privateConstructorUsedError;
+  CustomerModel? get clientPost => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ClientsBlocStateCopyWith<ClientsBlocState> get copyWith =>
+  $ClientsStateCopyWith<ClientsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ClientsBlocStateCopyWith<$Res> {
-  factory $ClientsBlocStateCopyWith(
-          ClientsBlocState value, $Res Function(ClientsBlocState) then) =
-      _$ClientsBlocStateCopyWithImpl<$Res, ClientsBlocState>;
+abstract class $ClientsStateCopyWith<$Res> {
+  factory $ClientsStateCopyWith(
+          ClientsState value, $Res Function(ClientsState) then) =
+      _$ClientsStateCopyWithImpl<$Res, ClientsState>;
   @useResult
   $Res call(
-      {BlocStatus statusClients,
+      {BlocStatus statusGetClients,
+      BlocStatus statusPostClients,
       String? message,
-      List<CustomerModel>? clientsList});
+      List<CustomerModel>? clientsList,
+      CustomerModel? clientPost});
 }
 
 /// @nodoc
-class _$ClientsBlocStateCopyWithImpl<$Res, $Val extends ClientsBlocState>
-    implements $ClientsBlocStateCopyWith<$Res> {
-  _$ClientsBlocStateCopyWithImpl(this._value, this._then);
+class _$ClientsStateCopyWithImpl<$Res, $Val extends ClientsState>
+    implements $ClientsStateCopyWith<$Res> {
+  _$ClientsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -50,14 +54,20 @@ class _$ClientsBlocStateCopyWithImpl<$Res, $Val extends ClientsBlocState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? statusClients = null,
+    Object? statusGetClients = null,
+    Object? statusPostClients = null,
     Object? message = freezed,
     Object? clientsList = freezed,
+    Object? clientPost = freezed,
   }) {
     return _then(_value.copyWith(
-      statusClients: null == statusClients
-          ? _value.statusClients
-          : statusClients // ignore: cast_nullable_to_non_nullable
+      statusGetClients: null == statusGetClients
+          ? _value.statusGetClients
+          : statusGetClients // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostClients: null == statusPostClients
+          ? _value.statusPostClients
+          : statusPostClients // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -67,43 +77,55 @@ class _$ClientsBlocStateCopyWithImpl<$Res, $Val extends ClientsBlocState>
           ? _value.clientsList
           : clientsList // ignore: cast_nullable_to_non_nullable
               as List<CustomerModel>?,
+      clientPost: freezed == clientPost
+          ? _value.clientPost
+          : clientPost // ignore: cast_nullable_to_non_nullable
+              as CustomerModel?,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$ClientsBlocStateImplCopyWith<$Res>
-    implements $ClientsBlocStateCopyWith<$Res> {
-  factory _$$ClientsBlocStateImplCopyWith(_$ClientsBlocStateImpl value,
-          $Res Function(_$ClientsBlocStateImpl) then) =
-      __$$ClientsBlocStateImplCopyWithImpl<$Res>;
+abstract class _$$ClientsStateImplCopyWith<$Res>
+    implements $ClientsStateCopyWith<$Res> {
+  factory _$$ClientsStateImplCopyWith(
+          _$ClientsStateImpl value, $Res Function(_$ClientsStateImpl) then) =
+      __$$ClientsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {BlocStatus statusClients,
+      {BlocStatus statusGetClients,
+      BlocStatus statusPostClients,
       String? message,
-      List<CustomerModel>? clientsList});
+      List<CustomerModel>? clientsList,
+      CustomerModel? clientPost});
 }
 
 /// @nodoc
-class __$$ClientsBlocStateImplCopyWithImpl<$Res>
-    extends _$ClientsBlocStateCopyWithImpl<$Res, _$ClientsBlocStateImpl>
-    implements _$$ClientsBlocStateImplCopyWith<$Res> {
-  __$$ClientsBlocStateImplCopyWithImpl(_$ClientsBlocStateImpl _value,
-      $Res Function(_$ClientsBlocStateImpl) _then)
+class __$$ClientsStateImplCopyWithImpl<$Res>
+    extends _$ClientsStateCopyWithImpl<$Res, _$ClientsStateImpl>
+    implements _$$ClientsStateImplCopyWith<$Res> {
+  __$$ClientsStateImplCopyWithImpl(
+      _$ClientsStateImpl _value, $Res Function(_$ClientsStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? statusClients = null,
+    Object? statusGetClients = null,
+    Object? statusPostClients = null,
     Object? message = freezed,
     Object? clientsList = freezed,
+    Object? clientPost = freezed,
   }) {
-    return _then(_$ClientsBlocStateImpl(
-      statusClients: null == statusClients
-          ? _value.statusClients
-          : statusClients // ignore: cast_nullable_to_non_nullable
+    return _then(_$ClientsStateImpl(
+      statusGetClients: null == statusGetClients
+          ? _value.statusGetClients
+          : statusGetClients // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPostClients: null == statusPostClients
+          ? _value.statusPostClients
+          : statusPostClients // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -113,23 +135,32 @@ class __$$ClientsBlocStateImplCopyWithImpl<$Res>
           ? _value._clientsList
           : clientsList // ignore: cast_nullable_to_non_nullable
               as List<CustomerModel>?,
+      clientPost: freezed == clientPost
+          ? _value.clientPost
+          : clientPost // ignore: cast_nullable_to_non_nullable
+              as CustomerModel?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$ClientsBlocStateImpl extends _ClientsBlocState {
-  const _$ClientsBlocStateImpl(
-      {this.statusClients = BlocStatus.notInitialized,
+class _$ClientsStateImpl extends _ClientsState {
+  const _$ClientsStateImpl(
+      {this.statusGetClients = BlocStatus.notInitialized,
+      this.statusPostClients = BlocStatus.notInitialized,
       this.message,
-      final List<CustomerModel>? clientsList})
+      final List<CustomerModel>? clientsList,
+      this.clientPost})
       : _clientsList = clientsList,
         super._();
 
   @override
   @JsonKey()
-  final BlocStatus statusClients;
+  final BlocStatus statusGetClients;
+  @override
+  @JsonKey()
+  final BlocStatus statusPostClients;
   @override
   final String? message;
   final List<CustomerModel>? _clientsList;
@@ -143,49 +174,66 @@ class _$ClientsBlocStateImpl extends _ClientsBlocState {
   }
 
   @override
+  final CustomerModel? clientPost;
+
+  @override
   String toString() {
-    return 'ClientsBlocState(statusClients: $statusClients, message: $message, clientsList: $clientsList)';
+    return 'ClientsState(statusGetClients: $statusGetClients, statusPostClients: $statusPostClients, message: $message, clientsList: $clientsList, clientPost: $clientPost)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ClientsBlocStateImpl &&
-            (identical(other.statusClients, statusClients) ||
-                other.statusClients == statusClients) &&
+            other is _$ClientsStateImpl &&
+            (identical(other.statusGetClients, statusGetClients) ||
+                other.statusGetClients == statusGetClients) &&
+            (identical(other.statusPostClients, statusPostClients) ||
+                other.statusPostClients == statusPostClients) &&
             (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality()
-                .equals(other._clientsList, _clientsList));
+                .equals(other._clientsList, _clientsList) &&
+            (identical(other.clientPost, clientPost) ||
+                other.clientPost == clientPost));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, statusClients, message,
-      const DeepCollectionEquality().hash(_clientsList));
+  int get hashCode => Object.hash(
+      runtimeType,
+      statusGetClients,
+      statusPostClients,
+      message,
+      const DeepCollectionEquality().hash(_clientsList),
+      clientPost);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ClientsBlocStateImplCopyWith<_$ClientsBlocStateImpl> get copyWith =>
-      __$$ClientsBlocStateImplCopyWithImpl<_$ClientsBlocStateImpl>(
-          this, _$identity);
+  _$$ClientsStateImplCopyWith<_$ClientsStateImpl> get copyWith =>
+      __$$ClientsStateImplCopyWithImpl<_$ClientsStateImpl>(this, _$identity);
 }
 
-abstract class _ClientsBlocState extends ClientsBlocState {
-  const factory _ClientsBlocState(
-      {final BlocStatus statusClients,
+abstract class _ClientsState extends ClientsState {
+  const factory _ClientsState(
+      {final BlocStatus statusGetClients,
+      final BlocStatus statusPostClients,
       final String? message,
-      final List<CustomerModel>? clientsList}) = _$ClientsBlocStateImpl;
-  const _ClientsBlocState._() : super._();
+      final List<CustomerModel>? clientsList,
+      final CustomerModel? clientPost}) = _$ClientsStateImpl;
+  const _ClientsState._() : super._();
 
   @override
-  BlocStatus get statusClients;
+  BlocStatus get statusGetClients;
+  @override
+  BlocStatus get statusPostClients;
   @override
   String? get message;
   @override
   List<CustomerModel>? get clientsList;
   @override
+  CustomerModel? get clientPost;
+  @override
   @JsonKey(ignore: true)
-  _$$ClientsBlocStateImplCopyWith<_$ClientsBlocStateImpl> get copyWith =>
+  _$$ClientsStateImplCopyWith<_$ClientsStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

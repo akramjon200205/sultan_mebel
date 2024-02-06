@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,32 +10,58 @@ part 'clients_bloc_bloc.freezed.dart';
 part 'clients_bloc_event.dart';
 part 'clients_bloc_state.dart';
 
-class ClientsBloc extends Bloc<ClientsBlocEvent, ClientsBlocState> {
+class ClientsBloc extends Bloc<ClientsBlocEvent, ClientsState> {
   ClientsRepositories repository;
 
   // final  LoginUseCase useCase;
-  ClientsBloc({required this.repository}) : super(const ClientsBlocState()) {
+  ClientsBloc({required this.repository}) : super(const ClientsState()) {
     on<ClientsBlocEvent>((event, emit) async {
-      emit(state.copyWith(statusClients: BlocStatus.inProgress));
+      emit(state.copyWith(statusGetClients: BlocStatus.inProgress));
       final result = await repository.clients();
       result.fold(
         (l) {
           if (l is ConnectionFailure) {
             emit(
-              state.copyWith(
-                  statusClients: BlocStatus.connectionFailed, message: l.message),
+              state.copyWith(statusGetClients: BlocStatus.connectionFailed, message: l.message),
             );
           } else if (l is UnautorizedFailure) {
-            emit(state.copyWith(
-                statusClients: BlocStatus.unAutorized, message: l.message));
+            emit(state.copyWith(statusGetClients: BlocStatus.unAutorized, message: l.message));
           }
           emit(
-            state.copyWith(statusClients: BlocStatus.failed, message: l.message),
+            state.copyWith(statusGetClients: BlocStatus.failed, message: l.message),
           );
         },
         (r) {
           emit(
-            state.copyWith(statusClients: BlocStatus.completed, clientsList: r),
+            state.copyWith(statusGetClients: BlocStatus.completed, clientsList: r),
+          );
+        },
+      );
+    });
+    on<ClientsPostEvent>((event, emit) async {
+      emit(state.copyWith(statusPostClients: BlocStatus.inProgress));
+      final result = await repository.postClients(
+        firstName: event.firstName,
+        lastName: event.lastName,
+        phone: event.phone,
+        address: event.address,
+      );
+      result.fold(
+        (l) {
+          if (l is ConnectionFailure) {
+            emit(
+              state.copyWith(statusPostClients: BlocStatus.connectionFailed, message: l.message),
+            );
+          } else if (l is UnautorizedFailure) {
+            emit(state.copyWith(statusPostClients: BlocStatus.unAutorized, message: l.message));
+          }
+          emit(
+            state.copyWith(statusPostClients: BlocStatus.failed, message: l.message),
+          );
+        },
+        (r) {
+          emit(
+            state.copyWith(statusGetClients: BlocStatus.completed, clientsList: state.clientsList,  clientPost: r),
           );
         },
       );

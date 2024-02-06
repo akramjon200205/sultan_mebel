@@ -1,13 +1,15 @@
 part of 'clients_bloc_bloc.dart';
 
 @freezed
-class ClientsBlocState with _$ClientsBlocState {
-  const factory ClientsBlocState({
-    @Default(BlocStatus.notInitialized) final BlocStatus statusClients,    
+class ClientsState with _$ClientsState {
+  const factory ClientsState({
+    @Default(BlocStatus.notInitialized) final BlocStatus statusGetClients,    
+    @Default(BlocStatus.notInitialized) final BlocStatus statusPostClients,    
     final String? message,
     final List<CustomerModel>? clientsList,
+    final CustomerModel? clientPost,
 
-  }) = _ClientsBlocState;
+  }) = _ClientsState;
 
-  const ClientsBlocState._();
+  const ClientsState._();
 }

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/di/di.dart';
+import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_bloc.dart';
 import 'package:sultan_mebel/future/home/presentation/bloc/home_bloc.dart';
 import 'package:sultan_mebel/future/login/presentation/bloc/login_bloc.dart';
 import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => di<ProductsBloc>()),
             BlocProvider(create: (_) => di<WarehouseBloc>()),
             BlocProvider(create: (_) => di<ProductBloc>()),
+            BlocProvider(create: (_) => di<ClientsBloc>()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
