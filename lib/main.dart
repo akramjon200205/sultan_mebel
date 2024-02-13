@@ -12,6 +12,7 @@ import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart'
 import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
 import 'di/di.dart' as sl;
+import 'future/client/presentation/bloc/client_bloc.dart';
 import 'future/products/presentation/bloc/products/products_bloc.dart';
 
 Future<void> main() async {
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => di<WarehouseBloc>()),
             BlocProvider(create: (_) => di<ProductBloc>()),
             BlocProvider(create: (_) => di<ClientsBloc>()),
+            BlocProvider(create: (_) => di<ClientBloc>()),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

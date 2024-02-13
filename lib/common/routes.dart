@@ -47,14 +47,17 @@ class Routes {
           return CupertinoPageRoute(
             settings: const RouteSettings(),
             builder: (_) => ProductPage(
-              idProduct: args?['idProduct'],             
+              idProduct: args?['idProduct'],
               idCategory: args?['idCategory'],
             ),
           );
         case clientPage:
           return CupertinoPageRoute(
             settings: const RouteSettings(),
-            builder: (_) => const ClientPage(),
+            builder: (_) => ClientPage(
+              clientId: args?['clientId'],
+              clientName: args?['clientName'],
+            ),
           );
         case notification:
           return CupertinoPageRoute(
@@ -64,7 +67,7 @@ class Routes {
         case productsPage:
           return CupertinoPageRoute(
             settings: const RouteSettings(),
-            builder: (_) =>  ProductsPage(
+            builder: (_) => ProductsPage(
               idCategory: args?['idCategory'],
               productsCategoriesName: args?['productName'],
             ),
@@ -73,7 +76,7 @@ class Routes {
         default:
           return CupertinoPageRoute(
             settings: const RouteSettings(),
-            builder: (_) => const ClientPage(),
+            builder: (_) => const MainPage(),
           );
       }
     } catch (e) {

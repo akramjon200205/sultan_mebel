@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/app_bar_widget.dart';
@@ -8,7 +10,13 @@ import 'package:sultan_mebel/future/client/presentation/widgets/scheduled_debt.d
 import 'package:sultan_mebel/future/client/presentation/widgets/summa_accept.dart';
 
 class ClientPage extends StatefulWidget {
-  const ClientPage({super.key});
+  String? clientName;
+  int? clientId;
+  ClientPage({
+    Key? key,
+    this.clientName,
+    this.clientId,
+  }) : super(key: key);
 
   @override
   State<ClientPage> createState() => _ClientPageState();
@@ -39,7 +47,7 @@ class _ClientPageState extends State<ClientPage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Jamoliddin Ibrohimov",
+                  widget.clientName ?? '',
                   style: AppTextStyles.body22w5.copyWith(
                     color: AppColors.white,
                   ),

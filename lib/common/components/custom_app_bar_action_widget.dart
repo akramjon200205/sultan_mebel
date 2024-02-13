@@ -7,7 +7,7 @@ import 'package:sultan_mebel/common/app_colors.dart';
 // ignore: must_be_immutable
 class CustomAppBarActionWidget extends StatelessWidget {
   String iconTextAssets;
-  Function function;
+  Function() function;
   EdgeInsets margin;
   CustomAppBarActionWidget({
     Key? key,
@@ -21,7 +21,7 @@ class CustomAppBarActionWidget extends StatelessWidget {
     return Padding(
       padding: margin,
       child: InkWell(
-        onTap: () => function(),
+        onTap: function,
         child: Container(
           width: 30,
           height: 30,

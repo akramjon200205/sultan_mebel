@@ -64,7 +64,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path:
+  image_path: "assets/logo/sultan_mebel_logo.png"
 
 flutter:
   uses-material-design: true

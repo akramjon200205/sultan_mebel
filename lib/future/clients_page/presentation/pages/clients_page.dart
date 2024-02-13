@@ -9,6 +9,7 @@ import 'package:sultan_mebel/common/assets.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_text_field_container.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
+import 'package:sultan_mebel/common/routes.dart';
 import 'package:sultan_mebel/future/client/presentation/pages/client_page.dart';
 import 'package:sultan_mebel/future/clients_page/presentation/widgets/client_container_widget.dart';
 import 'package:sultan_mebel/future/clients_page/presentation/widgets/phone_number_text_field.dart';
@@ -97,7 +98,7 @@ class _ClientsPageState extends State<ClientsPage> {
                         scrapText(ismFamiliyaController);
                         context.read<ClientsBloc>().add(ClientsPostEvent(
                               firstName: firstNameLaseName.first ?? '',
-                              lastName: firstNameLaseName.last ?? '',
+                              lastName: firstNameLaseName.length == 1 ? '' : firstNameLaseName.last ?? '',
                               address: yashashManziliController.text,
                               phone: phoneNumberController.text,
                             ));
@@ -148,6 +149,7 @@ class _ClientsPageState extends State<ClientsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.backgroundColor,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(60),
@@ -171,14 +173,10 @@ class _ClientsPageState extends State<ClientsPage> {
                 if (index < (state.clientsList?.length ?? 0)) {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const ClientPage();
-                          },
-                        ),
-                      );
+                      Navigator.pushNamed(context, Routes.clientPage, arguments: {
+                        'clientId': state.clientsList?[index].id,
+                        'clientName': "${state.clientsList?[index].firstName} ${state.clientsList?[index].lastName}",
+                      });
                     },
                     child: ClientContainerWidget(
                       index: index,

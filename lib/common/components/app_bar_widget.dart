@@ -17,59 +17,57 @@ class CustomAppBarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
-        alignment: Alignment.center,
-        height: 60,
-        decoration: const BoxDecoration(
-          color: AppColors.textColorBlack,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            arrowBackIcon
-                ? InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: SvgPicture.asset(
-                      Assets.icons.arrowBackIcon,
-                      alignment: Alignment.center,
-                      width: 25,
-                      height: 25,
-                      fit: BoxFit.scaleDown,
-                    ),
-                  )
-                : const SizedBox.shrink(),
-            Text(
-              "Sultan Mebel",
-              style: AppTextStyles.body22w4.copyWith(
-                color: AppColors.white,
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      alignment: Alignment.center,
+      height: 60,
+      decoration: const BoxDecoration(
+        color: AppColors.textColorBlack,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          arrowBackIcon
+              ? InkWell(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: SvgPicture.asset(
+                    Assets.icons.arrowBackIcon,
+                    alignment: Alignment.center,
+                    width: 25,
+                    height: 25,
+                    fit: BoxFit.scaleDown,
+                  ),
+                )
+              : const SizedBox.shrink(),
+          Text(
+            "Sultan Mebel",
+            style: AppTextStyles.body22w4.copyWith(
+              color: AppColors.white,
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.of(context).pushNamed(Routes.notification);
+            },
+            child: Container(
+              width: 35,
+              height: 35,
+              alignment: Alignment.center,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.yellow,
+              ),
+              child: SvgPicture.asset(
+                Assets.icons.iconNotification,
+                width: 20,
+                height: 20,
+                fit: BoxFit.scaleDown,
               ),
             ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed(Routes.notification);
-              },
-              child: Container(
-                width: 35,
-                height: 35,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.yellow,
-                ),
-                child: SvgPicture.asset(
-                  Assets.icons.iconNotification,
-                  width: 20,
-                  height: 20,
-                  fit: BoxFit.scaleDown,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
