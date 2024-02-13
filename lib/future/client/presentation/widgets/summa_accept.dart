@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
+import 'package:sultan_mebel/future/client/presentation/bloc/client_bloc.dart';
 import 'package:sultan_mebel/future/client/presentation/widgets/text_field_row.dart';
 
 // ignore: must_be_immutable
@@ -19,8 +21,14 @@ class AcceptSummWidgetContainer extends StatefulWidget {
 }
 
 class _AcceptSummWidgetContainerState extends State<AcceptSummWidgetContainer> {
+  double summaFunc(String summa) {
+    double summ = double.parse(context.read<ClientBloc>().state.clientGet!.loan!) - double.parse(summa);
+    return summ;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final contextBloc = context.read<ClientBloc>();
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -46,10 +54,6 @@ class _AcceptSummWidgetContainerState extends State<AcceptSummWidgetContainer> {
           const SizedBox(
             height: 15,
           ),
-          // TextFieldRow(
-          //   textFieldName: "Description",
-          //   controller: widget.textEditingController,
-          // ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -99,7 +103,24 @@ class _AcceptSummWidgetContainerState extends State<AcceptSummWidgetContainer> {
             color: AppColors.yellow,
             textButton: "Saqlash",
             textColor: AppColors.textColorBlack,
-            onTap: () {},
+            onTap: () {
+              contextBloc.add(
+                ClientPatchEvent(
+                  contextBloc.state.clientGet?.id,
+                  summaFunc(widget.textEditingController.text),
+                  contextBloc.state.clientGet?.lastName,
+                  contextBloc.state.clientGet?.firstName,
+                  contextBloc.state.clientGet?.phone,
+                  contextBloc.state.clientGet?.address,
+                ),
+              );
+              context.read<ClientBloc>().add(
+                    ClientEvent(
+                      context.read<ClientBloc>().state.clientGet?.id,
+                    ),
+                  );
+              // context.read<ClientBloc>().emit(context.read<ClientBloc>().state);
+            },
           ),
         ],
       ),

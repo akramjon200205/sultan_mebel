@@ -17,7 +17,7 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
   ClientBloc({required this.repository}) : super(const ClientState()) {
     on<ClientEvent>((event, emit) async {
       emit(state.copyWith(statusGetClient: BlocStatus.inProgress));
-      final result = await repository.getClient();
+      final result = await repository.getClient(id: event.id);
       result.fold(
         (l) {
           if (l is ConnectionFailure) {
@@ -38,5 +38,37 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
         },
       );
     });
+    on<ClientPatchEvent>(
+      (event, emit) async {
+        emit(state.copyWith(statusPatchClient: BlocStatus.inProgress));
+        final result = await repository.patchClient(
+          id: event.id,
+          address: event.address,
+          firstName: event.firstName,
+          lastName: event.lastName,
+          loan: event.loan,
+          phone: event.phone,
+        );
+        result.fold(
+          (l) {
+            if (l is ConnectionFailure) {
+              emit(
+                state.copyWith(statusPatchClient: BlocStatus.connectionFailed, message: l.message),
+              );
+            } else if (l is UnautorizedFailure) {
+              emit(state.copyWith(statusPatchClient: BlocStatus.unAutorized, message: l.message));
+            }
+            emit(
+              state.copyWith(statusPatchClient: BlocStatus.failed, message: l.message),
+            );
+          },
+          (r) {
+            emit(
+              state.copyWith(statusPatchClient: BlocStatus.completed, clientGet: state.clientGet, clientPatch: r),
+            );
+          },
+        );
+      },
+    );
   }
 }

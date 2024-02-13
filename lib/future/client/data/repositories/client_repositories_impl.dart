@@ -31,7 +31,14 @@ class ClientRepositoriesImpl implements ClientRepositories {
   }
 
   @override
-  Future<Either<Failure, dynamic>> patchClient({int? id, double? loan}) async {
+  Future<Either<Failure, dynamic>> patchClient({
+    int? id,
+    double? loan,
+    String? lastName,
+    String? firstName,
+    String? phone,
+    String? address,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
         final result = await clientRemoteDataSourceImpl.patchClientById(id: id, loan: loan);

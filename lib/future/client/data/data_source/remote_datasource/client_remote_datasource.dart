@@ -6,7 +6,14 @@ import 'package:sultan_mebel/common/models/customer_model.dart';
 
 abstract class ClientRemoteDataSource {
   Future<dynamic> getClientById({int? id});
-  Future<dynamic> patchClientById({int? id, double? loan});
+  Future<dynamic> patchClientById({
+    int? id,
+    double? loan,
+    String? lastName,
+    String? firstName,
+    String? phone,
+    String? address,
+  });
 }
 
 class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
@@ -31,7 +38,14 @@ class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
   }
 
   @override
-  Future patchClientById({int? id, double? loan}) async {
+  Future patchClientById({
+    int? id,
+    double? loan,
+    String? lastName,
+    String? firstName,
+    String? phone,
+    String? address,
+  }) async {
     final response = await dio.request(
       '/api/v1/customers/$id',
       options: Options(
@@ -42,6 +56,10 @@ class ClientRemoteDataSourceImpl implements ClientRemoteDataSource {
         },
       ),
       data: {
+        "first_name": firstName,
+        "last_name": lastName,
+        "phone": phone,
+        "address": address,
         "loan": "$loan",
       },
     );

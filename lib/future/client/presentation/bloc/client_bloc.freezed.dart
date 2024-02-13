@@ -17,8 +17,10 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ClientState {
   BlocStatus get statusGetClient => throw _privateConstructorUsedError;
+  BlocStatus get statusPatchClient => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
   CustomerModel? get clientGet => throw _privateConstructorUsedError;
+  CustomerModel? get clientPatch => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ClientStateCopyWith<ClientState> get copyWith =>
@@ -32,7 +34,11 @@ abstract class $ClientStateCopyWith<$Res> {
       _$ClientStateCopyWithImpl<$Res, ClientState>;
   @useResult
   $Res call(
-      {BlocStatus statusGetClient, String? message, CustomerModel? clientGet});
+      {BlocStatus statusGetClient,
+      BlocStatus statusPatchClient,
+      String? message,
+      CustomerModel? clientGet,
+      CustomerModel? clientPatch});
 }
 
 /// @nodoc
@@ -49,13 +55,19 @@ class _$ClientStateCopyWithImpl<$Res, $Val extends ClientState>
   @override
   $Res call({
     Object? statusGetClient = null,
+    Object? statusPatchClient = null,
     Object? message = freezed,
     Object? clientGet = freezed,
+    Object? clientPatch = freezed,
   }) {
     return _then(_value.copyWith(
       statusGetClient: null == statusGetClient
           ? _value.statusGetClient
           : statusGetClient // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPatchClient: null == statusPatchClient
+          ? _value.statusPatchClient
+          : statusPatchClient // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -64,6 +76,10 @@ class _$ClientStateCopyWithImpl<$Res, $Val extends ClientState>
       clientGet: freezed == clientGet
           ? _value.clientGet
           : clientGet // ignore: cast_nullable_to_non_nullable
+              as CustomerModel?,
+      clientPatch: freezed == clientPatch
+          ? _value.clientPatch
+          : clientPatch // ignore: cast_nullable_to_non_nullable
               as CustomerModel?,
     ) as $Val);
   }
@@ -78,7 +94,11 @@ abstract class _$$ClientStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {BlocStatus statusGetClient, String? message, CustomerModel? clientGet});
+      {BlocStatus statusGetClient,
+      BlocStatus statusPatchClient,
+      String? message,
+      CustomerModel? clientGet,
+      CustomerModel? clientPatch});
 }
 
 /// @nodoc
@@ -93,13 +113,19 @@ class __$$ClientStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? statusGetClient = null,
+    Object? statusPatchClient = null,
     Object? message = freezed,
     Object? clientGet = freezed,
+    Object? clientPatch = freezed,
   }) {
     return _then(_$ClientStateImpl(
       statusGetClient: null == statusGetClient
           ? _value.statusGetClient
           : statusGetClient // ignore: cast_nullable_to_non_nullable
+              as BlocStatus,
+      statusPatchClient: null == statusPatchClient
+          ? _value.statusPatchClient
+          : statusPatchClient // ignore: cast_nullable_to_non_nullable
               as BlocStatus,
       message: freezed == message
           ? _value.message
@@ -108,6 +134,10 @@ class __$$ClientStateImplCopyWithImpl<$Res>
       clientGet: freezed == clientGet
           ? _value.clientGet
           : clientGet // ignore: cast_nullable_to_non_nullable
+              as CustomerModel?,
+      clientPatch: freezed == clientPatch
+          ? _value.clientPatch
+          : clientPatch // ignore: cast_nullable_to_non_nullable
               as CustomerModel?,
     ));
   }
@@ -118,21 +148,28 @@ class __$$ClientStateImplCopyWithImpl<$Res>
 class _$ClientStateImpl extends _ClientState {
   const _$ClientStateImpl(
       {this.statusGetClient = BlocStatus.notInitialized,
+      this.statusPatchClient = BlocStatus.notInitialized,
       this.message,
-      this.clientGet})
+      this.clientGet,
+      this.clientPatch})
       : super._();
 
   @override
   @JsonKey()
   final BlocStatus statusGetClient;
   @override
+  @JsonKey()
+  final BlocStatus statusPatchClient;
+  @override
   final String? message;
   @override
   final CustomerModel? clientGet;
+  @override
+  final CustomerModel? clientPatch;
 
   @override
   String toString() {
-    return 'ClientState(statusGetClient: $statusGetClient, message: $message, clientGet: $clientGet)';
+    return 'ClientState(statusGetClient: $statusGetClient, statusPatchClient: $statusPatchClient, message: $message, clientGet: $clientGet, clientPatch: $clientPatch)';
   }
 
   @override
@@ -142,14 +179,18 @@ class _$ClientStateImpl extends _ClientState {
             other is _$ClientStateImpl &&
             (identical(other.statusGetClient, statusGetClient) ||
                 other.statusGetClient == statusGetClient) &&
+            (identical(other.statusPatchClient, statusPatchClient) ||
+                other.statusPatchClient == statusPatchClient) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.clientGet, clientGet) ||
-                other.clientGet == clientGet));
+                other.clientGet == clientGet) &&
+            (identical(other.clientPatch, clientPatch) ||
+                other.clientPatch == clientPatch));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, statusGetClient, message, clientGet);
+  int get hashCode => Object.hash(runtimeType, statusGetClient,
+      statusPatchClient, message, clientGet, clientPatch);
 
   @JsonKey(ignore: true)
   @override
@@ -161,16 +202,22 @@ class _$ClientStateImpl extends _ClientState {
 abstract class _ClientState extends ClientState {
   const factory _ClientState(
       {final BlocStatus statusGetClient,
+      final BlocStatus statusPatchClient,
       final String? message,
-      final CustomerModel? clientGet}) = _$ClientStateImpl;
+      final CustomerModel? clientGet,
+      final CustomerModel? clientPatch}) = _$ClientStateImpl;
   const _ClientState._() : super._();
 
   @override
   BlocStatus get statusGetClient;
   @override
+  BlocStatus get statusPatchClient;
+  @override
   String? get message;
   @override
   CustomerModel? get clientGet;
+  @override
+  CustomerModel? get clientPatch;
   @override
   @JsonKey(ignore: true)
   _$$ClientStateImplCopyWith<_$ClientStateImpl> get copyWith =>

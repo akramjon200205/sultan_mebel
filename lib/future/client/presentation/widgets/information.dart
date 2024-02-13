@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_text_field_container.dart';
+import 'package:sultan_mebel/future/client/presentation/bloc/client_bloc.dart';
 
 class InformationContainer extends StatefulWidget {
   const InformationContainer({super.key});
@@ -18,6 +20,7 @@ class _InformationContainerState extends State<InformationContainer> {
   TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var contextBloc = context.read<ClientBloc>().state.clientGet;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(
@@ -46,8 +49,8 @@ class _InformationContainerState extends State<InformationContainer> {
             height: 30,
           ),
           CustomTextFieldContainer(
-            textFieldName: "Ism, familiya, otasining ismi",
-            hintTextTextField: "Input something",
+            textFieldName: "Ism, familiya",
+            hintTextTextField: "${contextBloc?.firstName} ${contextBloc?.lastName}",
             controller: nameController,
           ),
           const SizedBox(
@@ -55,7 +58,7 @@ class _InformationContainerState extends State<InformationContainer> {
           ),
           CustomTextFieldContainer(
             textFieldName: "Yashash manzili",
-            hintTextTextField: "Input something",
+            hintTextTextField: "${contextBloc?.address}",
             controller: locationController,
           ),
           const SizedBox(
@@ -94,7 +97,7 @@ class _InformationContainerState extends State<InformationContainer> {
                       width: 1,
                     ),
                   ),
-                  hintText: '+998 (--)  --- -- --',
+                  hintText: '${contextBloc?.phone}',
                   hintStyle: AppTextStyles.body18w4.copyWith(
                     color: AppColors.grey,
                   ),
@@ -113,7 +116,9 @@ class _InformationContainerState extends State<InformationContainer> {
             color: AppColors.yellow,
             textButton: "Saqlash",
             textColor: AppColors.textColorBlack,
-            onTap: () {},
+            onTap: () {
+              
+            },
             width: double.infinity,
             height: 42,
           ),
