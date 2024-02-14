@@ -10,7 +10,6 @@ import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_text_field_container.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/common/routes.dart';
-import 'package:sultan_mebel/future/client/presentation/pages/client_page.dart';
 import 'package:sultan_mebel/future/clients_page/presentation/widgets/client_container_widget.dart';
 import 'package:sultan_mebel/future/clients_page/presentation/widgets/phone_number_text_field.dart';
 
@@ -102,10 +101,10 @@ class _ClientsPageState extends State<ClientsPage> {
                               address: yashashManziliController.text,
                               phone: phoneNumberController.text,
                             ));
+                        context.read<ClientsBloc>().add(const ClientsBlocEvent());
                         ismFamiliyaController.clear();
                         yashashManziliController.clear();
                         phoneNumberController.clear();
-                        context.read<ClientsBloc>().add(const ClientsBlocEvent());
                         Navigator.pop(context);
                       },
                       width: 200,
@@ -170,7 +169,7 @@ class _ClientsPageState extends State<ClientsPage> {
             return ListView.separated(
               padding: const EdgeInsets.symmetric(horizontal: 15).copyWith(top: 30, bottom: 25),
               itemBuilder: (context, index) {
-                if (index < (state.clientsList?.length ?? 0)) {
+                if (index != (state.clientsList?.length ?? 0)) {
                   return InkWell(
                     onTap: () {
                       Navigator.pushNamed(context, Routes.clientPage, arguments: {
@@ -186,6 +185,7 @@ class _ClientsPageState extends State<ClientsPage> {
                   return InkWell(
                     onTap: () {
                       showMyDialog();
+                      context.read<ClientsBloc>().emit(state);
                     },
                     borderRadius: BorderRadius.circular(15),
                     child: Container(

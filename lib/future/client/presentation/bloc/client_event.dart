@@ -11,6 +11,7 @@ class ClientEvent extends Equatable {
   List<Object> get props => [id!];
 }
 
+// ignore: must_be_immutable
 class ClientPatchEvent extends ClientEvent {
   int? idClient;
   double? loan;

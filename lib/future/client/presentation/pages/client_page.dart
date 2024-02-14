@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -13,7 +10,9 @@ import 'package:sultan_mebel/future/client/presentation/bloc/client_bloc.dart';
 import 'package:sultan_mebel/future/client/presentation/widgets/information.dart';
 import 'package:sultan_mebel/future/client/presentation/widgets/scheduled_debt.dart';
 import 'package:sultan_mebel/future/client/presentation/widgets/summa_accept.dart';
+import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_bloc.dart';
 
+// ignore: must_be_immutable
 class ClientPage extends StatefulWidget {
   String? clientName;
   int? clientId;
@@ -34,7 +33,6 @@ class _ClientPageState extends State<ClientPage> {
   @override
   void initState() {
     super.initState();
-    log("${widget.clientId}");
     context.read<ClientBloc>().add(
           ClientEvent(
             widget.clientId,
@@ -54,9 +52,16 @@ class _ClientPageState extends State<ClientPage> {
           ),
         ),
         body: BlocConsumer<ClientBloc, ClientState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if (context.read<ClientsBloc>().state.clientsList == BlocStatus.inProgress) {
+              context.read<ClientsBloc>().emit(context.read<ClientsBloc>().state);
+              const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          },
           builder: (context, state) {
-            if (state.statusGetClient == BlocStatus.inProgress) {
+            if (state.statusGetClient == BlocStatus.inProgress || state.clientPatch == BlocStatus.inProgress) {
               return const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.white,
@@ -74,7 +79,7 @@ class _ClientPageState extends State<ClientPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      widget.clientName ?? '',
+                      "${state.clientGet?.firstName} ${state.clientGet?.lastName}",
                       style: AppTextStyles.body22w5.copyWith(
                         color: AppColors.white,
                       ),
@@ -97,8 +102,8 @@ class _ClientPageState extends State<ClientPage> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: Text(
-                        "Umumiy qarz: ${summa.toString().formatAsNumber()}",
-                        style: AppTextStyles.body20w4.copyWith(
+                        "Umumiy qarz: ${state.clientGet?.loan.toString().formatAsNumber()}",
+                        style: AppTextStyles.body18w4.copyWith(
                           color: AppColors.white,
                         ),
                       ),

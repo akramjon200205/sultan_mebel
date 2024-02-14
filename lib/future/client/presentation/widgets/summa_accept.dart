@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -6,7 +5,6 @@ import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/future/client/presentation/bloc/client_bloc.dart';
-import 'package:sultan_mebel/future/client/presentation/widgets/text_field_row.dart';
 
 // ignore: must_be_immutable
 class AcceptSummWidgetContainer extends StatefulWidget {
@@ -104,22 +102,37 @@ class _AcceptSummWidgetContainerState extends State<AcceptSummWidgetContainer> {
             textButton: "Saqlash",
             textColor: AppColors.textColorBlack,
             onTap: () {
-              contextBloc.add(
-                ClientPatchEvent(
-                  contextBloc.state.clientGet?.id,
-                  summaFunc(widget.textEditingController.text),
-                  contextBloc.state.clientGet?.lastName,
-                  contextBloc.state.clientGet?.firstName,
-                  contextBloc.state.clientGet?.phone,
-                  contextBloc.state.clientGet?.address,
-                ),
-              );
-              context.read<ClientBloc>().add(
-                    ClientEvent(
-                      context.read<ClientBloc>().state.clientGet?.id,
+              if (widget.textEditingController.text.isNotEmpty) {
+                if (summaFunc(widget.textEditingController.text) >= 0) {
+                  contextBloc.add(
+                    ClientPatchEvent(
+                      contextBloc.state.clientGet?.id,
+                      summaFunc(widget.textEditingController.text),
+                      contextBloc.state.clientGet?.lastName,
+                      contextBloc.state.clientGet?.firstName,
+                      contextBloc.state.clientGet?.phone,
+                      contextBloc.state.clientGet?.address,
                     ),
                   );
-              // context.read<ClientBloc>().emit(context.read<ClientBloc>().state);
+                  context.read<ClientBloc>().add(
+                        ClientEvent(
+                          context.read<ClientBloc>().state.clientGet?.id,
+                        ),
+                      );
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: AppColors.backgroundColor,
+                      content: Text(
+                        "Siz kiritgan summa qarzdorlik summasidan ko'p",
+                        style: AppTextStyles.body14w3.copyWith(
+                          color: AppColors.redColor,
+                        ),
+                      ),
+                    ),
+                  );
+                }
+              }
             },
           ),
         ],

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -6,6 +8,7 @@ import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/components/custom_text_field_container.dart';
 import 'package:sultan_mebel/future/client/presentation/bloc/client_bloc.dart';
+import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_bloc.dart';
 
 class InformationContainer extends StatefulWidget {
   const InformationContainer({super.key});
@@ -18,6 +21,19 @@ class _InformationContainerState extends State<InformationContainer> {
   TextEditingController nameController = TextEditingController();
   TextEditingController locationController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  List<String> firstNameLaseName = [];
+
+  scrapText(TextEditingController controller) {
+    if (firstNameLaseName.isNotEmpty) {
+      firstNameLaseName = [];
+    } else {
+      firstNameLaseName = controller.text.split(' ');
+      for (var element in firstNameLaseName) {
+        log(element);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var contextBloc = context.read<ClientBloc>().state.clientGet;
@@ -117,7 +133,28 @@ class _InformationContainerState extends State<InformationContainer> {
             textButton: "Saqlash",
             textColor: AppColors.textColorBlack,
             onTap: () {
-              
+              scrapText(nameController);
+              if (nameController.text.isEmpty && phoneController.text.isEmpty && locationController.text.isEmpty) {
+                return;
+              }
+
+              if (nameController.text.isNotEmpty ||
+                  phoneController.text.isNotEmpty ||
+                  locationController.text.isNotEmpty) {
+                context.read<ClientBloc>().add(ClientPatchEvent(
+                      contextBloc?.id,
+                      double.parse(contextBloc!.loan!),
+                      nameController.text.isEmpty
+                          ? contextBloc.lastName
+                          : (firstNameLaseName.length == 1 ? '' : firstNameLaseName.last),
+                      nameController.text.isEmpty ? contextBloc.firstName : firstNameLaseName.first,
+                      phoneController.text.isEmpty ? contextBloc.phone : phoneController.text,
+                      locationController.text.isEmpty ? contextBloc.address : locationController.text,
+                    ));
+              }
+              // context.read<ClientBloc>().add(ClientEvent(contextBloc?.id));              
+              context.read<ClientsBloc>().add(const ClientsBlocEvent());
+              // context.read<ClientsBloc>().emit(context.read<ClientsBloc>().state);
             },
             width: double.infinity,
             height: 42,

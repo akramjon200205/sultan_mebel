@@ -64,7 +64,7 @@ class ClientBloc extends Bloc<ClientEvent, ClientState> {
           },
           (r) {
             emit(
-              state.copyWith(statusPatchClient: BlocStatus.completed, clientGet: state.clientGet, clientPatch: r),
+              state.copyWith(statusPatchClient: BlocStatus.completed, clientGet: state.clientGet),
             );
           },
         );

@@ -8,6 +8,8 @@ import 'package:sultan_mebel/core/platform/network_info.dart';
 import 'package:sultan_mebel/future/client/data/data_source/remote_datasource/client_remote_datasource.dart';
 import 'package:sultan_mebel/future/client/domain/repositories/client_repositories.dart';
 
+import '../../../../common/models/customer_model.dart';
+
 class ClientRepositoriesImpl implements ClientRepositories {
   final ClientRemoteDataSourceImpl clientRemoteDataSourceImpl;
   final NetworkInfo networkInfo;
@@ -16,7 +18,7 @@ class ClientRepositoriesImpl implements ClientRepositories {
     required this.networkInfo,
   });
   @override
-  Future<Either<Failure, dynamic>> getClient({int? id}) async {
+  Future<Either<Failure, CustomerModel>> getClient({int? id}) async {
     if (await networkInfo.isConnected) {
       try {
         final result = await clientRemoteDataSourceImpl.getClientById(id: id);
@@ -31,7 +33,7 @@ class ClientRepositoriesImpl implements ClientRepositories {
   }
 
   @override
-  Future<Either<Failure, dynamic>> patchClient({
+  Future<Either<Failure, CustomerModel>> patchClient({
     int? id,
     double? loan,
     String? lastName,
@@ -41,7 +43,14 @@ class ClientRepositoriesImpl implements ClientRepositories {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await clientRemoteDataSourceImpl.patchClientById(id: id, loan: loan);
+        final result = await clientRemoteDataSourceImpl.patchClientById(
+          id: id,
+          loan: loan,
+          address: address,
+          firstName: firstName,
+          lastName: lastName,
+          phone: phone,
+        );
         return Right(result);
       } on DioException catch (e) {
         final failure = DioExceptions.fromDioError(e);

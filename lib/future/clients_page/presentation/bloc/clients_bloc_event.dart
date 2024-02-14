@@ -8,6 +8,7 @@ class ClientsBlocEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// ignore: must_be_immutable
 class ClientsPostEvent extends ClientsBlocEvent {
   String? firstName;
   String? lastName;

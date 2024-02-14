@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
+import 'package:sultan_mebel/common/models/customer_model.dart';
 
 import '../../../../core/error/failure.dart';
 
 abstract class ClientRepositories {
-  Future<Either<Failure, dynamic>> getClient({int? id});
-  Future<Either<Failure, dynamic>> patchClient({
+  Future<Either<Failure, CustomerModel>> getClient({int? id});
+  Future<Either<Failure, CustomerModel>> patchClient({
     int? id,
     double? loan,
     String? lastName,
