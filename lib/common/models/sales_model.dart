@@ -53,14 +53,16 @@ class SalesModel {
 class Items {
   int? id;
   int? amount;
+  String? comment;
   int? product;
   int? sale;
 
-  Items({this.id, this.amount, this.product, this.sale});
+  Items({this.id, this.amount, this.comment, this.product, this.sale});
 
   Items.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     amount = json['amount'];
+    comment = json['comment'];
     product = json['product'];
     sale = json['sale'];
   }
@@ -69,6 +71,7 @@ class Items {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['amount'] = this.amount;
+    data['comment'] = this.comment;
     data['product'] = this.product;
     data['sale'] = this.sale;
     return data;

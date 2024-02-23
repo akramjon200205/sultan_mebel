@@ -1,8 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
+import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_bloc.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
 // ignore: must_be_immutable
 class CartListDropDownWidget extends StatefulWidget {
@@ -20,17 +22,47 @@ class CartListDropDownWidget extends StatefulWidget {
 }
 
 class _CartListDropDownWidgetState extends State<CartListDropDownWidget> {
+  List<String>? branchList = [];
+  List<String>? clientList = [];
+  String dropValueBranchs = '';
+  String dropValueNames = '';
+
+  cardFunc() {
+    final branchNames = context.read<WarehouseBloc>().state.branchList;
+    final clientsNames = context.read<ClientsBloc>().state.clientsList;
+    if (branchNames != null && clientsNames != null) {
+      for (var element in branchNames) {
+        branchList?.add(element.branch?.name ?? '');
+      }
+      for (var element in clientsNames) {
+        String? names = "${element.firstName} ${element.lastName}";
+        clientList?.add(names);
+      }
+    }
+
+    if (branchList!.isNotEmpty && clientList!.isNotEmpty) {
+      dropValueBranchs = branchList![0];
+      dropValueNames = clientList![0];
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cardFunc();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(left: 15, right: 50),
       child: Column(
         children: [
-          CartDropDownWidget(dropValue: widget.dropValue, dropListValue: widget.dropListValue, text: "Mijoz"),
+          CartDropDownWidget(dropValue: dropValueNames, dropListValue: clientList ?? [], text: "Mijoz"),
           const SizedBox(
             height: 20,
           ),
-          CartDropDownWidget(dropValue: widget.dropValue, dropListValue: widget.dropListValue, text: "Filial"),
+          CartDropDownWidget(dropValue: dropValueBranchs, dropListValue: branchList ?? [], text: "Filial"),
           const SizedBox(
             height: 20,
           ),
@@ -43,11 +75,15 @@ class _CartListDropDownWidgetState extends State<CartListDropDownWidget> {
                   color: AppColors.white,
                 ),
               ),
+              const SizedBox(
+                width: 15,
+              ),
               Container(
-                height: 25,
+                height: 30,
                 alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 5,
+                padding: const EdgeInsets.only(
+                  left: 5,
+                  right: 15,
                 ),
                 decoration: BoxDecoration(
                   color: AppColors.customContainerColor,
@@ -56,14 +92,13 @@ class _CartListDropDownWidgetState extends State<CartListDropDownWidget> {
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(
-                    10,
+                    8,
                   ),
                 ),
                 child: Text(
                   "100000",
-                  style: AppTextStyles.body13w4.copyWith(
+                  style: AppTextStyles.body14w3.copyWith(
                     color: AppColors.grey,
-                    fontWeight: FontWeight.w300,
                   ),
                 ),
               )
@@ -96,15 +131,16 @@ class _CartDropDownWidgetState extends State<CartDropDownWidget> {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           widget.text,
-          style: AppTextStyles.body15w4.copyWith(
+          style: AppTextStyles.body17w5.copyWith(
             color: AppColors.white,
           ),
         ),
         Container(
-          height: 35,
+          // height: 35,
           width: 200,
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.center,
@@ -124,7 +160,7 @@ class _CartDropDownWidgetState extends State<CartDropDownWidget> {
                   value: value,
                   child: Text(
                     value,
-                    style: AppTextStyles.body13w4.copyWith(
+                    style: AppTextStyles.body14w4.copyWith(
                       color: AppColors.white,
                     ),
                   ),

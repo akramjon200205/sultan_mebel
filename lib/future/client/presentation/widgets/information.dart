@@ -152,7 +152,7 @@ class _InformationContainerState extends State<InformationContainer> {
                       locationController.text.isEmpty ? contextBloc.address : locationController.text,
                     ));
               }
-              // context.read<ClientBloc>().add(ClientEvent(contextBloc?.id));              
+              context.read<ClientBloc>().add(ClientEvent(contextBloc?.id));              
               context.read<ClientsBloc>().add(const ClientsBlocEvent());
               // context.read<ClientsBloc>().emit(context.read<ClientsBloc>().state);
             },

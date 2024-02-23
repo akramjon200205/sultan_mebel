@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sultan_mebel/common/models/products_model.dart';
 import 'package:sultan_mebel/core/platform/network_info.dart';
 import 'package:sultan_mebel/core/platform/pretty_dio_logger.dart';
 import 'package:sultan_mebel/future/client/data/data_source/remote_datasource/client_remote_datasource.dart';
@@ -182,4 +185,12 @@ Future<void> init() async {
   di.registerLazySingleton(() => sharedPreferences);
 
   // Local data management
+
+  final document = await getApplicationDocumentsDirectory();
+  Hive
+    ..init(document.path)
+    ..registerAdapter(ProductsModelAdapter());
+  //GetChats ui
+
+  await Hive.openBox<ProductsModel>('products');
 }

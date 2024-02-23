@@ -6,7 +6,7 @@ import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_
 
 class ClientContainerWidget extends StatelessWidget {
   final int? index;
-  ClientContainerWidget({super.key, this.index});
+  const ClientContainerWidget({super.key, this.index});
 
   @override
   Widget build(BuildContext context) {

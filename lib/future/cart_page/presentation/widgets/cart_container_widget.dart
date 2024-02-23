@@ -6,14 +6,13 @@ import 'package:sultan_mebel/common/app_text_styles.dart';
 
 // ignore: must_be_immutable
 class CartContainerWidget extends StatelessWidget {
-  int number;
+  String nameProduct;
   TextEditingController controller;
-  // Function function;
+
   CartContainerWidget({
     Key? key,
-    required this.number,
+    required this.nameProduct,
     required this.controller,
-    // required this.function,
   }) : super(key: key);
 
   @override
@@ -34,14 +33,14 @@ class CartContainerWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "Product $number",
+                nameProduct,
                 style: AppTextStyles.body18w5.copyWith(
                   color: AppColors.white,
                 ),
               ),
               SizedBox(
-                width: 140,
-                height: 35,
+                width: 150,
+                height: 30,
                 child: TextField(
                   controller: controller,
                   decoration: InputDecoration(
@@ -54,7 +53,7 @@ class CartContainerWidget extends StatelessWidget {
                       ),
                     ),
                     hintText: "Maxsulot miqdori",
-                    hintStyle: AppTextStyles.body15w4.copyWith(
+                    hintStyle: AppTextStyles.body14w4.copyWith(
                       color: AppColors.grey,
                     ),
                     contentPadding: const EdgeInsets.symmetric(
@@ -65,6 +64,9 @@ class CartContainerWidget extends StatelessWidget {
                 ),
               )
             ],
+          ),
+          const SizedBox(
+            height: 15,
           ),
           TextField(
             style: AppTextStyles.body20w5.copyWith(

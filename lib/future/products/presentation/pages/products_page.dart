@@ -51,6 +51,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -95,17 +96,21 @@ class _ProductsPageState extends State<ProductsPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                          widget.productsCategoriesName,
-                          style: AppTextStyles.body20w4.copyWith(
-                            color: AppColors.white,
+                        SizedBox(
+                          width: size.width * 0.5,
+                          child: Text(
+                            widget.productsCategoriesName,
+                            style: AppTextStyles.body20w4.copyWith(
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                         Container(
-                          height: 35,
-                          width: 150,
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          // height: 35,
+                          width: size.width * 0.4,
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
                             color: AppColors.textColorBlack,

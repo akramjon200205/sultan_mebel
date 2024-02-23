@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,9 +13,13 @@ import 'package:sultan_mebel/common/assets.dart';
 import 'package:sultan_mebel/common/components/app_bar_widget.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
 import 'package:sultan_mebel/common/enums/bloc_status.dart';
+import 'package:sultan_mebel/common/models/products_model.dart';
+import 'package:sultan_mebel/common/models/shared_model.dart';
 import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
 import 'package:sultan_mebel/future/product/presentation/widgets/kirim_dialog.dart';
 import 'package:sultan_mebel/future/product/presentation/widgets/product_page_container_widget.dart';
+import 'package:sultan_mebel/future/products/data/model/warehouse_items_model.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/products/products_bloc.dart';
 
 import '../../../../common/routes.dart';
 import '../../../products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
@@ -33,6 +39,8 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   SharedPreferences? sharedPreferences;
+  List<ProductsModel> addProduct = [];
+  List<ProductsModel> productList = [];
 
   Future<void> showMyDialogKirim({
     int? idProduct,
@@ -51,14 +59,24 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
+  void fetchProducts() async {
+    productList = await SharedPreferencesHelper.getProductsList();
+  }
+
+  void saveModel(ProductsModel productsModel) async {
+    await SharedPreferencesHelper.saveProduct(productsModel);
+  }
+
   @override
   void initState() {
     context.read<ProductBloc>().add(ProductEvent(widget.idProduct));
+    fetchProducts();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final contextBloc = context.read<ProductBloc>();
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
@@ -94,18 +112,43 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   Align(
                     alignment: Alignment.centerRight,
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: AppColors.yellow,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.plus_one,
-                        size: 20,
-                        color: AppColors.textColorBlack,
+                    child: InkWell(
+                      onTap: () {
+                        saveModel(
+                          ProductsModel(
+                            category: contextBloc.state.productsModel?.category,
+                            id: contextBloc.state.productsModel?.id,
+                            name: contextBloc.state.productsModel?.name,
+                            price: contextBloc.state.productsModel?.price,
+                            sizes: contextBloc.state.productsModel?.sizes,
+                          ),
+                        );
+                        // addProduct.add(ProductsModel(
+                        //   category: contextBloc.state.productsModel?.category,
+                        //   id: contextBloc.state.productsModel?.id,
+                        //   name: contextBloc.state.productsModel?.name,
+                        //   price: contextBloc.state.productsModel?.price,
+                        // ));
+                        // for (var element in addProduct) {
+                        //   log("${element.id}");
+                        //   log("${element.category}");
+                        //   log("${element.name}");
+                        //   log("${element.price}");
+                        // }
+                      },
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: AppColors.yellow,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.plus_one,
+                          size: 20,
+                          color: AppColors.textColorBlack,
+                        ),
                       ),
                     ),
                   ),
@@ -160,7 +203,16 @@ class _ProductPageState extends State<ProductPage> {
                     margin: const EdgeInsets.symmetric(horizontal: 25),
                     textButton: "Maxsulotni o'chirib yuborish",
                     textColor: AppColors.redColor,
-                    onTap: () {},
+                    onTap: () async {
+                      fetchProducts();
+                      log("${productList.length}");
+                      for (var element in productList) {
+                        log("${element.category}");
+                        log("${element.id}");
+                        log("${element.name}");
+                        log("${element.price}");
+                      }
+                    },
                   ),
                   const SizedBox(
                     height: 30,

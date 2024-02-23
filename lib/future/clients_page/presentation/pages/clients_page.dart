@@ -32,6 +32,7 @@ class _ClientsPageState extends State<ClientsPage> {
   scrapText(TextEditingController controller) {
     if (firstNameLaseName.isNotEmpty) {
       firstNameLaseName = [];
+      firstNameLaseName = controller.text.split(' ');
     } else {
       firstNameLaseName = controller.text.split(' ');
       for (var element in firstNameLaseName) {
@@ -97,15 +98,14 @@ class _ClientsPageState extends State<ClientsPage> {
                         scrapText(ismFamiliyaController);
                         context.read<ClientsBloc>().add(ClientsPostEvent(
                               firstName: firstNameLaseName.first ?? '',
-                              lastName: firstNameLaseName.length == 1 ? '' : firstNameLaseName.last ?? '',
+                              lastName: firstNameLaseName.length == 1 ? '' : firstNameLaseName[1] ?? '',
                               address: yashashManziliController.text,
                               phone: phoneNumberController.text,
                             ));
-                        context.read<ClientsBloc>().add(const ClientsBlocEvent());
                         ismFamiliyaController.clear();
                         yashashManziliController.clear();
                         phoneNumberController.clear();
-                        Navigator.pop(context);
+                        Navigator.of(context).pop();
                       },
                       width: 200,
                       height: 48,
@@ -159,7 +159,7 @@ class _ClientsPageState extends State<ClientsPage> {
         body: BlocConsumer<ClientsBloc, ClientsState>(
           listener: (context, state) {},
           builder: (context, state) {
-            if (state.statusGetClients == BlocStatus.inProgress) {
+            if (state.statusGetClients == BlocStatus.inProgress || state.clientPost == BlocStatus.inProgress) {
               return const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.white,
@@ -185,7 +185,6 @@ class _ClientsPageState extends State<ClientsPage> {
                   return InkWell(
                     onTap: () {
                       showMyDialog();
-                      context.read<ClientsBloc>().emit(state);
                     },
                     borderRadius: BorderRadius.circular(15),
                     child: Container(

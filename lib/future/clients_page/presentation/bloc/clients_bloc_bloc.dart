@@ -60,8 +60,11 @@ class ClientsBloc extends Bloc<ClientsBlocEvent, ClientsState> {
           );
         },
         (r) {
+          List<CustomerModel> list = [];
+          list.addAll(state.clientsList ?? []);
+          list.add(r);
           emit(
-            state.copyWith(statusGetClients: BlocStatus.completed, clientsList: state.clientsList,  clientPost: r),
+            state.copyWith(statusGetClients: BlocStatus.completed, clientsList: list, clientPost: r),
           );
         },
       );

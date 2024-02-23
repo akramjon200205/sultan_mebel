@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
 import 'package:sultan_mebel/common/components/custom_button_container.dart';
+import 'package:sultan_mebel/common/models/products_model.dart';
+import 'package:sultan_mebel/common/models/shared_model.dart';
 import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_container_widget.dart';
 import 'package:sultan_mebel/future/cart_page/presentation/widgets/cart_page_drop_down_widget.dart';
+import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_bloc.dart';
+import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
 import '../../../../common/components/app_bar_widget.dart';
 
@@ -18,6 +23,8 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   TextEditingController controller = TextEditingController();
   int productItmCount = 5;
+  List<ProductsModel> productList = [];
+
   List<String> dropListValue = [
     "Umumiy",
     "Oshhona",
@@ -25,12 +32,25 @@ class _CartPageState extends State<CartPage> {
     "Mebel",
     "Savdo",
   ];
+
   String dropValue = "";
   String dropValue1 = "";
+
+  void fetchProducts() async {
+    productList = await SharedPreferencesHelper.getProductsList();
+  }
 
   @override
   void initState() {
     super.initState();
+    context.read<WarehouseBloc>().add(
+          const WarehouseEvent(),
+        );
+    context.read<ClientsBloc>().add(
+          const ClientsBlocEvent(),
+        );
+
+    fetchProducts();
     dropValue = dropListValue[0];
     dropValue1 = dropListValue[0];
   }
@@ -132,14 +152,14 @@ class _CartPageState extends State<CartPage> {
               ),
               const SizedBox(
                 height: 10,
-              ),              
+              ),
               ListView.separated(
                 shrinkWrap: true,
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return CartContainerWidget(
-                    number: 1,
+                    nameProduct: productList[index].name ?? '',
                     controller: controller,
                   );
                 },
@@ -148,12 +168,15 @@ class _CartPageState extends State<CartPage> {
                     height: 25,
                   );
                 },
-                itemCount: productItmCount,
+                itemCount: productList.length,
               ),
               const SizedBox(
                 height: 30,
               ),
-              CartListDropDownWidget(dropValue: dropValue, dropListValue: dropListValue),
+              CartListDropDownWidget(
+                dropValue: dropValue,
+                dropListValue: dropListValue,
+              ),
               const SizedBox(
                 height: 20,
               ),
