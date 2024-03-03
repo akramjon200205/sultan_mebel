@@ -1,19 +1,52 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
 import 'package:flutter/material.dart';
 
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
+import 'package:sultan_mebel/common/models/products_model.dart';
+import 'package:sultan_mebel/common/models/shared_model.dart';
 
 // ignore: must_be_immutable
-class CartContainerWidget extends StatelessWidget {
+class CartContainerWidget extends StatefulWidget {
   String nameProduct;
-  TextEditingController controller;
+  int index;
 
   CartContainerWidget({
     Key? key,
     required this.nameProduct,
-    required this.controller,
+    required this.index,
   }) : super(key: key);
+
+  @override
+  State<CartContainerWidget> createState() => _CartContainerWidgetState();
+}
+
+class _CartContainerWidgetState extends State<CartContainerWidget> {
+  TextEditingController controller = TextEditingController();
+  List<ProductsModel> productList = [];
+
+  String separateVariable = '';
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Add a listener to the controller
+    controller.addListener(() {
+      setState(() {
+        separateVariable = controller.text;
+        print(controller.text);
+      });
+    });
+  }
+
+  Future<void> saveData(int integer) async {
+    productList = await SharedPreferencesHelper.getProductsList();
+
+    await SharedPreferencesHelper.saveProductWithQuantity(productList[widget.index], integer);
+    log("${productList.length}");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +66,7 @@ class CartContainerWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                nameProduct,
+                widget.nameProduct,
                 style: AppTextStyles.body18w5.copyWith(
                   color: AppColors.white,
                 ),
@@ -42,7 +75,15 @@ class CartContainerWidget extends StatelessWidget {
                 width: 150,
                 height: 30,
                 child: TextField(
+                  style: AppTextStyles.body14w4.copyWith(
+                    color: AppColors.grey,
+                  ),
                   controller: controller,
+                  onEditingComplete: () {
+                    log(controller.text);
+                    // saveData((int.parse(controller.text)));
+                    FocusScope.of(context).unfocus();
+                  },
                   decoration: InputDecoration(
                     isDense: true,
                     border: OutlineInputBorder(
@@ -61,6 +102,7 @@ class CartContainerWidget extends StatelessWidget {
                       vertical: 10,
                     ),
                   ),
+                  keyboardType: TextInputType.number,
                 ),
               )
             ],

@@ -12,7 +12,7 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _MainPageState extends State<MainPage> with AutomaticKeepAliveClientMixin<MainPage> {
   int selectedIndex = 0;
   PageController controller = PageController(initialPage: 0);
   bool canPop = false;
@@ -31,6 +31,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) async {
@@ -133,4 +134,7 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

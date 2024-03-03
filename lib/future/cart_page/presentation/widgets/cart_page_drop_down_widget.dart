@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sultan_mebel/common/app_colors.dart';
 import 'package:sultan_mebel/common/app_text_styles.dart';
+import 'package:sultan_mebel/common/enums/bloc_status.dart';
 import 'package:sultan_mebel/future/clients_page/presentation/bloc/clients_bloc_bloc.dart';
 import 'package:sultan_mebel/future/products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
@@ -23,33 +26,56 @@ class CartListDropDownWidget extends StatefulWidget {
 
 class _CartListDropDownWidgetState extends State<CartListDropDownWidget> {
   List<String>? branchList = [];
-  List<String>? clientList = [];
+  List<String>? nameList = [];
   String dropValueBranchs = '';
   String dropValueNames = '';
-
-  cardFunc() {
-    final branchNames = context.read<WarehouseBloc>().state.branchList;
-    final clientsNames = context.read<ClientsBloc>().state.clientsList;
-    if (branchNames != null && clientsNames != null) {
-      for (var element in branchNames) {
-        branchList?.add(element.branch?.name ?? '');
-      }
-      for (var element in clientsNames) {
-        String? names = "${element.firstName} ${element.lastName}";
-        clientList?.add(names);
-      }
+  
+  Future<void> cardClientFunc() async {
+    final clientsList = context.read<ClientsBloc>().state.clientsList;
+    if (clientsList == null || clientsList.isEmpty) {
+      // Add "Empty" only if the list is empty
+      nameList?.add("Empty");
+      dropValueNames = "Empty";
+      return;
     }
 
-    if (branchList!.isNotEmpty && clientList!.isNotEmpty) {
+    for (var element in clientsList) {
+      nameList?.add(element.firstName ?? '');
+    }
+
+    if (nameList!.isNotEmpty) {
+      dropValueNames = '';
+      dropValueNames = nameList![0];
+    }
+  }
+
+  Future<void> cardFunc() async {
+    final branchNames = context.read<WarehouseBloc>().state.branchList;
+    if (branchNames == null || branchNames.isEmpty) {
+      // Add "Empty" only if the list is empty
+      branchList?.add("Empty");
+      dropValueBranchs = "Empty";
+      return;
+    }
+
+    for (var element in branchNames) {
+      branchList?.add(element.branch?.name ?? '');
+    }
+
+    if (branchList!.isNotEmpty) {
       dropValueBranchs = branchList![0];
-      dropValueNames = clientList![0];
     }
   }
 
   @override
   void initState() {
     super.initState();
-    cardFunc();
+    context.read<WarehouseBloc>().add(
+          const WarehouseEvent(),
+        );
+    context.read<ClientsBloc>().add(
+          const ClientsBlocEvent(),
+        );
   }
 
   @override
@@ -58,11 +84,40 @@ class _CartListDropDownWidgetState extends State<CartListDropDownWidget> {
       margin: const EdgeInsets.only(left: 15, right: 50),
       child: Column(
         children: [
-          CartDropDownWidget(dropValue: dropValueNames, dropListValue: clientList ?? [], text: "Mijoz"),
+          BlocConsumer<WarehouseBloc, WarehouseState>(
+            listener: (context, state) {
+              if (state.statusGetWarehouse == BlocStatus.completed) {
+                cardClientFunc();
+              }
+            },
+            builder: (context, state) {
+              if (state.statusGetWarehouse == BlocStatus.inProgress) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+
+              return CartDropDownWidget(dropValue: dropValueNames, dropListValue: nameList ?? [], text: "Mijoz");
+            },
+          ),
           const SizedBox(
             height: 20,
           ),
-          CartDropDownWidget(dropValue: dropValueBranchs, dropListValue: branchList ?? [], text: "Filial"),
+          BlocConsumer<ClientsBloc, ClientsState>(
+            listener: (context, state) {
+              if (state.statusGetClients == BlocStatus.completed) {
+                cardFunc();
+              }
+            },
+            builder: (context, state) {
+              if (state.statusGetClients == BlocStatus.inProgress) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return CartDropDownWidget(dropValue: dropValueBranchs, dropListValue: branchList ?? [], text: "Filial");
+            },
+          ),
           const SizedBox(
             height: 20,
           ),
@@ -127,6 +182,8 @@ class CartDropDownWidget extends StatefulWidget {
 }
 
 class _CartDropDownWidgetState extends State<CartDropDownWidget> {
+  String? _selectedValue; // Add this variable to hold the selected value
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -140,7 +197,6 @@ class _CartDropDownWidgetState extends State<CartDropDownWidget> {
           ),
         ),
         Container(
-          // height: 35,
           width: 200,
           padding: const EdgeInsets.symmetric(horizontal: 10),
           alignment: Alignment.center,
@@ -152,7 +208,7 @@ class _CartDropDownWidgetState extends State<CartDropDownWidget> {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               dropdownColor: AppColors.textColorBlack,
-              value: widget.dropValue,
+              value: _selectedValue ?? widget.dropValue, // Use _selectedValue if set, otherwise use widget.dropValue
               isDense: true,
               style: AppTextStyles.body14w4.copyWith(color: AppColors.white),
               items: widget.dropListValue.map<DropdownMenuItem<String>>((String value) {
@@ -169,7 +225,7 @@ class _CartDropDownWidgetState extends State<CartDropDownWidget> {
               isExpanded: true,
               onChanged: (value) {
                 setState(() {
-                  widget.dropValue = value!;
+                  _selectedValue = value; // Update the selected value
                 });
               },
             ),

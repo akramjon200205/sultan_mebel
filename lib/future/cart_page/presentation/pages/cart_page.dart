@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -36,21 +38,17 @@ class _CartPageState extends State<CartPage> {
   String dropValue = "";
   String dropValue1 = "";
 
-  void fetchProducts() async {
+  Future<void> fetchProducts() async {
     productList = await SharedPreferencesHelper.getProductsList();
+    log("${productList.length}");
   }
 
   @override
   void initState() {
     super.initState();
-    context.read<WarehouseBloc>().add(
-          const WarehouseEvent(),
-        );
-    context.read<ClientsBloc>().add(
-          const ClientsBlocEvent(),
-        );
-
-    fetchProducts();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchProducts();
+    });
     dropValue = dropListValue[0];
     dropValue1 = dropListValue[0];
   }
@@ -153,22 +151,33 @@ class _CartPageState extends State<CartPage> {
               const SizedBox(
                 height: 10,
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return CartContainerWidget(
-                    nameProduct: productList[index].name ?? '',
-                    controller: controller,
-                  );
+              FutureBuilder(
+                future: fetchProducts(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return CartContainerWidget(
+                          index: index,
+                          nameProduct: productList[index].name ?? '',
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(
+                          height: 25,
+                        );
+                      },
+                      itemCount: productList.length,
+                    );
+                  }
                 },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(
-                    height: 25,
-                  );
-                },
-                itemCount: productList.length,
               ),
               const SizedBox(
                 height: 30,

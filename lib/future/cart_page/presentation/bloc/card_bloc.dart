@@ -1,3 +1,4 @@
+import 'dart:core';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,9 +15,15 @@ part 'card_bloc.freezed.dart';
 class CardBloc extends Bloc<CardEvent, CardState> {
   final CardRepository repository;
   CardBloc({required this.repository}) : super(const CardState()) {
-    on<CardEvent>((event, emit) async {
+    on<CardClientsPostEvent>((event, emit) async {
       emit(state.copyWith(statusPostSales: BlocStatus.inProgress));
-      final result = await repository.postSales();
+      final result = await repository.postSales(
+        itemsList: event.itemsList,
+        branch: event.branch,
+        commentClient: event.commentClient,
+        customer: event.customer,
+        price: event.price,
+      );
       result.fold(
         (l) {
           if (l is ConnectionFailure) {
@@ -31,9 +38,9 @@ class CardBloc extends Bloc<CardEvent, CardState> {
           );
         },
         (r) {
-          // emit(
-          //   state.copyWith(statusGetClient: BlocStatus.completed, clientGet: r),
-          // );
+          emit(
+            state.copyWith(statusPostSales: BlocStatus.completed, clientGet: r),
+          );
         },
       );
     });

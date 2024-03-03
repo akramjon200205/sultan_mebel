@@ -18,11 +18,8 @@ import 'package:sultan_mebel/common/models/shared_model.dart';
 import 'package:sultan_mebel/future/product/presentation/bloc/product_bloc.dart';
 import 'package:sultan_mebel/future/product/presentation/widgets/kirim_dialog.dart';
 import 'package:sultan_mebel/future/product/presentation/widgets/product_page_container_widget.dart';
-import 'package:sultan_mebel/future/products/data/model/warehouse_items_model.dart';
-import 'package:sultan_mebel/future/products/presentation/bloc/products/products_bloc.dart';
 
 import '../../../../common/routes.dart';
-import '../../../products/presentation/bloc/warehouse_bloc/warehouse_bloc.dart';
 
 class ProductPage extends StatefulWidget {
   final int idProduct;
@@ -123,18 +120,6 @@ class _ProductPageState extends State<ProductPage> {
                             sizes: contextBloc.state.productsModel?.sizes,
                           ),
                         );
-                        // addProduct.add(ProductsModel(
-                        //   category: contextBloc.state.productsModel?.category,
-                        //   id: contextBloc.state.productsModel?.id,
-                        //   name: contextBloc.state.productsModel?.name,
-                        //   price: contextBloc.state.productsModel?.price,
-                        // ));
-                        // for (var element in addProduct) {
-                        //   log("${element.id}");
-                        //   log("${element.category}");
-                        //   log("${element.name}");
-                        //   log("${element.price}");
-                        // }
                       },
                       child: Container(
                         width: 30,

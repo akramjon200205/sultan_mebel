@@ -1,20 +1,14 @@
-import 'package:hive/hive.dart';
-
-part 'products_model.g.dart';
-
-@HiveType(typeId: 0)
 class ProductsModel {
-  @HiveField(0)
   int? id;
-  @HiveField(1)
+
   List<Images>? images;
-  @HiveField(2)
+
   String? name;
-  @HiveField(3)
+
   double? price;
-  @HiveField(4)
+
   String? sizes;
-  @HiveField(5)
+
   int? category;
 
   ProductsModel({this.id, this.images, this.name, this.price, this.sizes, this.category});

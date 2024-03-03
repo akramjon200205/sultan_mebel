@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:hive/hive.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sultan_mebel/common/models/products_model.dart';
 import 'package:sultan_mebel/core/platform/network_info.dart';
 import 'package:sultan_mebel/core/platform/pretty_dio_logger.dart';
+import 'package:sultan_mebel/future/cart_page/data/data_source/remote_datasource/card_remote_datasource.dart';
+import 'package:sultan_mebel/future/cart_page/data/repositories/card_repository_impl.dart';
+import 'package:sultan_mebel/future/cart_page/domain/repositories/card_repository.dart';
+import 'package:sultan_mebel/future/cart_page/presentation/bloc/card_bloc.dart';
 import 'package:sultan_mebel/future/client/data/data_source/remote_datasource/client_remote_datasource.dart';
 import 'package:sultan_mebel/future/client/data/repositories/client_repositories_impl.dart';
 import 'package:sultan_mebel/future/client/domain/repositories/client_repositories.dart';
@@ -68,6 +69,11 @@ Future<void> init() async {
       repository: di(),
     ),
   );
+  di.registerFactory(
+    () => CardBloc(
+      repository: di(),
+    ),
+  );
 
   // Repositories
   di.registerFactory<CategoryRepository>(
@@ -112,6 +118,12 @@ Future<void> init() async {
       networkInfo: di(),
     ),
   );
+  di.registerFactory<CardRepository>(
+    () => CardRepositoryImpl(
+      cardRemoteDataSourceImpl: di(),
+      networkInfo: di(),
+    ),
+  );
 
   // Datasources
   di.registerLazySingleton<CategoryRemoteDataSourceImpl>(
@@ -146,6 +158,11 @@ Future<void> init() async {
   );
   di.registerLazySingleton<ClientRemoteDataSourceImpl>(
     () => ClientRemoteDataSourceImpl(
+      dio: di(),
+    ),
+  );
+  di.registerLazySingleton<CardRemoteDataSourceImpl>(
+    () => CardRemoteDataSourceImpl(
       dio: di(),
     ),
   );
@@ -186,11 +203,11 @@ Future<void> init() async {
 
   // Local data management
 
-  final document = await getApplicationDocumentsDirectory();
-  Hive
-    ..init(document.path)
-    ..registerAdapter(ProductsModelAdapter());
-  //GetChats ui
+  // final document = await getApplicationDocumentsDirectory();
+  // Hive
+  //   ..init(document.path)
+  //   ..registerAdapter(ProductsModelAdapter());
+  // //GetChats ui
 
-  await Hive.openBox<ProductsModel>('products');
+  // await Hive.openBox<ProductsModel>('products');
 }
