@@ -45,7 +45,7 @@ class CardRemoteDataSourceImpl implements CardRemoteDataSource {
   @override
   Future<SalesModel> postSales(
     int? id,
-    List<Map<String, dynamic>> itemsList,
+    List<Map<String, dynamic>>? itemsList,
     String? dateTime,
     double? price,
     String? comment,

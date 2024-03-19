@@ -19,8 +19,7 @@ class CardBloc extends Bloc<CardEvent, CardState> {
       emit(state.copyWith(statusPostSales: BlocStatus.inProgress));
       final result = await repository.postSales(
         itemsList: event.itemsList,
-        branch: event.branch,
-        commentClient: event.commentClient,
+        branch: event.branch,      
         customer: event.customer,
         price: event.price,
       );
